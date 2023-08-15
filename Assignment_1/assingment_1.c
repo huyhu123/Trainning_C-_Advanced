@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Function to take input matrix from the keyboard
 void get_matrix_data(int **matrix, int rows, int collums)
 {
     for(int row = 0 ; row < rows; row++)
@@ -12,6 +13,7 @@ void get_matrix_data(int **matrix, int rows, int collums)
     }
 }
 
+// Function to print matrix
 void print_matrix(int **matrix, int rows, int collums)
 {
     for(int row = 0 ; row < rows; row++)
@@ -24,11 +26,11 @@ void print_matrix(int **matrix, int rows, int collums)
     }
 }
 
+// Function to calculate the sum of two matrices
 int **sum_matrix(int **matrix_a, int matrix_a_row, int matrix_a_col, int **matrix_b, int matrix_b_row, int matrix_b_col)
 {
     if(matrix_a_row != matrix_b_row || matrix_a_col != matrix_b_col)
     {
-        printf("Matrix A, Matrix B can’t add together\n");
         return NULL;
     }
     
@@ -49,11 +51,11 @@ int **sum_matrix(int **matrix_a, int matrix_a_row, int matrix_a_col, int **matri
     return matrix_sum;
 }
 
+// Function to calculate the product of two matrices
 int **product_matrix(int **matrix_a, int matrix_a_row, int matrix_a_col, int **matrix_b, int matrix_b_row, int matrix_b_col)
 {
     if(matrix_a_col != matrix_b_row)
     {
-        printf("Matrix A, Matrix B can’t multi together\n");
         return NULL;
     }
     
@@ -121,6 +123,10 @@ int main()
         printf("Matrix A + Matrix B:\n");
         print_matrix(sum, matrix_a_row, matrix_a_col);
     }
+    else
+    {
+        printf("Matrix A, Matrix B cant add together\n");
+    }
 
     //Calculate and print matrix multification
     int **product = product_matrix(matrix_a, matrix_a_row, matrix_a_col, matrix_b, matrix_b_row, matrix_b_col);
@@ -128,6 +134,10 @@ int main()
     {
         printf("Matrix A * Matrix B:\n");
         print_matrix(product, matrix_a_row, matrix_b_col);
+    }
+    else
+    {
+        printf("Matrix A, Matrix B cant multi together\n");
     }
 
     //Free allocated memory
