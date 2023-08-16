@@ -1,10 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void get_matrix_data(int **matrix, int rows, int collums);
+typedef struct {
+    int m_row;
+    int m_column;
+	int **m_data;
+} matrix_t;
 
-void print_matrix(int **matrix, int rows, int collums);
+void get_matrix_data(matrix_t *matrix);
 
-int **sum_matrix(int **matrix_a, int matrix_a_row, int matrix_a_col, int **matrix_b, int matrix_b_row, int matrix_b_col);
+void print_matrix(matrix_t *matrix);
 
-int **product_matrix(int **matrix_a, int matrix_a_row, int matrix_a_col, int **matrix_b, int matrix_b_row, int matrix_b_col);
+matrix_t *sum_matrix(matrix_t *matrix_a, matrix_t *matrix_b);
+
+matrix_t *product_matrix(matrix_t *matrix_a, matrix_t *matrix_b);
+
+void free_matrix(matrix_t *matrix);
