@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Function to take input matrix from the keyboard
+// Function to take input matrix from the keyboar
 void get_matrix_data(int **matrix, int rows, int collums)
 {
     for(int row = 0 ; row < rows; row++)
