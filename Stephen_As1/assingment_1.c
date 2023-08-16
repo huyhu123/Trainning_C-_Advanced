@@ -4,9 +4,9 @@
 // Function to take input matrix from the keyboard test
 void get_matrix_data(int **matrix, int rows, int collums)
 {
-    for(int row = 0 ; row < rows; row++)
+    for(int row = 0; row < rows; row++)
     {
-        for(int collum = 0 ; collum < collums; collum++)
+        for(int collum = 0 ; collum < collums ; collum++)
         {
             scanf("%i", &matrix[row][collum]);
         }
@@ -16,9 +16,9 @@ void get_matrix_data(int **matrix, int rows, int collums)
 // Function to print matrix
 void print_matrix(int **matrix, int rows, int collums)
 {
-    for(int row = 0 ; row < rows; row++)
+    for(int row = 0 ; row < rows ; row++)
     {
-        for(int collum = 0 ; collum < collums; collum++)
+        for(int collum = 0; collum < collums; collum++)
         {
             printf("%i ", matrix[row][collum]);
         }
@@ -42,7 +42,7 @@ int **sum_matrix(int **matrix_a, int matrix_a_row, int matrix_a_col, int **matri
 
     for(int row = 0 ; row < matrix_a_row; row++)
     {
-        for(int collum = 0 ; collum < matrix_a_col; collum++)
+        for(int collum = 0; collum < matrix_a_col; collum++)
         {
             matrix_sum[row][collum] = matrix_a[row][collum] + matrix_b[row][collum];
         }
