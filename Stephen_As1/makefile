@@ -1,10 +1,8 @@
-assingment_1: assingment_1.c
-	gcc assingment_1.c -o assingment_1
+run: main.o matrix.o
+	gcc -o run -I./inc ./src/maxtrix.c main.c
 
-all: run clean
+main.o: main.c ./src/maxtrix.c
+	gcc -c main.c ./src/maxtrix.c
 
-run: assingment_1
-	./assingment_1
-
-clean:
-	rm -rf assingment_1
+maxtrix.o: ./src/maxtrix.c
+	gcc -c -I./inc ./src/maxtrix.c
