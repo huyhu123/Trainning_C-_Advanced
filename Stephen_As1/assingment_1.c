@@ -20,7 +20,7 @@ void print_matrix(int **matrix, int rows, int collums)
     {
         for(int collum = 0; collum < collums; collum++)
         {
-            printf("%i ", matrix[row][collum]);
+            printf("%10i", matrix[row][collum]);
         }
         printf("\n");
     }
@@ -116,7 +116,7 @@ int main()
     printf("Matrix B:\n");
     print_matrix(matrix_b, matrix_b_row, matrix_b_col);
 
-    //Calculate and print sum matrix
+    //Calculate and print sum of 2 matrix
     int **sum = sum_matrix(matrix_a, matrix_a_row, matrix_a_col, matrix_b, matrix_b_row, matrix_b_col);
     if(sum != NULL)
     {
@@ -128,7 +128,7 @@ int main()
         printf("Matrix A, Matrix B cant add together\n");
     }
 
-    //Calculate and print matrix multification
+    //Calculate and print product of 2 matrix
     int **product = product_matrix(matrix_a, matrix_a_row, matrix_a_col, matrix_b, matrix_b_row, matrix_b_col);
     if(product != NULL)
     {
