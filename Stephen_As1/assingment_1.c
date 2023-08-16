@@ -1,8 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
+// Function to take input matrix from the keyboard test
+void get_matrix_data(int **matrix, int rows, int collums)
+{
+    for(int row = 0 ; row < rows; row++)
+    {
+        for(int collum = 0 ; collum < collums; collum++)
+        {
+            scanf("%i", &matrix[row][collum]);
+        }
+    }
+}
 
 // Function to print matrix
 void print_matrix(int **matrix, int rows, int collums)
