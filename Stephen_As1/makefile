@@ -1,8 +1,14 @@
-run: main.o matrix.o
-	gcc -o run -I./inc ./src/maxtrix.c main.c
+CC = gcc
+INC = -I./inc
+SRC = ./src/*.c
 
-main.o: main.c ./src/maxtrix.c
-	gcc -c main.c ./src/maxtrix.c
+all: run clean
 
-maxtrix.o: ./src/maxtrix.c
-	gcc -c -I./inc ./src/maxtrix.c
+run: main
+	./main
+
+main: main.c $(SRC)
+	$(CC) $(INC) main.c $(SRC) -o main
+
+clean:
+	rm -rf main
