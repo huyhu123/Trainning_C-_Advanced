@@ -1,17 +1,17 @@
 #include "matrix.h"
 
-static bool check_matrix_can_add(matrix_t *p_matrix_a, matrix_t *p_matrix_b)
+static bool check_matrix_can_add(int matrix_a_row, int matrix_a_col, int matrix_b_row, int matrix_b_col)
 {
-    if(p_matrix_a->m_row != p_matrix_b->m_row || p_matrix_a->m_column != p_matrix_b->m_column)
+    if(matrix_a_row != matrix_b_row || matrix_a_col != matrix_b_col)
     {
         return false;
     }
     return true;
 }
 
-static bool check_matrix_can_multiply(matrix_t *p_matrix_a, matrix_t *p_matrix_b)
+static bool check_matrix_can_multiply(int matrix_a_col, int matrix_b_row)
 {
-    if(p_matrix_a->m_column != p_matrix_b->m_row)
+    if(matrix_a_col != matrix_b_row)
     {
         return false;
     }
@@ -37,7 +37,6 @@ static float get_input_float() {
 
     while (scanf("%f", &return_value) != 1)
     {
-        printf("Not int\n");
         while(getchar() != '\n');
     }
     
@@ -105,7 +104,7 @@ void print_matrix(matrix_t *p_matrix)
 ============================================================================================*/
 matrix_t *sum_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b)
 {
-    if(!check_matrix_can_add(p_matrix_a, p_matrix_b))
+    if(!check_matrix_can_add(p_matrix_a->m_row, p_matrix_a->m_column, p_matrix_b->m_row, p_matrix_b->m_column))
     {
         return NULL;
     }
@@ -136,7 +135,7 @@ matrix_t *sum_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b)
 ============================================================================================*/
 matrix_t *multiply_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b)
 {
-    if(!check_matrix_can_multiply(p_matrix_a, p_matrix_b))
+    if(!check_matrix_can_multiply(p_matrix_a->m_column, p_matrix_b->m_row))
     {
         return NULL;
     }
