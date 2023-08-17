@@ -1,6 +1,13 @@
 #include "matrix.h"
 
-#define MAX_STRING_INPUT 100
+static int Clean_stdin()
+{
+    while(getchar() != '\n')
+    {
+
+    }
+    return 1;
+}
 
 static bool check_matrix_can_add(int matrix_a_row, int matrix_a_col, int matrix_b_row, int matrix_b_col)
 {
@@ -22,15 +29,15 @@ static bool check_matrix_can_multiply(int matrix_a_col, int matrix_b_row)
 
 static int get_input_int() 
 {
-    int return_value = 0;
+    int input;
+    unsigned int i =0 ;
+    char c;
 
-    while (scanf("%i", &return_value) != 1 || return_value <= 0)
+    while ((scanf("%d", &input) != 1 || input < 1) && Clean_stdin())
     {
-        printf("Please enter a positive number: ");
-        while(getchar() != '\n');
+        printf("\n*Warning:Failed! The amount of the row and column must be a positive integer.\nEnter again:  ");
     }
-    
-    return return_value;
+    return input;
 }
 
 static float get_input_float() 
