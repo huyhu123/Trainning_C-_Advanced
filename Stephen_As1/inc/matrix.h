@@ -15,7 +15,7 @@ typedef struct {
 *
 *return *matrix_t <pointer point to struct matrix_t of the matrix>
 */
-matrix_t *initialize_matrix();
+matrix_t *initialize_matrix(int row, int collum);
 
 /*!
 * @brief <Take input matrix from the keyboard>
@@ -67,3 +67,14 @@ matrix_t *multiply_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b);
 *return None
 */
 void free_matrix(int count, ...);
+
+/*!
+* @brief <Get matrix size of the user>
+*
+* @param *row [In/Out] <pointer point to the row of matrix>
+*
+* @param *collum [In/Out] <pointer point to the collum of matrix>
+*
+*return None
+*/
+void get_matrix_size(int *row, int *collum);

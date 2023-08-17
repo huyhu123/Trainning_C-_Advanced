@@ -25,6 +25,7 @@ static int get_input_int() {
     {
         while (scanf("%i", &return_value) != 1)
         {
+            printf("Please enter a positive integer: ");
             while(getchar() != '\n');
         }
     }
@@ -37,6 +38,7 @@ static float get_input_float() {
 
     while (scanf("%f", &return_value) != 1)
     {
+        printf("Please enter a real number: ");
         while(getchar() != '\n');
     }
     
@@ -47,9 +49,13 @@ static float get_input_float() {
 *   Function Name : initialize_matrix
 *   Description   : Allocate memory for matrix 
 ============================================================================================*/
-matrix_t *initialize_matrix()
+matrix_t *initialize_matrix(int row, int collum)
 {
-   return malloc(sizeof(matrix_t));
+    matrix_t *return_matrix = malloc(sizeof(matrix_t));
+    return_matrix->m_row = row;
+    return_matrix->m_column = collum;
+
+    return return_matrix;
 }
 
 /*FUNCTION===================================================================================
@@ -58,11 +64,6 @@ matrix_t *initialize_matrix()
 ============================================================================================*/
 void get_matrix_data(matrix_t *p_matrix)
 {
-    //Get matrix a size
-    printf("Matrix Row: ");
-    p_matrix->m_row = get_input_int();
-    printf("Matrix Col: ");
-    p_matrix->m_column = get_input_int();
 
     //Allocate memory for matrix 
     p_matrix->m_data = (float **)malloc(p_matrix->m_row * sizeof(float *));
@@ -72,11 +73,11 @@ void get_matrix_data(matrix_t *p_matrix)
     }
 
     //Take input matrix from the keyboard
-    printf("Input matrix:\n");
     for(int row = 0; row < p_matrix->m_row; row++)
     {
         for(int collum = 0 ; collum < p_matrix->m_column ; collum++)
         {
+            printf("Enter elememt %i %i of matrix: ", row, collum);
             p_matrix->m_data[row][collum] = get_input_float();
         }
     }
@@ -190,3 +191,14 @@ void free_matrix(int count, ...)
     }
 }
 
+/*FUNCTION===================================================================================
+*   Function Name : get_matrix_size
+*   Description   : Get matrix size of the user
+============================================================================================*/
+void get_matrix_size(int *row, int *collum)
+{
+    printf("Matrix Row: ");
+    *row = get_input_int();
+    printf("Matrix Col: ");
+    *collum = get_input_int();
+}

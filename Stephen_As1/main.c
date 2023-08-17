@@ -2,9 +2,22 @@
 
 int main()
 {
-    matrix_t *p_matrix_a, *p_matrix_b;
-    p_matrix_a = initialize_matrix();
-    p_matrix_b = initialize_matrix();
+    matrix_t *p_matrix_a = NULL;
+    matrix_t *p_matrix_b = NULL;
+    int matrix_a_row = 0;
+    int matrix_a_col = 0;
+    int matrix_b_row = 0;
+    int matrix_b_col = 0;
+
+    //Get matrix size
+    printf("Input matrix A size\n");
+    get_matrix_size(&matrix_a_row, &matrix_a_col);
+    printf("Input matrix B size\n");
+    get_matrix_size(&matrix_b_row, &matrix_b_col);
+
+    //Initialize_matrix
+    p_matrix_a = initialize_matrix(matrix_a_row, matrix_a_col);
+    p_matrix_b = initialize_matrix(matrix_b_row, matrix_b_col);
 
     //Get matrix data
     printf("Input matrix A\n");
