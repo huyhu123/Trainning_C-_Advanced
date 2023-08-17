@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <stdbool.h>
+#include <ctype.h> 
 
 typedef struct {
     int m_row;
     int m_column;
-	int **m_data;
+	float **m_data;
 } matrix_t;
 
 /*!
