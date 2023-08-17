@@ -1,6 +1,15 @@
 #include "matrix.h"
 
 /*FUNCTION===================================================================================
+*   Function Name : initialize_matrix
+*   Description   : Allocate memory for matrix 
+============================================================================================*/
+matrix_t *initialize_matrix()
+{
+   return malloc(sizeof(matrix_t));
+}
+
+/*FUNCTION===================================================================================
 *   Function Name : get_matrix_data
 *   Description   : Take input matrix from the keyboard
 ============================================================================================*/
@@ -60,7 +69,6 @@ matrix_t *sum_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b)
     matrix_t *p_matrix_sum = malloc(sizeof(matrix_t)); 
     p_matrix_sum->m_row = p_matrix_a->m_row;
     p_matrix_sum->m_column = p_matrix_a->m_column;
-
     p_matrix_sum->m_data = (int **)malloc(p_matrix_sum->m_row * sizeof(int *));
     for (int i = 0; i < p_matrix_sum->m_row; i++) 
     {
@@ -79,10 +87,10 @@ matrix_t *sum_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b)
 }
 
 /*FUNCTION===================================================================================
-*   Function Name : product_matrix
+*   Function Name : multiply_matrix
 *   Description   : Calculate the product of two matrices
 ============================================================================================*/
-matrix_t *product_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b)
+matrix_t *multiply_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b)
 {
     if(p_matrix_a->m_column != p_matrix_b->m_row)
     {
@@ -114,12 +122,27 @@ matrix_t *product_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b)
 *   Function Name : free_matrix
 *   Description   : Free matrix allocated memory
 ============================================================================================*/
-void free_matrix(matrix_t *p_matrix)
+void free_matrix(int count, ...)
 {
-    for (int i = 0; i < p_matrix->m_row; i++) 
+    va_list list;
+    va_start(list, count); 
+
+    //Loop through list of matrix
+    for(int i = 0; i < count; i++)
     {
-        free(p_matrix->m_data[i]);
+        matrix_t *p_matrix = va_arg(list, matrix_t *);
+        if(p_matrix == NULL)
+        {
+            return;
+        }
+
+        for (int j = 0; j < p_matrix->m_row; j++) 
+        {
+            free(p_matrix->m_data[j]);
+        }
+        free(p_matrix->m_data);
+        free(p_matrix);
+
+        p_matrix = NULL;
     }
-    free(p_matrix->m_data);
-    free(p_matrix);
 }

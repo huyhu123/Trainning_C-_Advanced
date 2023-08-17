@@ -1,11 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 typedef struct {
     int m_row;
     int m_column;
 	int **m_data;
 } matrix_t;
+
+/*!
+* @brief <Allocate memory for matrix>
+*
+*return *matrix_t <pointer point to struct matrix_t of the matrix>
+*/
+matrix_t *initialize_matrix();
 
 /*!
 * @brief <Take input matrix from the keyboard>
@@ -45,13 +53,15 @@ matrix_t *sum_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b);
 *
 *return *product_matrix <pointer point to struct matrix_t of the product of 2 matrix>
 */
-matrix_t *product_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b);
+matrix_t *multiply_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b);
 
 /*!
 * @brief <Free matrix allocated memory>
 *
-* @param *p_matrix [In] <pointer point to struct matrix_t of the matrix>
+* @param count [In] <numbers of matrix to free>
+*
+* @param matrix_t *, ... [In] <matrix to free>
 *
 *return None
 */
-void free_matrix(matrix_t *p_matrix);
+void free_matrix(int count, ...);
