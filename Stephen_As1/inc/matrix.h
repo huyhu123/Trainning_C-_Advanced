@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <stdbool.h>
 #include <ctype.h> 
+#include <string.h>
 
 typedef struct {
     int m_row;

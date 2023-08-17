@@ -1,5 +1,7 @@
 #include "matrix.h"
 
+#define MAX_STRING_INPUT 100
+
 static bool check_matrix_can_add(int matrix_a_row, int matrix_a_col, int matrix_b_row, int matrix_b_col)
 {
     if(matrix_a_row != matrix_b_row || matrix_a_col != matrix_b_col)
@@ -18,22 +20,48 @@ static bool check_matrix_can_multiply(int matrix_a_col, int matrix_b_row)
     return true;
 }
 
-static int get_input_int() {
-    int return_value = 0;
+static int get_input_int() 
+{
+    char input_str[MAX_STRING_INPUT];
+    double input = -1;
+    while (1) {
+        fflush(stdout);
+        scanf("%s", input_str);
 
-    while(return_value <= 0)
-    {
-        while (scanf("%i", &return_value) != 1)
+        bool check = true;
+
+        for (int i = 0; i < strlen(input_str); i++) 
         {
-            printf("Please enter a positive integer: ");
-            while(getchar() != '\n');
+            if (isdigit(input_str[i])) 
+            {
+                check = true;
+            } 
+            else if (input_str[i] == '.' || input_str[i] == ',') 
+            {
+                check = false;
+                break;
+            } 
+            else 
+            {
+                check = false;
+                break;
+            }
         }
+        char *endptr;
+        if (check) {
+            input = strtod(input_str, &endptr);
+            if (*endptr == '\0') 
+            {
+                break;
+            }
+        }
+        printf("Please enter a positive integer: ");
     }
-    
-    return return_value;
+    return input;
 }
 
-static float get_input_float() {
+static float get_input_float() 
+{
     float return_value = 0;
 
     while (scanf("%f", &return_value) != 1)
