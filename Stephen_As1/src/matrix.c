@@ -22,42 +22,15 @@ static bool check_matrix_can_multiply(int matrix_a_col, int matrix_b_row)
 
 static int get_input_int() 
 {
-    char input_str[MAX_STRING_INPUT];
-    double input = -1;
-    while (1) {
-        fflush(stdout);
-        scanf("%s", input_str);
+    int return_value = 0;
 
-        bool check = true;
-
-        for (int i = 0; i < strlen(input_str); i++) 
-        {
-            if (isdigit(input_str[i])) 
-            {
-                check = true;
-            } 
-            else if (input_str[i] == '.' || input_str[i] == ',') 
-            {
-                check = false;
-                break;
-            } 
-            else 
-            {
-                check = false;
-                break;
-            }
-        }
-        char *endptr;
-        if (check) {
-            input = strtod(input_str, &endptr);
-            if (*endptr == '\0') 
-            {
-                break;
-            }
-        }
-        printf("Please enter a positive integer: ");
+    while (scanf("%i", &return_value) != 1 || return_value <= 0)
+    {
+        printf("Please enter a positive number: ");
+        while(getchar() != '\n');
     }
-    return input;
+    
+    return return_value;
 }
 
 static float get_input_float() 

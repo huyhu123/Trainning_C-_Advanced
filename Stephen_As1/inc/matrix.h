@@ -14,7 +14,7 @@ typedef struct {
 /*!
 * @brief <Allocate memory for matrix>
 *
-*return *matrix_t <pointer point to struct matrix_t of the matrix>
+* @return *matrix_t <pointer point to struct matrix_t of the matrix>
 */
 matrix_t *initialize_matrix(int row, int collum);
 
@@ -23,7 +23,7 @@ matrix_t *initialize_matrix(int row, int collum);
 *
 * @param *p_matrix [In/Out] <pointer point to struct matrix_t of the matrix>
 *
-*return None
+* @return None
 */
 void get_matrix_data(matrix_t *p_matrix);
 
@@ -32,7 +32,7 @@ void get_matrix_data(matrix_t *p_matrix);
 *
 * @param *p_matrix [In] <pointer point to struct matrix_t of the matrix>
 *
-*return None
+* @return None
 */
 void print_matrix(matrix_t *p_matrix);
 
@@ -43,7 +43,7 @@ void print_matrix(matrix_t *p_matrix);
 *
 * @param *p_matrix_b [In] <pointer point to struct matrix_t of the seccond matrix>
 *
-*return *sum_matrix <pointer point to struct matrix_t of the sum of 2 matrix>
+* @return *sum_matrix <pointer point to struct matrix_t of the sum of 2 matrix>
 */
 matrix_t *sum_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b);
 
@@ -54,7 +54,7 @@ matrix_t *sum_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b);
 *
 * @param *p_matrix_b [In] <pointer point to struct matrix_t of the seccond matrix>
 *
-*return *product_matrix <pointer point to struct matrix_t of the product of 2 matrix>
+* @return *product_matrix <pointer point to struct matrix_t of the product of 2 matrix>
 */
 matrix_t *multiply_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b);
 
@@ -65,7 +65,7 @@ matrix_t *multiply_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b);
 *
 * @param matrix_t *, ... [In] <matrix to free>
 *
-*return None
+* @return None
 */
 void free_matrix(int count, ...);
 
@@ -76,6 +76,6 @@ void free_matrix(int count, ...);
 *
 * @param *collum [In/Out] <pointer point to the collum of matrix>
 *
-*return None
+* @return None
 */
 void get_matrix_size(int *row, int *collum);
