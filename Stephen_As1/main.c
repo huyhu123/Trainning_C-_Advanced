@@ -2,27 +2,27 @@
 
 int main()
 {
-    matrix_t *matrix_a = malloc(sizeof(size_t));
-    matrix_t *matrix_b = malloc(sizeof(size_t));
+    matrix_t *p_matrix_a = malloc(sizeof(size_t));
+    matrix_t *p_matrix_b = malloc(sizeof(size_t));
 
     //Get matrix data
     printf("Input matrix A\n");
-    get_matrix_data(matrix_a);
+    get_matrix_data(p_matrix_a);
     printf("Input matrix B\n");
-    get_matrix_data(matrix_b);
+    get_matrix_data(p_matrix_b);
 
     //Print matrix
     printf("Matrix A:\n");
-    print_matrix(matrix_a);
+    print_matrix(p_matrix_a);
     printf("Matrix B:\n");
-    print_matrix(matrix_b);
+    print_matrix(p_matrix_b);
 
     //Calculate and print sum of 2 matrix
-    matrix_t *sum = sum_matrix(matrix_a, matrix_b);
-    if(sum != NULL)
+    matrix_t *p_matrix_sum = sum_matrix(p_matrix_a, p_matrix_b);
+    if(p_matrix_sum != NULL)
     {
         printf("Matrix A + Matrix B:\n");
-        print_matrix(sum);
+        print_matrix(p_matrix_sum);
     }
     else
     {
@@ -30,11 +30,11 @@ int main()
     }
 
     //Calculate and print product of 2 matrix
-    matrix_t *product = product_matrix(matrix_a, matrix_b);
-    if(product != NULL)
+    matrix_t *p_matrix_product = product_matrix(p_matrix_a, p_matrix_b);
+    if(p_matrix_product != NULL)
     {
         printf("Matrix A * Matrix B:\n");
-        print_matrix(product);
+        print_matrix(p_matrix_product);
     }
     else
     {
@@ -42,15 +42,15 @@ int main()
     }
 
     //Free allocated memory
-    free_matrix(matrix_a);
-    free_matrix(matrix_b);
-    if(sum != NULL)
+    free_matrix(p_matrix_a);
+    free_matrix(p_matrix_b);
+    if(p_matrix_sum != NULL)
     {
-        free_matrix(sum);
+        free_matrix(p_matrix_sum);
     }
-    if(product != NULL)
+    if(p_matrix_product != NULL)
     {
-        free_matrix(product);
+        free_matrix(p_matrix_product);
     }
     
     return 0;
