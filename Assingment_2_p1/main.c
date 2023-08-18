@@ -23,7 +23,7 @@ int main()
     float average = calculate_average_value(array, size);
     int num_less = count_elements_less_than_average(array, size, average);
     int num_more = count_elements_less_than_average(array, size, average);
-    printf("Average value of the elements of the array: %f\nNumber of elements less than average value: %i\nNumber of elements more than average value: %i\n", average, num_less, num_more);
+    printf("Average value of the elements of the array: %.2f\nNumber of elements less than average value: %i\nNumber of elements more than average value: %i\n", average, num_less, num_more);
 
     //Moves even values to the right and odd values to the left of the array
     printf("Array before moves even values to the right and odd values to the left: ");

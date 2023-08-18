@@ -13,7 +13,7 @@ static int Clean_stdin()
     return 1;
 }
 
-static int get_input_size() 
+static int Get_input_size() 
 {
     int input;
     unsigned int i =0 ;
@@ -26,7 +26,7 @@ static int get_input_size()
     return input;
 }
 
-static int get_input_int() 
+static int Get_input_int() 
 {
     int input;
     unsigned int i =0 ;
@@ -41,7 +41,7 @@ static int get_input_int()
 
 void get_array_size(int *size)
 {
-    *size = get_input_size();
+    *size = Get_input_size();
 }
 
 int *initialize_array(int size)
@@ -63,7 +63,7 @@ void get_array_data(int *array, int size)
     for(int i = 0; i < size; i++)
     {
         printf("Enter element %d of the array: ", i);
-        array[i] = get_input_int();
+        array[i] = Get_input_int();
     }
     printf("\n");
 }
