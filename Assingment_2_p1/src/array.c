@@ -1,5 +1,7 @@
 #include "array.h"
 
+#define SWAP(a, b) int temp = a; a = b; b = temp  
+
 #define ARRAY_MAX 50
 
 static int Clean_stdin()
@@ -40,6 +42,7 @@ void print_array(int *array, int size)
     {
         printf("%i ", array[i]);
     }
+    printf("\n");
 }
 
 void get_array_data(int *array, int size)
@@ -56,10 +59,54 @@ float calculate_average_value(int *array, int size)
 {
     float average = 0;
 
-    for(int i=0; i < size; i++)
+    for(int i = 0; i < size; i++)
     {
         average += array[i];
     }
 
     return average/size;
+}
+
+int count_elements_less_than_average(int *array, int size, float average)
+{
+    int count = 0;
+
+    for(int i = 0; i < size; i++)
+    {
+        if(array[i] < average)
+        {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+int count_elements_more_than_average(int *array, int size, float average)
+{
+    int count = 0;
+
+    for(int i = 0; i < size; i++)
+    {
+        if(array[i] > average)
+        {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+void reorder_array(int *array, int size)
+{
+    int index = 0;
+
+    for(int i = 0; i < size; i++)
+    {
+        if(array[i] % 2 == 1)
+        {
+            SWAP(array[i], array[index]);
+            index++;
+        }
+    }
 }
