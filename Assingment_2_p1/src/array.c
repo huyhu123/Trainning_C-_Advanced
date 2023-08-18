@@ -19,9 +19,9 @@ static int get_input_int()
     unsigned int i =0 ;
     char c;
 
-    while ((scanf("%d", &input) != 1 || input < 1) && Clean_stdin())
+    while ((scanf("%d", &input) != 1 || input < 1 || input >50) && Clean_stdin())
     {
-        printf("\n*Warning:Failed! The amount of the row and column must be a positive integer.\nEnter again:  ");
+        printf("\n*Warning:Failed! Please enter an interger between 0 and 50.\nEnter again:  ");
     }
     return input;
 }
