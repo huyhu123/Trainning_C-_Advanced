@@ -11,26 +11,18 @@ static int Clean_stdin()
 
 static bool check_matrix_can_add(int matrix_a_row, int matrix_a_col, int matrix_b_row, int matrix_b_col)
 {
-    if(matrix_a_row != matrix_b_row || matrix_a_col != matrix_b_col)
-    {
-        return false;
-    }
-    return true;
+    return (matrix_a_row == matrix_b_row && matrix_a_col == matrix_b_col);
 }
 
 static bool check_matrix_can_multiply(int matrix_a_col, int matrix_b_row)
 {
-    if(matrix_a_col != matrix_b_row)
-    {
-        return false;
-    }
-    return true;
+    return (matrix_a_col == matrix_b_row);
 }
 
 static int get_input_int() 
 {
     int input;
-    unsigned int i =0 ;
+    unsigned int i =0;
     char c;
 
     while ((scanf("%d", &input) != 1 || input < 1) && Clean_stdin())
@@ -63,6 +55,12 @@ matrix_t *initialize_matrix(int row, int collum)
     return_matrix->m_row = row;
     return_matrix->m_column = collum;
 
+    return_matrix->m_data = (float **)malloc(row * sizeof(float *));
+    for (int i = 0; i < row; i++)
+    {
+        return_matrix->m_data[i] = (float *)malloc(collum * sizeof(float));
+    }
+
     return return_matrix;
 }
 
@@ -72,14 +70,6 @@ matrix_t *initialize_matrix(int row, int collum)
 ============================================================================================*/
 void get_matrix_data(matrix_t *p_matrix)
 {
-
-    //Allocate memory for matrix 
-    p_matrix->m_data = (float **)malloc(p_matrix->m_row * sizeof(float *));
-    for (int i = 0; i < p_matrix->m_row; i++) 
-    {
-        p_matrix->m_data[i] = (float *)malloc(p_matrix->m_column * sizeof(float));
-    }
-
     //Take input matrix from the keyboard
     for(int row = 0; row < p_matrix->m_row; row++)
     {
@@ -118,10 +108,7 @@ matrix_t *sum_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b)
         return NULL;
     }
     
-    matrix_t *p_matrix_sum = malloc(sizeof(matrix_t)); 
-    p_matrix_sum->m_row = p_matrix_a->m_row;
-    p_matrix_sum->m_column = p_matrix_a->m_column;
-    p_matrix_sum->m_data = (float **)malloc(p_matrix_sum->m_row * sizeof(float *));
+    matrix_t *p_matrix_sum = initialize_matrix(p_matrix_a->m_row, p_matrix_a->m_column);
     for (int i = 0; i < p_matrix_sum->m_row; i++) 
     {
         p_matrix_sum->m_data[i] = (float *)malloc(p_matrix_sum->m_column * sizeof(float));
@@ -149,15 +136,8 @@ matrix_t *multiply_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b)
         return NULL;
     }
     
-    matrix_t *p_matrix_product = malloc(sizeof(matrix_t)); 
-    p_matrix_product->m_row = p_matrix_a->m_row;
-    p_matrix_product->m_column = p_matrix_b->m_column;
+    matrix_t *p_matrix_product = initialize_matrix(p_matrix_a->m_row, p_matrix_a->m_column);
 
-    p_matrix_product->m_data = (float **)malloc(p_matrix_a->m_row * sizeof(float *));
-    for (int i = 0; i < p_matrix_a->m_row; i++) {
-        p_matrix_product->m_data[i] = (float *)malloc(p_matrix_b->m_column * sizeof(float));
-    }
-    
     for (int i = 0; i < p_matrix_a->m_row; i++) {
         for (int j = 0; j < p_matrix_b->m_column; j++) {
             p_matrix_product->m_data[i][j] = 0;

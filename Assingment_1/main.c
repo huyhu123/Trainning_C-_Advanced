@@ -43,6 +43,7 @@ int main()
         printf("Matrix A, Matrix B cant add together\n");
     }
 
+    
     //Calculate and print product of 2 matrix
     matrix_t *p_matrix_product = multiply_matrix(p_matrix_a, p_matrix_b);
     if(p_matrix_product != NULL)
