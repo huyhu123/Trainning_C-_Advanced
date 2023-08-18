@@ -109,10 +109,6 @@ matrix_t *sum_matrix(matrix_t *p_matrix_a, matrix_t *p_matrix_b)
     }
     
     matrix_t *p_matrix_sum = initialize_matrix(p_matrix_a->m_row, p_matrix_a->m_column);
-    for (int i = 0; i < p_matrix_sum->m_row; i++) 
-    {
-        p_matrix_sum->m_data[i] = (float *)malloc(p_matrix_sum->m_column * sizeof(float));
-    }
 
     for(int row = 0 ; row < p_matrix_sum->m_row; row++)
     {
