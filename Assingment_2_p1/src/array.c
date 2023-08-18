@@ -13,7 +13,7 @@ static int Clean_stdin()
     return 1;
 }
 
-static int get_input_int() 
+static int get_input_size() 
 {
     int input;
     unsigned int i =0 ;
@@ -26,9 +26,22 @@ static int get_input_int()
     return input;
 }
 
+static int get_input_int() 
+{
+    int input;
+    unsigned int i =0 ;
+    char c;
+
+    while ((scanf("%d", &input) != 1) && Clean_stdin())
+    {
+        printf("\n*Warning:Failed! Please enter an interger.\nEnter again:  ");
+    }
+    return input;
+}
+
 void get_array_size(int *size)
 {
-    *size = get_input_int();
+    *size = get_input_size();
 }
 
 int *initialize_array(int size)
@@ -103,7 +116,7 @@ void reorder_array(int *array, int size)
 
     for(int i = 0; i < size; i++)
     {
-        if(array[i] % 2 == 1)
+        if(abs(array[i]) % 2 == 1)
         {
             SWAP(array[i], array[index]);
             index++;
