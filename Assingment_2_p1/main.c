@@ -28,7 +28,7 @@ int main()
     //Moves even values to the right and odd values to the left of the array
     printf("Array before moves even values to the right and odd values to the left: ");
     print_array(array, size);
-    reorder_array(array, size);
+    move_elements_array(array, size);
     printf("Array after moves even values to the right and odd values to the left: ");
     print_array(array, size);
 

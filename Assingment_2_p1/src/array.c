@@ -110,16 +110,25 @@ int count_elements_more_than_average(int *array, int size, float average)
     return count;
 }
 
-void reorder_array(int *array, int size)
+void move_elements_array(int *array, int size)
 {
-    int index = 0;
+    int left_index = 0;
+    int right_index = size - 1;
 
-    for(int i = 0; i < size; i++)
+    while(left_index < right_index)
     {
-        if(abs(array[i]) % 2 == 1)
+        while(abs(array[left_index]) % 2 == 1 && left_index < right_index)
         {
-            SWAP(array[i], array[index]);
-            index++;
+            left_index++;            
         }
+        while(abs(array[right_index]) % 2 == 0 && left_index < right_index)
+        {
+            right_index--;
+        }
+
+        if(left_index < right_index)
+        {
+            SWAP(array[left_index], array[right_index]);
+        } 
     }
 }
