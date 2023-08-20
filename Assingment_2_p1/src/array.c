@@ -6,10 +6,7 @@
 
 static int Clean_stdin()
 {
-    while(getchar() != '\n')
-    {
-
-    }
+    while(getchar() != '\n');
     return 1;
 }
 
