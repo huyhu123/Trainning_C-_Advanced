@@ -121,10 +121,10 @@ void move_elements_array(int *array, int size)
     int right_index = size - 1;
 
     while (left_index < right_index) {
-        while (abs(array[left_index]) % 2 == 1 && left_index < right_index) {
+        while (array[left_index] % 2 != 0 && left_index < right_index) {
             left_index++;            
         }
-        while (abs(array[right_index]) % 2 == 0 && left_index < right_index) {
+        while (array[right_index] % 2 == 0 && left_index < right_index) {
             right_index--;
         }
 
