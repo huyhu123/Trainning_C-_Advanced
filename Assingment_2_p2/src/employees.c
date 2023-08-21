@@ -221,6 +221,27 @@ int find_linked_list_size(node_t *head)
     return count;
 }
 
+bool compare_name(char *name_1, char *name_2)
+{
+    int name_1_size = strlen(name_1);
+    int name_2_size = strlen(name_2);
+    int index = 0;
+
+    for (index; index < name_1_size; index++) {
+        if (index > name_2_size) {
+            return false;
+        }
+        if (tolower(name_1[index]) > tolower(name_2[index])) {
+            return true;
+        }
+        if (tolower(name_1[index]) < tolower(name_2[index])) {
+            return false;
+        }
+    }
+    
+    return false;
+}
+
 void sort_linked_list(node_t *head, int order)
 {
     int index_1 = 0;
@@ -234,7 +255,7 @@ void sort_linked_list(node_t *head, int order)
             switch (order)
             {
             case 0:
-                if (tolower(temp->employee_data->full_name[0]) > tolower(temp->next->employee_data->full_name[0])) {
+                if (compare_name(temp->employee_data->full_name, temp->next->employee_data->full_name)) {
                     swap_element_linked_list(temp, temp->next);
                 }
                 break;
@@ -268,7 +289,3 @@ int get_input_sort_order()
     return (int)input;
 }
 
-void compare_name(char *name_1, char *name_2)
-{
-    //Todo
-}
