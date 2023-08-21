@@ -32,5 +32,8 @@ int main()
     printf("Array after moves even values to the right and odd values to the left: ");
     print_array(array, size);
 
+    //Free allocated memory
+    free(array);
+
     return 0;
 }

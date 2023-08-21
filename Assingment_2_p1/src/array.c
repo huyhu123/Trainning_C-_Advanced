@@ -19,7 +19,7 @@ static int Get_input_size()
 {
     int input;
 
-    while ((scanf("%d", &input) != 1 || input < 1 || input >50) && Clean_stdin()) {
+    while ((scanf("%d", &input) != 1 || input < 0 || input >50) && Clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an interger between 0 and 50.\nEnter again:  ");
     }
 
@@ -80,6 +80,10 @@ float calculate_average_value(int *array, int size)
         average += array[array_index];
     }
 
+    if (average == 0)
+    {
+        return 0;
+    }
     return average/size;
 }
 

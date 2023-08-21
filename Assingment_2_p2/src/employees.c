@@ -90,7 +90,9 @@ void print_linked_list(node_t *head)
     while (temp != NULL) {
         printf("%i", temp->employee_data->id);
         printf(" - %s\n", temp->employee_data->full_name);
-        printf(" - %s\n", temp->employee_data->department);
+        printf("    Department: %s\n", temp->employee_data->department);
+        printf("    Salary: %f\n", temp->employee_data->salary);
+        printf("    Start date: %s\n", temp->employee_data->department);
         temp = temp->next;
     }
 }
