@@ -3,9 +3,9 @@
 int main() {
     int employee_num = 0;
 
+    //Get number of employee
     printf("Enter number of employee: ");
     get_employee_num(&employee_num);
 
-    employee_t *employee_1 = malloc(sizeof(employee_t));
-    get_employee_data(employee_1);
+    node_t *head = init_employees(employee_num);
 }
