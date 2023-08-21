@@ -29,9 +29,9 @@ static int Get_input_size()
 
 static int Get_input_int() 
 {
-    int input;
+    float input;
 
-    while ((scanf("%d", &input) != 1 || input - (int)input != 0) && Clean_stdin()) {
+    while ((scanf("%f", &input) != 1 || input - (int)input != 0) && Clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an interger.\nEnter again:  ");
     }
 
