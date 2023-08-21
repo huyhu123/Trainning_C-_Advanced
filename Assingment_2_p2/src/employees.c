@@ -109,6 +109,7 @@ void print_linked_list(node_t *head)
         printf("\n");
         temp = temp->next;
     }
+    printf("\n");
 }
 
 void get_employee_num(int *size)
@@ -265,4 +266,9 @@ int get_input_sort_order()
     clean_stdin();
 
     return (int)input;
+}
+
+void compare_name(char *name_1, char *name_2)
+{
+    //Todo
 }
