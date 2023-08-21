@@ -24,7 +24,7 @@ static int Get_input_size()
         printf("\n*Warning:Failed! Please enter an interger between 0 and 50.\nEnter again:  ");
     }
 
-    return input;
+    return (int)input;
 }
 
 static int Get_input_int() 
@@ -35,7 +35,7 @@ static int Get_input_int()
         printf("\n*Warning:Failed! Please enter an interger.\nEnter again:  ");
     }
 
-    return input;
+    return (int)input;
 }
 
 void get_array_size(int *size)
