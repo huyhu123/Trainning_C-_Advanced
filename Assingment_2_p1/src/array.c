@@ -31,7 +31,7 @@ static int Get_input_int()
 {
     int input;
 
-    while ((scanf("%d", &input) != 1) && Clean_stdin()) {
+    while ((scanf("%d", &input) != 1 || input - (int)input != 0) && Clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an interger.\nEnter again:  ");
     }
 
