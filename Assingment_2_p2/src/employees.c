@@ -2,9 +2,20 @@
 
 static int clean_stdin()
 {
-    while (getchar() != '\n');
+    int c;
+    while (c = getchar() != '\n' && c != EOF);
     return 1;
 }
+
+static bool check_input_buffer(char *input)
+{
+    if (strcspn(input, "\n") == MAX_STRING-1) {
+        clean_stdin();
+        return true;
+    }
+    return false;
+}
+
 
 static int get_input_size() 
 {
@@ -18,12 +29,12 @@ static int get_input_size()
     return (int)input;
 }
 
-static float Get_input_float()
+static float get_input_float()
 {
     float input;
 
     while ((scanf("%f", &input) != 1 || input < 0) && clean_stdin()) {
-        printf("\n*Warning:Failed! Please enter an positive real number.\nEnter again:  ");
+        printf("\n    *Warning:Failed! Please enter an positive real number.\nEnter again:  ");
     }
     clean_stdin();
 
@@ -35,24 +46,28 @@ static int get_input_int()
     float input;
 
     while ((scanf("%f", &input) != 1 || input < 0 || input - (int)input != 0) && clean_stdin()) {
-        printf("\n*Warning:Failed! Please enter an positive interger.\nEnter again:  ");
+        printf("\n    *Warning:Failed! Please enter an positive interger.\nEnter again:  ");
     }
     clean_stdin();
 
     return (int)input;
 }
 
-static char *Get_input_char() 
+static char *get_input_char() 
 {
     char *input = malloc(MAX_STRING);
 
     fgets(input, MAX_STRING, stdin);
+    while (check_input_buffer(input) == 1) {
+        printf("        Input too long, enter again: ");
+        fgets(input, MAX_STRING, stdin);
+    }
     input[strcspn(input, "\n")] = 0;
 
     return input;
 }
 
-static bool Check_day(int day, int month) 
+static bool check_day(int day, int month) 
 {
     if (month % 2 == 1 && day > 31) {
         return false;
@@ -86,11 +101,12 @@ void print_linked_list(node_t *head)
 
     node_t *temp = head;
     while (temp != NULL) {
-        printf("%i", temp->employee_data->id);
-        printf(" - %s\n", temp->employee_data->full_name);
-        printf("    Department: %s\n", temp->employee_data->department);
-        printf("    Salary: %f\n", temp->employee_data->salary);
-        printf("    Start date: %i/%i/%i\n", temp->employee_data->start_date->day, temp->employee_data->start_date->month, temp->employee_data->start_date->year);
+        printf("ID: %i\n", temp->employee_data->id);
+        printf("Full name: %s\n", temp->employee_data->full_name);
+        printf("Department: %s\n", temp->employee_data->department);
+        printf("Salary: %f\n", temp->employee_data->salary);
+        printf("Start date: %i/%i/%i\n", temp->employee_data->start_date->day, temp->employee_data->start_date->month, temp->employee_data->start_date->year);
+        printf("\n");
         temp = temp->next;
     }
 }
@@ -104,20 +120,26 @@ date_t *get_date()
 {
     date_t *date = malloc(sizeof(date_t));
 
-    do {
-        printf("        Enter a valid year: ");
+    printf("        Enter start year: ");  
+    date->year = get_input_int();
+    while (date->year < 2000 || date->year > 2023) {
+        printf("            Not a valid year, enter again: ");
         date->year = get_input_int();
-    } while (date->year < 2000 || date->year > 2023);
+    }
 
-    do {
-        printf("        Enter a valid month: ");
+    printf("        Enter start month: ");
+    date->month = get_input_int();
+    while (date->month > 12) {
+        printf("            Not a valid month, enter again: ");
         date->month = get_input_int();
-    } while (date->month > 12);
-    
-    do {
-        printf("        Enter a valid day: ");
+    }
+
+    printf("        Enter start day: ");
+    date->day = get_input_int();
+    while (!check_day(date->day, date->month)) {
+        printf("            Not a valid day, enter again: ");
         date->day = get_input_int();
-    } while (!Check_day(date->day, date->month));
+    }
 
     return date;
 }
@@ -128,13 +150,13 @@ void get_employee_data(employee_t *employee)
     employee->id = get_input_int();
 
     printf("    Enter employee full name: ");
-    employee->full_name = Get_input_char();
+    employee->full_name = get_input_char();
 
     printf("    Enter employee department: ");
-    employee->department = Get_input_char();
+    employee->department = get_input_char();
 
     printf("    Enter employee salary: ");
-    employee->salary = Get_input_float();
+    employee->salary = get_input_float();
 
     printf("    Enter employee start date\n");
     employee->start_date = get_date();
@@ -151,32 +173,96 @@ node_t *init_employees(int size)
         head = push_node(head, temp);
     }
 
-    print_linked_list(head);
-
     return head;
 }
 
 void free_employee(employee_t *employee)
 {
     free(employee->start_date);
+    free(employee->full_name);
+    free(employee->department);
     free(employee);
+
+    employee = NULL;
 }
 
 void free_linked_list(node_t *head)
 {
-    node_t *current_node = head;
-    node_t *previous_node;
+    node_t *temp = head;
 
-    while(current_node != NULL) {
-        previous_node = current_node;
-        free(previous_node->employee_data->start_date);
-        free(previous_node->employee_data);
-        free(previous_node);
-        current_node = current_node->next;
+    while(head != NULL) {
+        temp = head;
+        head = head->next;
+        free_employee(temp->employee_data);
+        free(temp);
     }
-    free(current_node);
 
-    current_node = NULL;
-    previous_node = NULL;
-    head = NULL;
+    temp = NULL;
+}
+
+void swap_element_linked_list(node_t *node_1, node_t *node_2)
+{
+    employee_t *temp = node_1->employee_data;
+    node_1->employee_data = node_2->employee_data;
+    node_2->employee_data = temp;
+}
+
+int find_linked_list_size(node_t *head)
+{
+    node_t *temp = head;
+    int count = 0;
+
+    while (temp != NULL) {
+        count++;
+        temp = temp->next;
+    }
+
+    return count;
+}
+
+void sort_linked_list(node_t *head, int order)
+{
+    int index_1 = 0;
+    int index_2 = 0;
+    int size = find_linked_list_size(head);
+
+    node_t *temp = head;
+
+    for(index_1; index_1 < size-1; index_1++) {
+        for(index_2 = 0; index_2 < size-index_1; index_2++) {
+            switch (order)
+            {
+            case 0:
+                if (tolower(temp->employee_data->full_name[0]) > tolower(temp->next->employee_data->full_name[0])) {
+                    swap_element_linked_list(temp, temp->next);
+                }
+                break;
+            case 1:
+                if (temp->employee_data->salary < temp->next->employee_data->salary) {
+                    swap_element_linked_list(temp, temp->next);
+                }
+                break;
+            case 2:
+                if (temp->employee_data->salary > temp->next->employee_data->salary) {
+                    swap_element_linked_list(temp, temp->next);
+                }
+                break;
+            default:
+                break;
+            }
+        }
+        temp = temp->next;
+    }
+}
+
+int get_input_sort_order() 
+{
+    float input;
+    printf("Select the sorted order of employees salary (1 = descending or 2 =ascending, or 0 = sorting employees full name alphabetically): ");
+    while ((scanf("%f", &input) != 1 || input < 0 || input > 2 || input - (int)input != 0) && clean_stdin()) {
+        printf("\n*Warning:Failed! Please enter an 1, 2 or 3 interger.\nEnter again:  ");
+    }
+    clean_stdin();
+
+    return (int)input;
 }

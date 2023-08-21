@@ -39,4 +39,8 @@ void print_linked_list(node_t *head);
 
 void free_linked_list(node_t *head);
 
+void sort_linked_list(node_t *head, int order);
+
+int get_input_sort_order();
+
 
