@@ -6,7 +6,7 @@ int main()
     int size = 0;
 
     //Get array size
-    printf("Array size: ");
+    printf("Enter array size: ");
     get_array_size(&size);
 
     //Initialize_array

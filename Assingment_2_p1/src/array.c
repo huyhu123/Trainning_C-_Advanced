@@ -13,24 +13,22 @@ static int Clean_stdin()
 static int Get_input_size() 
 {
     int input;
-    unsigned int i =0 ;
-    char c;
 
     while ((scanf("%d", &input) != 1 || input < 1 || input >50) && Clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an interger between 0 and 50.\nEnter again:  ");
     }
+
     return input;
 }
 
 static int Get_input_int() 
 {
     int input;
-    unsigned int i =0 ;
-    char c;
 
     while ((scanf("%d", &input) != 1) && Clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an interger.\nEnter again:  ");
     }
+    
     return input;
 }
 
