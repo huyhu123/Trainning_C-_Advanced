@@ -1,5 +1,12 @@
 #include "array.h"
 
+#define SWAP(x, y) \
+  do { \
+    int tmp = (x); \
+    (x) = (y); \
+    (y) = tmp; } \
+  while (0)
+
 #define ARRAY_MAX 50
 
 static int Clean_stdin()
@@ -118,7 +125,8 @@ void move_elements_array(int *array, int size)
         }
 
         if (left_index < right_index) {
-            Swap(&array[left_index], &array[right_index]);
+            //Swap(&array[left_index], &array[right_index]);
+            SWAP(array[left_index], array[right_index]);
         } 
     }
 }
