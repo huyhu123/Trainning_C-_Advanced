@@ -92,7 +92,7 @@ void print_linked_list(node_t *head)
         printf(" - %s\n", temp->employee_data->full_name);
         printf("    Department: %s\n", temp->employee_data->department);
         printf("    Salary: %f\n", temp->employee_data->salary);
-        printf("    Start date: %s\n", temp->employee_data->department);
+        printf("    Start date: %i/%i/%i\n", temp->employee_data->start_date->day, temp->employee_data->start_date->month, temp->employee_data->start_date->year);
         temp = temp->next;
     }
 }
