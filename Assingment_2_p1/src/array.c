@@ -1,7 +1,5 @@
 #include "array.h"
 
-#define SWAP(a, b) int temp = a; a = b; b = temp  
-
 #define ARRAY_MAX 50
 
 static int Clean_stdin()
@@ -28,8 +26,15 @@ static int Get_input_int()
     while ((scanf("%d", &input) != 1) && Clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an interger.\nEnter again:  ");
     }
-    
+
     return input;
+}
+
+static void Swap(int *value_1, int *value_2)
+{
+    int temp = *value_1;
+    *value_1 = *value_2;
+    *value_2 = temp;
 }
 
 void get_array_size(int *size)
@@ -62,9 +67,10 @@ void get_array_data(int *array, int size)
 float calculate_average_value(int *array, int size)
 {
     float average = 0;
+    int array_index = 0;
 
-    for (int i = 0; i < size; i++) {
-        average += array[i];
+    for (array_index; array_index < size; array_index++) {
+        average += array[array_index];
     }
 
     return average/size;
@@ -73,9 +79,10 @@ float calculate_average_value(int *array, int size)
 int count_elements_less_than_average(int *array, int size, float average)
 {
     int count = 0;
+    int array_index = 0;
 
-    for (int i = 0; i < size; i++) {
-        if (array[i] < average) {
+    for (array_index; array_index < size; array_index++) {
+        if (array[array_index] < average) {
             count++;
         }
     }
@@ -86,9 +93,10 @@ int count_elements_less_than_average(int *array, int size, float average)
 int count_elements_more_than_average(int *array, int size, float average)
 {
     int count = 0;
+    int array_index = 0;
 
-    for (int i = 0; i < size; i++) {
-        if (array[i] > average) {
+    for (array_index; array_index < size; array_index++) {
+        if (array[array_index] > average) {
             count++;
         }
     }
@@ -110,7 +118,7 @@ void move_elements_array(int *array, int size)
         }
 
         if (left_index < right_index) {
-            SWAP(array[left_index], array[right_index]);
+            Swap(&array[left_index], &array[right_index]);
         } 
     }
 }

@@ -49,7 +49,8 @@ static char *Get_input_char()
     char *input = malloc(MAX_STRING);
 
     fgets(input, MAX_STRING, stdin);
-    
+    input[strcspn(input, "\n")] = 0;
+
     return input;
 }
 
@@ -87,7 +88,9 @@ void print_linked_list(node_t *head)
 
     node_t *temp = head;
     while (temp != NULL) {
-        printf("%s\n", temp->employee_data->full_name);
+        printf("%i", temp->employee_data->id);
+        printf(" - %s\n", temp->employee_data->full_name);
+        printf(" - %s\n", temp->employee_data->department);
         temp = temp->next;
     }
 }
@@ -102,17 +105,17 @@ date_t *get_date()
     date_t *date = malloc(sizeof(date_t));
 
     do {
-        printf("Enter a valid year: ");
+        printf("        Enter a valid year: ");
         date->year = Get_input_int();
     } while (date->year < 2000 || date->year > 2023);
 
     do {
-        printf("Enter a valid month: ");
+        printf("        Enter a valid month: ");
         date->month = Get_input_int();
     } while (date->month > 12);
     
     do {
-        printf("Enter a valid day: ");
+        printf("        Enter a valid day: ");
         date->day = Get_input_int();
     } while (!Check_day(date->day, date->month));
 
@@ -121,19 +124,19 @@ date_t *get_date()
 
 void get_employee_data(employee_t *employee)
 {
-    printf("Enter employee id: ");
+    printf("    Enter employee id: ");
     employee->id = Get_input_int();
 
-    printf("Enter employee full name: ");
+    printf("    Enter employee full name: ");
     employee->full_name = Get_input_char();
 
-    printf("Enter employee department: ");
+    printf("    Enter employee department: ");
     employee->department = Get_input_char();
 
-    printf("Enter employee salary: ");
+    printf("    Enter employee salary: ");
     employee->salary = Get_input_float();
 
-    printf("Enter employee start date: \n");
+    printf("    Enter employee start date\n");
     employee->start_date = get_date();
 }
 
@@ -142,6 +145,7 @@ node_t *init_employees(int size)
     node_t *head = NULL;
 
     for (int i = 0; i < size; i++) {
+        printf("\nEnter infomation of employee %i\n", i + 1);
         employee_t *temp = malloc(sizeof(employee_t));
         get_employee_data(temp);
         head = push_node(head, temp);
