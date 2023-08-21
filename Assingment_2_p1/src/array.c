@@ -17,9 +17,9 @@ static int Clean_stdin()
 
 static int Get_input_size() 
 {
-    int input;
+    float input;
 
-    while ((scanf("%d", &input) != 1 || input < 0 || input >50) && Clean_stdin()) {
+    while ((scanf("%f", &input) != 1 || input < 0 || input > ARRAY_MAX || input - (int)input != 0) && Clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an interger between 0 and 50.\nEnter again:  ");
     }
 
@@ -35,13 +35,6 @@ static int Get_input_int()
     }
 
     return input;
-}
-
-static void Swap(int *value_1, int *value_2)
-{
-    int temp = *value_1;
-    *value_1 = *value_2;
-    *value_2 = temp;
 }
 
 void get_array_size(int *size)
@@ -129,7 +122,6 @@ void move_elements_array(int *array, int size)
         }
 
         if (left_index < right_index) {
-            //Swap(&array[left_index], &array[right_index]);
             SWAP(array[left_index], array[right_index]);
         } 
     }
