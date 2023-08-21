@@ -33,8 +33,7 @@ int main()
     print_array(array, size);
 
     //Free allocated memory
-    free(array);
-    array = NULL;
+    free_array(array);
 
     return 0;
 }

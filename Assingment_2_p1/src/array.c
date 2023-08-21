@@ -7,6 +7,7 @@
     (y) = tmp; } \
   while (0)
 
+#define ARRAY_MIN 0
 #define ARRAY_MAX 50
 
 static int Clean_stdin()
@@ -19,7 +20,7 @@ static int Get_input_size()
 {
     float input;
 
-    while ((scanf("%f", &input) != 1 || input < 0 || input > ARRAY_MAX || input - (int)input != 0) && Clean_stdin()) {
+    while ((scanf("%f", &input) != 1 || input < ARRAY_MIN || input > ARRAY_MAX || input - (int)input != 0) && Clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an interger between 0 and 50.\nEnter again:  ");
     }
 
@@ -125,4 +126,10 @@ void move_elements_array(int *array, int size)
             SWAP(array[left_index], array[right_index]);
         } 
     }
+}
+
+void free_array(int *array)
+{
+    free(array);
+    array = NULL;
 }

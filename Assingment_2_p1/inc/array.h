@@ -17,3 +17,5 @@ int count_elements_less_than_average(int *array, int size, float average);
 int count_elements_more_than_average(int *array, int size, float average);
 
 void move_elements_array(int *array, int size);
+
+void free_array(int *array);
