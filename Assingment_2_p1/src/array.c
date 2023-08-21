@@ -10,28 +10,28 @@
 #define ARRAY_MIN 0
 #define ARRAY_MAX 50
 
-static int Clean_stdin()
+static int clean_stdin()
 {
     while (getchar() != '\n');
     return 1;
 }
 
-static int Get_input_size() 
+static int get_input_size() 
 {
     float input;
 
-    while ((scanf("%f", &input) != 1 || input < ARRAY_MIN || input > ARRAY_MAX || input - (int)input != 0) && Clean_stdin()) {
+    while ((scanf("%f", &input) != 1 || input < ARRAY_MIN || input > ARRAY_MAX || input - (int)input != 0) && clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an interger between 0 and 50.\nEnter again:  ");
     }
 
     return (int)input;
 }
 
-static int Get_input_int() 
+static int get_input_int() 
 {
     float input;
 
-    while ((scanf("%f", &input) != 1 || input - (int)input != 0) && Clean_stdin()) {
+    while ((scanf("%f", &input) != 1 || input - (int)input != 0) && clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an interger.\nEnter again:  ");
     }
 
@@ -40,7 +40,7 @@ static int Get_input_int()
 
 void get_array_size(int *size)
 {
-    *size = Get_input_size();
+    *size = get_input_size();
 }
 
 int *initialize_array(int size)
@@ -60,7 +60,7 @@ void get_array_data(int *array, int size)
 {
     for (int i = 0; i < size; i++) {
         printf("Enter element %d of the array: ", i);
-        array[i] = Get_input_int();
+        array[i] = get_input_int();
     }
     printf("\n");
 }

@@ -1,6 +1,6 @@
 #include "matrix.h"
 
-static int Clean_stdin()
+static int clean_stdin()
 {
     while(getchar() != '\n')
     {
@@ -25,7 +25,7 @@ static int get_input_int()
     unsigned int i =0;
     char c;
 
-    while ((scanf("%d", &input) != 1 || input < 1) && Clean_stdin())
+    while ((scanf("%d", &input) != 1 || input < 1) && clean_stdin())
     {
         printf("\n*Warning:Failed! The amount of the row and column must be a positive integer.\nEnter again:  ");
     }

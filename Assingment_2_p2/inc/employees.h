@@ -35,4 +35,8 @@ void get_employee_data(employee_t *employee);
 
 node_t *init_employees(int size);
 
+void print_linked_list(node_t *head);
+
+void free_linked_list(node_t *head);
+
 

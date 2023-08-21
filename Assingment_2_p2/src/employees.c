@@ -1,44 +1,45 @@
 #include <employees.h>
 
-static int Clean_stdin()
+static int clean_stdin()
 {
     while (getchar() != '\n');
     return 1;
 }
 
-static int Get_input_size() 
+static int get_input_size() 
 {
     float input;
 
-    while ((scanf("%d", &input) != 1 || input < 0 || input - (int)input != 0) && Clean_stdin()) {
-        printf("\n*Warning:Failed! Please enter an interger.\nEnter again:  ");
+    while ((scanf("%f", &input) != 1 || input < 0 || input - (int)input != 0) && clean_stdin()) {
+        printf("\n*Warning:Failed! Please enter an positive interger.\nEnter again:  ");
     }
+    clean_stdin();
 
-    return input;
+    return (int)input;
 }
 
 static float Get_input_float()
 {
     float input;
 
-    while ((scanf("%f", &input) != 1 || input < 0) && Clean_stdin()) {
+    while ((scanf("%f", &input) != 1 || input < 0) && clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an positive real number.\nEnter again:  ");
     }
-    Clean_stdin();
+    clean_stdin();
 
     return input;
 }
 
-static int Get_input_int() 
+static int get_input_int() 
 {
-    int input;
+    float input;
 
-    while ((scanf("%d", &input) != 1 || input < 0) && Clean_stdin()) {
+    while ((scanf("%f", &input) != 1 || input < 0 || input - (int)input != 0) && clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an positive interger.\nEnter again:  ");
     }
-    Clean_stdin();
+    clean_stdin();
 
-    return input;
+    return (int)input;
 }
 
 static char *Get_input_char() 
@@ -96,7 +97,7 @@ void print_linked_list(node_t *head)
 
 void get_employee_num(int *size)
 {
-    *size = Get_input_size();
+    *size = get_input_size();
 }
 
 date_t *get_date()
@@ -105,17 +106,17 @@ date_t *get_date()
 
     do {
         printf("        Enter a valid year: ");
-        date->year = Get_input_int();
+        date->year = get_input_int();
     } while (date->year < 2000 || date->year > 2023);
 
     do {
         printf("        Enter a valid month: ");
-        date->month = Get_input_int();
+        date->month = get_input_int();
     } while (date->month > 12);
     
     do {
         printf("        Enter a valid day: ");
-        date->day = Get_input_int();
+        date->day = get_input_int();
     } while (!Check_day(date->day, date->month));
 
     return date;
@@ -124,7 +125,7 @@ date_t *get_date()
 void get_employee_data(employee_t *employee)
 {
     printf("    Enter employee id: ");
-    employee->id = Get_input_int();
+    employee->id = get_input_int();
 
     printf("    Enter employee full name: ");
     employee->full_name = Get_input_char();
@@ -153,4 +154,29 @@ node_t *init_employees(int size)
     print_linked_list(head);
 
     return head;
+}
+
+void free_employee(employee_t *employee)
+{
+    free(employee->start_date);
+    free(employee);
+}
+
+void free_linked_list(node_t *head)
+{
+    node_t *current_node = head;
+    node_t *previous_node;
+
+    while(current_node != NULL) {
+        previous_node = current_node;
+        free(previous_node->employee_data->start_date);
+        free(previous_node->employee_data);
+        free(previous_node);
+        current_node = current_node->next;
+    }
+    free(current_node);
+
+    current_node = NULL;
+    previous_node = NULL;
+    head = NULL;
 }

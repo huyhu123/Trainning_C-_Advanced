@@ -8,4 +8,6 @@ int main() {
     get_employee_num(&employee_num);
 
     node_t *head = init_employees(employee_num);
+
+    free_linked_list(head);
 }
