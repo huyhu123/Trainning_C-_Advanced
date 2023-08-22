@@ -19,7 +19,6 @@ static bool check_input_buffer(char *input)
     return false;
 }
 
-
 static int get_input_size() 
 {
     float input;
@@ -107,7 +106,13 @@ void print_linked_list(node_t *head)
     printf("\n");
     printf("%-15s %-15s %-15s %-15s %-15s\n", "ID", "Full name", "Department", "Salary","Start date");
     while (temp != NULL) {
-        printf("%-15d %-15s %-15s %-15f %d/%d/%d\n", temp->employee_data->id, temp->employee_data->full_name, temp->employee_data->department, temp->employee_data->salary,temp->employee_data->start_date->day, temp->employee_data->start_date->month, temp->employee_data->start_date->year);
+        printf("%-15d %-15s %-15s %-15f %d/%d/%d\n", temp->employee_data->id, 
+                                                     temp->employee_data->full_name, 
+                                                     temp->employee_data->department, 
+                                                     temp->employee_data->salary,
+                                                     temp->employee_data->start_date->day, 
+                                                     temp->employee_data->start_date->month, 
+                                                     temp->employee_data->start_date->year);
         temp = temp->next;
     }
     printf("\n");
@@ -122,7 +127,7 @@ date_t *get_date()
 {
     date_t *date = malloc(sizeof(date_t));
 
-    printf("\t\tEnter start year: ");  
+    printf("\t\tEnter start year (1500-2023): ");  
     date->year = get_input_int();
     while (date->year < START_YEAR_MIN || date->year > START_YEAR_MAX) {
         printf("\t\t\tNot a valid year, enter again: ");
