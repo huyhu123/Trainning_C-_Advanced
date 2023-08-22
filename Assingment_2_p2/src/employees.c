@@ -1,5 +1,8 @@
 #include <employees.h>
 
+#define START_YEAR_MIN 1500
+#define START_YEAR_MAX 2023
+
 static int clean_stdin()
 {
     int c;
@@ -34,7 +37,7 @@ static float get_input_float()
     float input;
 
     while ((scanf("%f", &input) != 1 || input < 0) && clean_stdin()) {
-        printf("\n    *Warning:Failed! Please enter an positive real number.\nEnter again:  ");
+        printf("\n\t*Warning:Failed! Please enter an positive real number.\nEnter again:  ");
     }
     clean_stdin();
 
@@ -46,7 +49,7 @@ static int get_input_int()
     float input;
 
     while ((scanf("%f", &input) != 1 || input < 0 || input - (int)input != 0) && clean_stdin()) {
-        printf("\n    *Warning:Failed! Please enter an positive interger.\nEnter again:  ");
+        printf("\n\t*Warning:Failed! Please enter an positive interger.\nEnter again:  ");
     }
     clean_stdin();
 
@@ -59,7 +62,7 @@ static char *get_input_char()
 
     fgets(input, MAX_STRING, stdin);
     while (check_input_buffer(input) == 1) {
-        printf("        Input too long, enter again: ");
+        printf("\t\tInput too long, enter again: ");
         fgets(input, MAX_STRING, stdin);
     }
     input[strcspn(input, "\n")] = 0;
@@ -100,13 +103,11 @@ void print_linked_list(node_t *head)
     }
 
     node_t *temp = head;
+
+    printf("\n");
+    printf("%-15s %-15s %-15s %-15s %-15s\n", "ID", "Full name", "Department", "Salary","Start date");
     while (temp != NULL) {
-        printf("ID: %i\n", temp->employee_data->id);
-        printf("Full name: %s\n", temp->employee_data->full_name);
-        printf("Department: %s\n", temp->employee_data->department);
-        printf("Salary: %f\n", temp->employee_data->salary);
-        printf("Start date: %i/%i/%i\n", temp->employee_data->start_date->day, temp->employee_data->start_date->month, temp->employee_data->start_date->year);
-        printf("\n");
+        printf("%-15d %-15s %-15s %-15f %d/%d/%d\n", temp->employee_data->id, temp->employee_data->full_name, temp->employee_data->department, temp->employee_data->salary,temp->employee_data->start_date->day, temp->employee_data->start_date->month, temp->employee_data->start_date->year);
         temp = temp->next;
     }
     printf("\n");
@@ -121,24 +122,24 @@ date_t *get_date()
 {
     date_t *date = malloc(sizeof(date_t));
 
-    printf("        Enter start year: ");  
+    printf("\t\tEnter start year: ");  
     date->year = get_input_int();
-    while (date->year < 2000 || date->year > 2023) {
-        printf("            Not a valid year, enter again: ");
+    while (date->year < START_YEAR_MIN || date->year > START_YEAR_MAX) {
+        printf("\t\t\tNot a valid year, enter again: ");
         date->year = get_input_int();
     }
 
-    printf("        Enter start month: ");
+    printf("\t\tEnter start month: ");
     date->month = get_input_int();
     while (date->month > 12) {
-        printf("            Not a valid month, enter again: ");
+        printf("\t\t\tNot a valid month, enter again: ");
         date->month = get_input_int();
     }
 
-    printf("        Enter start day: ");
+    printf("\t\tEnter start day: ");
     date->day = get_input_int();
     while (!check_day(date->day, date->month)) {
-        printf("            Not a valid day, enter again: ");
+        printf("\t\t\tNot a valid day, enter again: ");
         date->day = get_input_int();
     }
 
@@ -147,19 +148,19 @@ date_t *get_date()
 
 void get_employee_data(employee_t *employee)
 {
-    printf("    Enter employee id: ");
+    printf("\tEnter employee id: ");
     employee->id = get_input_int();
 
-    printf("    Enter employee full name: ");
+    printf("\tEnter employee full name: ");
     employee->full_name = get_input_char();
 
-    printf("    Enter employee department: ");
+    printf("\tEnter employee department: ");
     employee->department = get_input_char();
 
-    printf("    Enter employee salary: ");
+    printf("\tEnter employee salary: ");
     employee->salary = get_input_float();
 
-    printf("    Enter employee start date\n");
+    printf("\tEnter employee start date\n");
     employee->start_date = get_date();
 }
 
@@ -198,6 +199,7 @@ void free_linked_list(node_t *head)
         free(temp);
     }
 
+    head = NULL;
     temp = NULL;
 }
 
@@ -225,18 +227,28 @@ bool compare_name(char *name_1, char *name_2)
 {
     int name_1_size = strlen(name_1);
     int name_2_size = strlen(name_2);
-    int index = 0;
+    int index_1 = 0;
+    int index_2 = 0;
 
-    for (index; index < name_1_size; index++) {
-        if (index > name_2_size) {
-            return false;
+    while (index_1 < name_1_size && index_2 < name_2_size) {
+        if (name_1[index_1] == ' ') {
+            index_1++;
+            continue;
         }
-        if (tolower(name_1[index]) > tolower(name_2[index])) {
+        if (name_2[index_2] == ' ') {
+            index_2++;
+            continue;
+        }
+
+        if (tolower(name_1[index_1]) > tolower(name_2[index_2])) {
             return true;
         }
-        if (tolower(name_1[index]) < tolower(name_2[index])) {
+        if (tolower(name_1[index_1]) < tolower(name_2[index_2])) {
             return false;
         }
+
+        index_1++;
+        index_2++;
     }
     
     return false;
