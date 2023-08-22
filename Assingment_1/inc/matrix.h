@@ -1,3 +1,6 @@
+#ifndef _MATRIX_H_
+#define _MATRIX_H_
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -79,3 +82,5 @@ void free_matrix(int count, ...);
 * @return None
 */
 void get_matrix_size(int *row, int *collum);
+
+#endif

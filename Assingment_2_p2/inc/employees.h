@@ -1,6 +1,8 @@
+#ifndef _EMPLOYEES_H_
+#define _EMPLOYEES_H_
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
 #include <stdbool.h>
 #include <ctype.h> 
 #include <string.h>
@@ -43,4 +45,4 @@ void sort_linked_list(node_t *head, int order);
 
 int get_input_sort_order();
 
-
+#endif
