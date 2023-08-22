@@ -326,6 +326,20 @@ bool compare_name(char *name_1, char *name_2)
     return false;
 }
 
+employees_list_t *find_by_index_employees_list(employees_list_t *head, int index)
+{
+    employees_list_t *temp = head;
+
+    for (int i = 0; i < index-1; i++) {
+        if (temp == NULL) {
+            return NULL;
+        }
+        temp = temp->next;
+    }
+
+    return temp;
+}
+
 void sort_employees_list(employees_list_t *head, int order)
 {
     int index_1 = 0;
@@ -336,6 +350,9 @@ void sort_employees_list(employees_list_t *head, int order)
 
     for(index_1; index_1 < size-1; index_1++) {
         for(index_2 = 0; index_2 < size-index_1; index_2++) {
+            temp = find_by_index_employees_list(head, index_2);
+            printf("%i\n", index_2);
+        
             switch (order)
             {
             case e_name_sorting:
@@ -353,11 +370,8 @@ void sort_employees_list(employees_list_t *head, int order)
                     swap_element_employees_list(temp, temp->next);
                 }
                 break;
-            default:
-                break;
             }
         }
-        temp = temp->next;
     }
 }
 
