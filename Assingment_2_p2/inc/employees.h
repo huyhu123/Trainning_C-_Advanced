@@ -1,6 +1,13 @@
 #ifndef _EMPLOYEES_H_
 #define _EMPLOYEES_H_
 
+#ifdef _WIN32
+#include <conio.h>
+#else
+#include <stdio.h>
+#define clrscr() printf("\e[1;1H\e[2J")
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -8,6 +15,13 @@
 #include <string.h>
 
 #define MAX_STRING 50
+
+typedef enum {
+    e_quit = 0x00U,
+    e_input_employees = 0x01U,
+    e_add_employee = 0x02U,
+    e_sort = 0x03U,
+} e_main_interface_option;
 
 typedef struct date
 {
@@ -29,20 +43,26 @@ typedef struct node
 {
     employee_t *employee_data;
     struct node *next;
-} node_t;
+} employees_list_t;
 
 void get_employee_num(int *size);
 
-void get_employee_data(employee_t *employee);
+void get_employee_data(employee_t *employee, employees_list_t *head);
 
-node_t *init_employees(int size);
+employees_list_t *input_employees_information(int size);
 
-void print_linked_list(node_t *head);
+void print_employees_list(employees_list_t *head);
 
-void free_linked_list(node_t *head);
+void free_employees_list(employees_list_t *head);
 
-void sort_linked_list(node_t *head, int order);
+void sort_employees_list(employees_list_t *head, int order);
 
 int get_input_sort_order();
+
+int show_main_interface();
+
+employees_list_t *input_employees(int *employee_num);
+
+void sort_employee(employees_list_t *head);
 
 #endif

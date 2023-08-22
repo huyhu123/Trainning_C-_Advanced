@@ -1,23 +1,31 @@
 #include <employees.h>
 
 int main() {
+    int option = 1;
     int employee_num = 0;
     int sort_order = 0;
+    employees_list_t *employee_list = NULL;
 
-    //Get number of employee
-    printf("Enter number of employee: ");
-    get_employee_num(&employee_num);
-
-    //Get employee data
-    node_t *head = init_employees(employee_num);
-
-    //Sort linked list
-    sort_order = get_input_sort_order();
-    sort_linked_list(head, sort_order);
-
-    //Print linked_list
-    print_linked_list(head);
+    clrscr();
+    while (option != 0)
+    {
+        option = show_main_interface();
+        switch (option)
+        {
+        case e_quit:
+            break;
+        case e_input_employees:
+            employee_list = input_employees(&employee_num);
+            break;
+        case e_add_employee:
+            //Todo
+            break;
+        case e_sort:
+            sort_employee(employee_list);
+            break;
+        }
+    }
 
     //Free allocated memory
-    free_linked_list(head);
+    free_employees_list(employee_list);
 }
