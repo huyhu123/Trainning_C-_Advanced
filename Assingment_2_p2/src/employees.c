@@ -2,6 +2,7 @@
 
 #define START_YEAR_MIN 1500
 #define START_YEAR_MAX 2023
+#define MAX_EMPLOYEES 50
 
 static int clean_stdin()
 {
@@ -23,7 +24,7 @@ static int get_input_size()
 {
     float input;
 
-    while ((scanf("%f", &input) != 1 || input < 0 || input - (int)input != 0) && clean_stdin()) {
+    while ((scanf("%f", &input) != 1 || input < 0 || input > MAX_EMPLOYEES || input - (int)input != 0) && clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an positive interger.\nEnter again:  ");
     }
     clean_stdin();
