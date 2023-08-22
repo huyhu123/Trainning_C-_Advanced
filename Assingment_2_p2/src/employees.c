@@ -25,7 +25,7 @@ static int get_input_size()
     float input;
 
     while ((scanf("%f", &input) != 1 || input < 0 || input > MAX_EMPLOYEES || input - (int)input != 0) && clean_stdin()) {
-        printf("\n*Warning:Failed! Please enter an positive interger.\nEnter again:  ");
+        printf("\n*Warning:Failed! Please enter an interger from 0 to 50.\nEnter again:  ");
     }
     clean_stdin();
 
