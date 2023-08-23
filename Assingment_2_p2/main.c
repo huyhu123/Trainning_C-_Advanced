@@ -1,7 +1,10 @@
 #include <employees.h>
 
 int main() {
-    int option = 1;
+    //int test;
+    //scanf("%i", &test);
+
+    e_main_interface_option option = 1;
     int employee_num = 0;
     int sort_order = 0;
     employees_list_t *employee_list = NULL;
@@ -21,7 +24,12 @@ int main() {
             show_employee_table(employee_list);
             break;
         case e_sort:
-            sort_employee(employee_list);
+            quick_sort(employee_list, 0, employee_num);
+            //sort_employee(employee_list);
+            print_employees_list(employee_list);
+            break;
+        case e_delete_employee:
+            employee_list = delete_employee_by_index(employee_list, 0);
             break;
         }
     }

@@ -4,12 +4,6 @@
 #define START_YEAR_MAX     2023
 #define MAX_EMPLOYEES      50
 
-typedef enum {
-    e_name_sorting = 0x00U,
-    e_salary_decend_sorting = 0x01U,
-    e_salary_accend_sorting = 0x02U,
-} e_sort_mode_t;
-
 static int clean_stdin()
 {
     int c;
@@ -293,8 +287,20 @@ int find_employees_list_size(employees_list_t *head)
     return count;
 }
 
-bool compare_name(char *name_1, char *name_2)
+bool compare_name(employees_list_t *employees_1, employees_list_t *employees_2)
 {
+    char *name_1 = employees_1->employee_data->full_name;
+    char *name_2 = employees_2->employee_data->full_name;
+
+    printf("%i\n", strcmp(name_1, name_2));
+    if (strcmp(name_1, name_2) == 0) {
+        
+        if (employees_1->employee_data->id > employees_2->employee_data->id) {
+            return true;
+        }
+        return false;
+    }
+
     int name_1_size = strlen(name_1);
     int name_2_size = strlen(name_2);
     int index_1 = 0;
@@ -353,7 +359,7 @@ void sort_employees_list(employees_list_t *head, int order)
             switch (order)
             {
             case e_name_sorting:
-                if (compare_name(temp->employee_data->full_name, temp->next->employee_data->full_name)) {
+                if (compare_name(temp, temp->next)) {
                     swap_element_employees_list(temp, temp->next);
                 }
                 break;
@@ -372,6 +378,66 @@ void sort_employees_list(employees_list_t *head, int order)
     }
 }
 
+ /*
+employees_list_t *partition(employees_list_t *head, int *pi, e_sort_mode_t order, int low, int high)
+{
+    employees_list_t *pivot = find_by_index_employees_list(head, high);
+
+    int i = (low - 1);
+    for (int j = low; j <= high - 1; j++) {
+
+        if (find_by_index_employees_list(head, j)->employee_data->salary < pivot->employee_data->salary) {
+            i++;
+            swap_element_employees_list(find_by_index_employees_list(head, i), find_by_index_employees_list(head, j));
+        }
+    }
+    swap_element_employees_list(find_by_index_employees_list(head, i+1), find_by_index_employees_list(head, high));
+    
+    return head;
+}
+ 
+
+employees_list_t *quick_sort(employees_list_t *head, e_sort_mode_t order, int low, int high)
+{
+    int pi = 0;
+    if (low < high) {
+        head = partition(head, &pi, order, low, high);
+ 
+        quick_sort(head, order, low, pi - 1);
+        quick_sort(head, order, pi + 1, high);
+    }
+
+    return head;
+}
+*/
+
+void quick_sort(employees_list_t *head, int first, int last)
+{
+   int i, j, pivot;
+   employees_list_t *temp = head;
+
+   if (first < last) {
+      pivot = first;
+      i = first;
+      j = last;
+      while (i < j) {
+         while (find_by_index_employees_list(temp, i)->employee_data->salary <= find_by_index_employees_list(temp, pivot)->employee_data->salary && i < last)
+         i++;
+         while (find_by_index_employees_list(temp, j)->employee_data->salary > find_by_index_employees_list(temp, pivot)->employee_data->salary)
+         j--;
+         if (i < j) {
+            swap_element_employees_list(find_by_index_employees_list(temp, i), find_by_index_employees_list(temp, j));
+         }
+      }
+      swap_element_employees_list(find_by_index_employees_list(temp, pivot), find_by_index_employees_list(temp, j));
+
+      quick_sort(temp, first, j - 1);
+      quick_sort(temp, j + 1, last);
+   }
+   
+}
+
+
 int get_input_sort_order() 
 {
     float input;
@@ -387,7 +453,7 @@ int get_input_sort_order()
 int get_input_main_interface() 
 {
     float input;
-    while ((scanf("%f", &input) != 1 || input < 0 || input > 3 || input - (int)input != 0) && clean_stdin()) {
+    while ((scanf("%f", &input) != 1 || input < 0 || input > 4 || input - (int)input != 0) && clean_stdin()) {
         printf("\n*Warning:Failed! Please enter a number from 0 to 4.\nEnter again:  ");
     }
     clean_stdin();
@@ -401,6 +467,7 @@ int show_main_interface()
     printf("1. Add employees\n");
     printf("2. Show employee table\n");
     printf("3. Sort employee list\n");
+    printf("4. Delete employee\n");
     printf("0. Exit\n");
     printf("Your option: ");
     int option = get_input_main_interface();
@@ -423,7 +490,7 @@ employees_list_t *input_employees(employees_list_t *head, int *employee_num)
 
 void sort_employee(employees_list_t *head)
 {
-    int sort_order = 0;
+    e_sort_mode_t sort_order = 0;
 
     //Sort linked list
     sort_order = get_input_sort_order();
@@ -436,5 +503,34 @@ void sort_employee(employees_list_t *head)
 void show_employee_table(employees_list_t *head)
 {
     print_employees_list(head);
+}
+
+employees_list_t *delete_employee_by_index(employees_list_t *head, int index)
+{
+   if (head == NULL)
+      return head;
+ 
+   employees_list_t *temp = head;
+ 
+    if (index == 0)
+    {
+        head = temp->next;
+        free(temp); 
+        return head;
+    }
+ 
+    for (int i=0; temp != NULL && i < index - 1; i++)
+         temp = temp->next;
+ 
+    if (temp == NULL || temp->next == NULL)
+         return head;
+ 
+    employees_list_t *next = temp->next->next;
+ 
+    free(temp->next);  
+ 
+    temp->next = next; 
+
+    return head;
 }
 

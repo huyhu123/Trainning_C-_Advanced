@@ -21,7 +21,14 @@ typedef enum {
     e_input_employees = 0x01U,
     e_show_employee_table = 0x02U,
     e_sort = 0x03U,
+    e_delete_employee = 0x04U,
 } e_main_interface_option;
+
+typedef enum {
+    e_name_sorting = 0x00U,
+    e_salary_decend_sorting = 0x01U,
+    e_salary_accend_sorting = 0x02U,
+} e_sort_mode_t;
 
 typedef struct date
 {
@@ -66,5 +73,9 @@ employees_list_t *input_employees(employees_list_t *head, int *employee_num);
 void sort_employee(employees_list_t *head);
 
 void show_employee_table(employees_list_t *head);
+
+void quick_sort(employees_list_t *head, int first, int last);
+
+employees_list_t *delete_employee_by_index(employees_list_t *head, int index);
 
 #endif
