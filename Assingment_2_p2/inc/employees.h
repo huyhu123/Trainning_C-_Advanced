@@ -74,7 +74,7 @@ void sort_employee(employees_list_t *head);
 
 void show_employee_table(employees_list_t *head);
 
-void quick_sort(employees_list_t *head, int first, int last);
+void mergeSort(employees_list_t** head);
 
 employees_list_t *delete_employee_by_index(employees_list_t *head, int index);
 

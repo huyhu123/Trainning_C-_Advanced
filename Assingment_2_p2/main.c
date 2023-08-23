@@ -24,8 +24,7 @@ int main() {
             show_employee_table(employee_list);
             break;
         case e_sort:
-            quick_sort(employee_list, 0, employee_num);
-            //sort_employee(employee_list);
+            mergeSort(&employee_list);
             print_employees_list(employee_list);
             break;
         case e_delete_employee:

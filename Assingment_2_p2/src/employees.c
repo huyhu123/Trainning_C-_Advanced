@@ -378,63 +378,84 @@ void sort_employees_list(employees_list_t *head, int order)
     }
 }
 
- /*
-employees_list_t *partition(employees_list_t *head, int *pi, e_sort_mode_t order, int low, int high)
+
+employees_list_t* merge(employees_list_t* left, employees_list_t* right)
 {
-    employees_list_t *pivot = find_by_index_employees_list(head, high);
+    employees_list_t* result = NULL;
 
-    int i = (low - 1);
-    for (int j = low; j <= high - 1; j++) {
+    // Base cases
+    if (left == NULL)
+        return right;
+    else if (right == NULL)
+        return left;
 
-        if (find_by_index_employees_list(head, j)->employee_data->salary < pivot->employee_data->salary) {
-            i++;
-            swap_element_employees_list(find_by_index_employees_list(head, i), find_by_index_employees_list(head, j));
+    // Compare the salaries of the employees in the linked lists and merge accordingly
+    if (left->employee_data->salary >= right->employee_data->salary)
+    {
+        result = left;
+        result->next = merge(left->next, right);
+    }
+    else
+    {
+        result = right;
+        result->next = merge(left, right->next);
+    }
+
+    return result;
+}
+
+void split(employees_list_t* source, employees_list_t** front, employees_list_t** back)
+{
+    employees_list_t* fast;
+    employees_list_t* slow;
+
+    if (source == NULL || source->next == NULL)
+    {
+        *front = source;
+        *back = NULL;
+    }
+    else
+    {
+        slow = source;
+        fast = source->next;
+
+        // Move fast pointer by two and slow pointer by one
+        while (fast != NULL)
+        {
+            fast = fast->next;
+            if (fast != NULL)
+            {
+                slow = slow->next;
+                fast = fast->next;
+            }
         }
+
+        // Split the linked list into two halves
+        *front = source;
+        *back = slow->next;
+        slow->next = NULL;
     }
-    swap_element_employees_list(find_by_index_employees_list(head, i+1), find_by_index_employees_list(head, high));
-    
-    return head;
 }
- 
 
-employees_list_t *quick_sort(employees_list_t *head, e_sort_mode_t order, int low, int high)
+void mergeSort(employees_list_t** head)
 {
-    int pi = 0;
-    if (low < high) {
-        head = partition(head, &pi, order, low, high);
- 
-        quick_sort(head, order, low, pi - 1);
-        quick_sort(head, order, pi + 1, high);
+    employees_list_t* temp = *head;
+    employees_list_t* left;
+    employees_list_t* right;
+
+    if (temp == NULL || temp->next == NULL)
+    {
+        return;
     }
 
-    return head;
-}
-*/
+    split(temp, &left, &right);
 
-void quick_sort(employees_list_t *head, int first, int last)
-{
-   int i, j, pivot;
-   employees_list_t *temp = head;
+    // Recursively sort the two halves
+    mergeSort(&left);
+    mergeSort(&right);
 
-   if (first < last) {
-      pivot = first;
-      i = first;
-      j = last;
-      while (i < j) {
-         while (find_by_index_employees_list(temp, i)->employee_data->salary <= find_by_index_employees_list(temp, pivot)->employee_data->salary && i < last)
-         i++;
-         while (find_by_index_employees_list(temp, j)->employee_data->salary > find_by_index_employees_list(temp, pivot)->employee_data->salary)
-         j--;
-         if (i < j) {
-            swap_element_employees_list(find_by_index_employees_list(temp, i), find_by_index_employees_list(temp, j));
-         }
-      }
-      swap_element_employees_list(find_by_index_employees_list(temp, pivot), find_by_index_employees_list(temp, j));
-
-      quick_sort(temp, first, j - 1);
-      quick_sort(temp, j + 1, last);
-   }
-   
+    // Merge the sorted halves
+    *head = merge(left, right);
 }
 
 
