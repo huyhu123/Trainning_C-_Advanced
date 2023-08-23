@@ -19,7 +19,7 @@
 typedef enum {
     e_quit = 0x00U,
     e_input_employees = 0x01U,
-    e_add_employee = 0x02U,
+    e_show_employee_table = 0x02U,
     e_sort = 0x03U,
 } e_main_interface_option;
 
@@ -49,7 +49,7 @@ void get_employee_num(int *size);
 
 void get_employee_data(employee_t *employee, employees_list_t *head);
 
-employees_list_t *input_employees_information(int size);
+employees_list_t *input_employees_information(employees_list_t *head, int size);
 
 void print_employees_list(employees_list_t *head);
 
@@ -61,8 +61,10 @@ int get_input_sort_order();
 
 int show_main_interface();
 
-employees_list_t *input_employees(int *employee_num);
+employees_list_t *input_employees(employees_list_t *head, int *employee_num);
 
 void sort_employee(employees_list_t *head);
+
+void show_employee_table(employees_list_t *head);
 
 #endif

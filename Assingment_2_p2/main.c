@@ -15,10 +15,10 @@ int main() {
         case e_quit:
             break;
         case e_input_employees:
-            employee_list = input_employees(&employee_num);
+            employee_list = input_employees(employee_list, &employee_num);
             break;
-        case e_add_employee:
-            //Todo
+        case e_show_employee_table:
+            show_employee_table(employee_list);
             break;
         case e_sort:
             sort_employee(employee_list);

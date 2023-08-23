@@ -64,6 +64,10 @@ static int get_input_int()
 
 static bool find_id(employees_list_t *head, int id)
 {
+    if (head == NULL) {
+        return false;
+    }
+
     employees_list_t *temp = head;
 
     while (temp != NULL) {
@@ -160,10 +164,6 @@ employees_list_t *push_node(employees_list_t *head, employee_t *data)
 
 void print_employees_list(employees_list_t *head)
 {
-    if (head == NULL) {
-        printf("List empty\n");
-    }
-
     employees_list_t *temp = head;
 
     printf("\n");
@@ -236,10 +236,8 @@ void get_employee_data(employee_t *employee, employees_list_t *head)
     //printf("\e[1;1H\e[2J");
 }
 
-employees_list_t *input_employees_information(int size)
+employees_list_t *input_employees_information(employees_list_t *head, int size)
 {
-    employees_list_t *head = NULL;
-
     for (int i = 0; i < size; i++) {
         printf("\nEnter infomation of employee %i\n", i + 1);
         employee_t *temp = malloc(sizeof(employee_t));
@@ -351,7 +349,6 @@ void sort_employees_list(employees_list_t *head, int order)
     for(index_1; index_1 < size-1; index_1++) {
         for(index_2 = 0; index_2 < size-index_1; index_2++) {
             temp = find_by_index_employees_list(head, index_2);
-            printf("%i\n", index_2);
         
             switch (order)
             {
@@ -391,7 +388,7 @@ int get_input_main_interface()
 {
     float input;
     while ((scanf("%f", &input) != 1 || input < 0 || input > 3 || input - (int)input != 0) && clean_stdin()) {
-        printf("\n*Warning:Failed! Please enter an 0, 1, 2 or 3 interger.\nEnter again:  ");
+        printf("\n*Warning:Failed! Please enter a number from 0 to 4.\nEnter again:  ");
     }
     clean_stdin();
 
@@ -401,8 +398,8 @@ int get_input_main_interface()
 int show_main_interface() 
 {
     printf("Choose an option:\n");
-    printf("1. Input a number of employees\n");
-    printf("2. Add an employees\n");
+    printf("1. Add employees\n");
+    printf("2. Show employee table\n");
     printf("3. Sort employee list\n");
     printf("0. Exit\n");
     printf("Your option: ");
@@ -412,14 +409,14 @@ int show_main_interface()
     return option;
 }
 
-employees_list_t *input_employees(int *employee_num)
+employees_list_t *input_employees(employees_list_t *head, int *employee_num)
 {
     //Get number of employee
     printf("Enter number of employee: ");
     get_employee_num(employee_num);
 
     //Get employee data
-    employees_list_t *head = input_employees_information(*employee_num);
+    head = input_employees_information(head ,*employee_num);
 
     return head;
 }
@@ -427,7 +424,7 @@ employees_list_t *input_employees(int *employee_num)
 void sort_employee(employees_list_t *head)
 {
     int sort_order = 0;
-    
+
     //Sort linked list
     sort_order = get_input_sort_order();
     sort_employees_list(head, sort_order);
@@ -435,3 +432,9 @@ void sort_employee(employees_list_t *head)
     //Print employees_list
     print_employees_list(head);
 }
+
+void show_employee_table(employees_list_t *head)
+{
+    print_employees_list(head);
+}
+
