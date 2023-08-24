@@ -5,6 +5,7 @@ int main() {
     int employee_num = 0;
     int sort_order = 0;
     int index = 0;
+    e_sort_mode_t order = 0;
     employees_list_t *employee_list = NULL;
 
     clrscr();
@@ -22,7 +23,7 @@ int main() {
             show_employee_table(employee_list);
             break;
         case e_sort:
-            e_sort_mode_t order = get_input_sort_order(); 
+            order = get_input_sort_order(); 
             merge_sort(&employee_list, order);
             print_employees_list(employee_list);
             break;
