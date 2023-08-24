@@ -56,28 +56,30 @@ static int get_input_int()
     return (int)input;
 }
 
-static bool find_id(employees_list_t *head, int id)
+static int find_id(employees_list_t *head, int id)
 {
     if (head == NULL) {
-        return false;
+        return -1;
     }
 
     employees_list_t *temp = head;
+    int count = 0;
 
     while (temp != NULL) {
         if (temp->employee_data->id == id) {
-            return true;
+            return count;
         }
         temp = temp->next;
+        count++;
     }
 
-    return false;
+    return -1;
 }
 
 static int get_input_id(employees_list_t *head)
 {
     int id = get_input_int();
-    while (find_id(head, id)) {
+    while (find_id(head, id) != -1) {
         printf("\tID already existed, enter again: ");
         id = get_input_int();
     }
@@ -292,7 +294,6 @@ bool compare_name(employees_list_t *employees_1, employees_list_t *employees_2)
     char *name_1 = employees_1->employee_data->full_name;
     char *name_2 = employees_2->employee_data->full_name;
 
-    printf("%i\n", strcmp(name_1, name_2));
     if (strcmp(name_1, name_2) == 0) {
         
         if (employees_1->employee_data->id > employees_2->employee_data->id) {
@@ -344,62 +345,52 @@ employees_list_t *find_by_index_employees_list(employees_list_t *head, int index
     return temp;
 }
 
-void sort_employees_list(employees_list_t *head, int order)
-{
-    int index_1 = 0;
-    int index_2 = 0;
-    int size = find_employees_list_size(head);
-
-    employees_list_t *temp = head;
-
-    for(index_1; index_1 < size-1; index_1++) {
-        for(index_2 = 0; index_2 < size-index_1; index_2++) {
-            temp = find_by_index_employees_list(head, index_2);
-        
-            switch (order)
-            {
-            case e_name_sorting:
-                if (compare_name(temp, temp->next)) {
-                    swap_element_employees_list(temp, temp->next);
-                }
-                break;
-            case e_salary_decend_sorting:
-                if (temp->employee_data->salary < temp->next->employee_data->salary) {
-                    swap_element_employees_list(temp, temp->next);
-                }
-                break;
-            case e_salary_accend_sorting:
-                if (temp->employee_data->salary > temp->next->employee_data->salary) {
-                    swap_element_employees_list(temp, temp->next);
-                }
-                break;
-            }
-        }
-    }
-}
-
-
-employees_list_t* merge(employees_list_t* left, employees_list_t* right)
+employees_list_t* merge(employees_list_t* left, employees_list_t* right, e_sort_mode_t order)
 {
     employees_list_t* result = NULL;
 
     // Base cases
-    if (left == NULL)
+    if (left == NULL) {
         return right;
-    else if (right == NULL)
+    }
+    else if (right == NULL) {
         return left;
+    }
 
     // Compare the salaries of the employees in the linked lists and merge accordingly
-    if (left->employee_data->salary >= right->employee_data->salary)
+    switch (order)
     {
-        result = left;
-        result->next = merge(left->next, right);
+    case e_salary_decend_sorting:
+        if (left->employee_data->salary >= right->employee_data->salary) {
+            result = left;
+            result->next = merge(left->next, right, order);
+        } else {
+            result = right;
+            result->next = merge(left, right->next, order);
+        }
+        break;
+    case e_salary_accend_sorting:
+        if (left->employee_data->salary <= right->employee_data->salary) {
+            result = left;
+            result->next = merge(left->next, right, order);
+        } else {
+            result = right;
+            result->next = merge(left, right->next, order);
+        }
+        break;
+    case e_name_sorting:
+        if (!compare_name(left, right)) {
+            result = left;
+            result->next = merge(left->next, right, order);
+        } else {
+            result = right;
+            result->next = merge(left, right->next, order);
+        }
+        break;
+    default:
+        break;
     }
-    else
-    {
-        result = right;
-        result->next = merge(left, right->next);
-    }
+
 
     return result;
 }
@@ -409,22 +400,17 @@ void split(employees_list_t* source, employees_list_t** front, employees_list_t*
     employees_list_t* fast;
     employees_list_t* slow;
 
-    if (source == NULL || source->next == NULL)
-    {
+    if (source == NULL || source->next == NULL) {
         *front = source;
         *back = NULL;
-    }
-    else
-    {
+    } else {
         slow = source;
         fast = source->next;
 
         // Move fast pointer by two and slow pointer by one
-        while (fast != NULL)
-        {
+        while (fast != NULL) {
             fast = fast->next;
-            if (fast != NULL)
-            {
+            if (fast != NULL) {
                 slow = slow->next;
                 fast = fast->next;
             }
@@ -437,29 +423,28 @@ void split(employees_list_t* source, employees_list_t** front, employees_list_t*
     }
 }
 
-void mergeSort(employees_list_t** head)
+void merge_sort(employees_list_t** head, e_sort_mode_t order)
 {
-    employees_list_t* temp = *head;
-    employees_list_t* left;
-    employees_list_t* right;
+    employees_list_t *temp = *head;
+    employees_list_t *left;
+    employees_list_t *right;
 
-    if (temp == NULL || temp->next == NULL)
-    {
+    if (temp == NULL || temp->next == NULL) {
         return;
     }
 
     split(temp, &left, &right);
 
     // Recursively sort the two halves
-    mergeSort(&left);
-    mergeSort(&right);
+    merge_sort(&left, order);
+    merge_sort(&right, order);
 
     // Merge the sorted halves
-    *head = merge(left, right);
+    *head = merge(left, right, order);
 }
 
 
-int get_input_sort_order() 
+e_sort_mode_t get_input_sort_order() 
 {
     float input;
     printf("Select the sorted order of employees salary (1 = descending or 2 =ascending, or 0 = sorting employees full name alphabetically): ");
@@ -468,30 +453,31 @@ int get_input_sort_order()
     }
     clean_stdin();
 
-    return (int)input;
+    return (e_sort_mode_t)input;
 }
 
-int get_input_main_interface() 
+e_main_interface_option get_input_main_interface() 
 {
     float input;
-    while ((scanf("%f", &input) != 1 || input < 0 || input > 4 || input - (int)input != 0) && clean_stdin()) {
-        printf("\n*Warning:Failed! Please enter a number from 0 to 4.\nEnter again:  ");
+    while ((scanf("%f", &input) != 1 || input < 0 || input > 5 || input - (int)input != 0) && clean_stdin()) {
+        printf("\n*Warning:Failed! Please enter a number from 0 to 5.\nEnter again:  ");
     }
     clean_stdin();
 
-    return (int)input;
+    return (e_main_interface_option)input;
 }
 
-int show_main_interface() 
+e_main_interface_option show_main_interface() 
 {
     printf("Choose an option:\n");
     printf("1. Add employees\n");
     printf("2. Show employee table\n");
     printf("3. Sort employee list\n");
-    printf("4. Delete employee\n");
+    printf("4. Delete employee by id\n");
+    printf("5. Delete employee by full name\n");
     printf("0. Exit\n");
     printf("Your option: ");
-    int option = get_input_main_interface();
+    e_main_interface_option option = get_input_main_interface();
     clrscr();
 
     return option;
@@ -509,18 +495,6 @@ employees_list_t *input_employees(employees_list_t *head, int *employee_num)
     return head;
 }
 
-void sort_employee(employees_list_t *head)
-{
-    e_sort_mode_t sort_order = 0;
-
-    //Sort linked list
-    sort_order = get_input_sort_order();
-    sort_employees_list(head, sort_order);
-
-    //Print employees_list
-    print_employees_list(head);
-}
-
 void show_employee_table(employees_list_t *head)
 {
     print_employees_list(head);
@@ -528,30 +502,157 @@ void show_employee_table(employees_list_t *head)
 
 employees_list_t *delete_employee_by_index(employees_list_t *head, int index)
 {
-   if (head == NULL)
+   if (head == NULL || index == -1)
       return head;
  
-   employees_list_t *temp = head;
- 
-    if (index == 0)
-    {
+    employees_list_t *temp = head;
+    employees_list_t *pre;
+
+    if (index == 0) {
         head = temp->next;
+        free_employee(temp->employee_data);
         free(temp); 
         return head;
     }
  
-    for (int i=0; temp != NULL && i < index - 1; i++)
-         temp = temp->next;
+
+    for (int i = 0; i <= index; i++) {
+        pre = temp;
+        temp = temp->next;
+    }
+
+    /*
+    for (int i=0; temp != NULL && i <= index; i++)
+        temp = temp->next;
  
     if (temp == NULL || temp->next == NULL)
-         return head;
+        return head;
  
     employees_list_t *next = temp->next->next;
- 
-    free(temp->next);  
- 
-    temp->next = next; 
 
+    temp->next = next; 
+    */
+    free_employee(temp->next->employee_data);
+    free(temp->next);
+    
     return head;
 }
 
+void delete_node_by_index(employees_list_t **head, int index) 
+{
+    if (*head == NULL || index == -1) {
+        return;
+    }
+
+    employees_list_t *current = *head;
+
+    if (index == 0) {
+        *head = current->next;
+        free_employee(current->employee_data);
+        free(current); 
+        return;
+    }
+
+    int count = 0;
+    while (current != NULL && count < index - 1) {
+        current = current->next;
+        count++;
+    }
+
+    if (current == NULL || current->next == NULL) {
+        return;
+    }
+
+    employees_list_t *next = current->next->next;
+    free_employee(current->next->employee_data);
+    free(current->next); 
+    current->next = next;
+}
+
+int find_employee_by_id(employees_list_t *head)
+{
+    if (head == NULL) {
+        printf("Table empty\n\n");
+        return -1;
+    }
+
+    printf("Enter ID of the employee you want to delete: ");
+    int index = get_input_int();
+    while (find_id(head, index) == -1) {
+        printf("\tID not existed, enter again: ");
+        index = get_input_int();
+    }
+
+    return find_id(head, index);
+}
+
+bool check_name_duplicate(employees_list_t *head, char *name)
+{
+    if (head == NULL) {
+        return false;
+    }
+
+    employees_list_t *temp = head;
+    int count = 0;
+
+    while (temp != NULL) {
+        if (strcmp(temp->employee_data->full_name, name) == 0) {
+            count++;
+        }
+        temp = temp->next;
+    }
+
+    if (count >= 2) {
+        return true;
+    }
+
+    return false;
+}
+
+int find_name(employees_list_t *head, char *name)
+{
+    if (head == NULL) {
+        return -1;
+    }
+
+    employees_list_t *temp = head;
+    int count = 0;
+
+    while (temp != NULL) {
+        if (strcmp(temp->employee_data->full_name, name) == 0) {
+            return count;
+        }
+        temp = temp->next;
+        count++;
+    }
+
+    return -1;
+}
+
+int find_employee_by_name(employees_list_t *head)
+{
+    if (head == NULL) {
+        printf("Table empty\n\n");
+        return -1;
+    }
+
+    printf("Enter full name of the employee you want to delete: ");
+    char *name = get_input_name(head);
+    while (find_name(head, name) == -1) {
+        free(name);
+        printf("\tName not existed, enter again: ");
+        name = get_input_name();
+    }
+    
+
+    if (check_name_duplicate(head, name)) {
+        printf("\tThere are more than 1 person with the same name, please delete by ID instead!!\n");
+        free(name);
+        return -1;
+    }
+
+    int index = find_name(head, name);
+    free(name);
+
+    return index;
+}

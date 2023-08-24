@@ -21,7 +21,8 @@ typedef enum {
     e_input_employees = 0x01U,
     e_show_employee_table = 0x02U,
     e_sort = 0x03U,
-    e_delete_employee = 0x04U,
+    e_delete_employee_id = 0x04U,
+    e_delete_employee_full_name = 0x05U,
 } e_main_interface_option;
 
 typedef enum {
@@ -62,20 +63,22 @@ void print_employees_list(employees_list_t *head);
 
 void free_employees_list(employees_list_t *head);
 
-void sort_employees_list(employees_list_t *head, int order);
+e_sort_mode_t get_input_sort_order();
 
-int get_input_sort_order();
-
-int show_main_interface();
+e_main_interface_option show_main_interface();
 
 employees_list_t *input_employees(employees_list_t *head, int *employee_num);
 
-void sort_employee(employees_list_t *head);
-
 void show_employee_table(employees_list_t *head);
 
-void mergeSort(employees_list_t** head);
+void merge_sort(employees_list_t** head, e_sort_mode_t order);
 
 employees_list_t *delete_employee_by_index(employees_list_t *head, int index);
+
+int find_employee_by_id(employees_list_t *head);
+
+int find_employee_by_name(employees_list_t *head);
+
+void delete_node_by_index(employees_list_t **head, int index);
 
 #endif

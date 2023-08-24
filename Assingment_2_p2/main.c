@@ -1,12 +1,10 @@
 #include <employees.h>
 
 int main() {
-    //int test;
-    //scanf("%i", &test);
-
     e_main_interface_option option = 1;
     int employee_num = 0;
     int sort_order = 0;
+    int index = 0;
     employees_list_t *employee_list = NULL;
 
     clrscr();
@@ -24,15 +22,28 @@ int main() {
             show_employee_table(employee_list);
             break;
         case e_sort:
-            mergeSort(&employee_list);
+            e_sort_mode_t order = get_input_sort_order(); 
+            merge_sort(&employee_list, order);
             print_employees_list(employee_list);
             break;
-        case e_delete_employee:
-            employee_list = delete_employee_by_index(employee_list, 0);
+        case e_delete_employee_id:
+            print_employees_list(employee_list);
+            index = find_employee_by_id(employee_list);
+            delete_node_by_index(&employee_list, index);
+            clrscr();
+            print_employees_list(employee_list);
+            break;
+        case e_delete_employee_full_name:
+            print_employees_list(employee_list);
+            index = find_employee_by_name(employee_list);
+            delete_node_by_index(&employee_list, index);
+            print_employees_list(employee_list);
             break;
         }
     }
 
     //Free allocated memory
     free_employees_list(employee_list);
+
+    return 0;
 }
