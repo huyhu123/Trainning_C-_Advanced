@@ -347,14 +347,6 @@ void free_employees_list(employees_list_t *head)
     temp = NULL;
 }
 
-// Swap data of 2 node in linked list
-void swap_element_employees_list(employees_list_t *node_1, employees_list_t *node_2)
-{
-    employee_t *temp = node_1->employee_data;
-    node_1->employee_data = node_2->employee_data;
-    node_2->employee_data = temp;
-}
-
 
 bool compare_name(employees_list_t *employees_1, employees_list_t *employees_2)
 {
