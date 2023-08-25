@@ -2,6 +2,10 @@
 
 employees_list_t *g_employee_list = NULL;
 
+//Todo
+//emloyee_data_t employee_list[MAX]
+//khong dung linked list o main
+
 int main() {
     e_main_interface_option option = 1;
     int employee_num = 0;
@@ -50,3 +54,5 @@ int main() {
 
     return 0;
 }
+
+

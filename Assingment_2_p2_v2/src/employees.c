@@ -5,6 +5,11 @@
 #define MAX_EMPLOYEES      50
 
 
+//Todo
+//employees_list_t *g_linked_list_head
+//bo bot tham so o cac ham
+//viet ham tra ve array de thao tac tren main
+
 static int clean_stdin()
 {
     int c;
