@@ -12,6 +12,7 @@ static int clean_stdin()
     return 1;
 }
 
+// Check if buffer if overflow
 static bool check_input_buffer(char *input)
 {
     if (strcspn(input, "\n") == MAX_STRING-1) {
@@ -377,6 +378,9 @@ bool compare_name(employees_list_t *employees_1, employees_list_t *employees_2)
     return false;
 }
 
+// Merges two list of employee.
+// First list is from l to m
+// Second list is from m+1 to r
 employees_list_t* merge(employees_list_t* left, employees_list_t* right, e_sort_mode_t order)
 {
     employees_list_t* result = NULL;
@@ -426,6 +430,7 @@ employees_list_t* merge(employees_list_t* left, employees_list_t* right, e_sort_
     return result;
 }
 
+//Splitting the linked list of the employee into 2 haft
 void split(employees_list_t* source, employees_list_t** front, employees_list_t** back)
 {
     employees_list_t* fast;
@@ -454,6 +459,7 @@ void split(employees_list_t* source, employees_list_t** front, employees_list_t*
     }
 }
 
+// linked list of employee and order to be sorted
 void merge_sort(employees_list_t** head, e_sort_mode_t order)
 {
     if (order == -1) {
