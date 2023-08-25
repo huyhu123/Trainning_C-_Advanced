@@ -72,12 +72,10 @@ void show_employee_table(employees_list_t *head);
 
 void merge_sort(employees_list_t** head, e_sort_mode_t order);
 
-employees_list_t *delete_employee_by_index(employees_list_t *head, int index);
-
 int find_employee_by_id(employees_list_t *head);
 
 int find_employee_by_name(employees_list_t *head);
 
-void delete_node_by_index(employees_list_t **head, int index);
+void delete_employee_by_index(employees_list_t **head, int index);
 
 #endif

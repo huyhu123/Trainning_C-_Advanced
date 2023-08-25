@@ -56,6 +56,18 @@ static int get_input_int()
     return (int)input;
 }
 
+static int get_input_int_to_delete() 
+{
+    float input;
+
+    while ((scanf("%f", &input) != 1 || input < -1 || input - (int)input != 0) && clean_stdin()) {
+        printf("\n\t*Warning:Failed! Please enter an positive interger or -1.\nEnter again:  ");
+    }
+    clean_stdin();
+
+    return (int)input;
+}
+
 static int find_id(employees_list_t *head, int id)
 {
     if (head == NULL) {
@@ -149,7 +161,7 @@ static bool check_date(int day, int month)
     return true;
 }
 
-employees_list_t *push_node(employees_list_t *head, employee_t *data)
+employees_list_t *push_employee_to_linked_list(employees_list_t *head, employee_t *data)
 {
     employees_list_t *new_node = malloc(sizeof(employees_list_t));
     new_node->employee_data = data;
@@ -238,7 +250,7 @@ employees_list_t *input_employees_information(employees_list_t *head, int size)
         printf("\nEnter infomation of employee %i\n", i + 1);
         employee_t *temp = malloc(sizeof(employee_t));
         get_employee_data(temp, head);
-        head = push_node(head, temp);
+        head = push_employee_to_linked_list(head, temp);
     }
 
     return head;
@@ -391,7 +403,6 @@ employees_list_t* merge(employees_list_t* left, employees_list_t* right, e_sort_
         break;
     }
 
-
     return result;
 }
 
@@ -500,45 +511,7 @@ void show_employee_table(employees_list_t *head)
     print_employees_list(head);
 }
 
-employees_list_t *delete_employee_by_index(employees_list_t *head, int index)
-{
-   if (head == NULL || index == -1)
-      return head;
- 
-    employees_list_t *temp = head;
-    employees_list_t *pre;
-
-    if (index == 0) {
-        head = temp->next;
-        free_employee(temp->employee_data);
-        free(temp); 
-        return head;
-    }
- 
-
-    for (int i = 0; i <= index; i++) {
-        pre = temp;
-        temp = temp->next;
-    }
-
-    /*
-    for (int i=0; temp != NULL && i <= index; i++)
-        temp = temp->next;
- 
-    if (temp == NULL || temp->next == NULL)
-        return head;
- 
-    employees_list_t *next = temp->next->next;
-
-    temp->next = next; 
-    */
-    free_employee(temp->next->employee_data);
-    free(temp->next);
-    
-    return head;
-}
-
-void delete_node_by_index(employees_list_t **head, int index) 
+void delete_employee_by_index(employees_list_t **head, int index) 
 {
     if (*head == NULL || index == -1) {
         return;
@@ -576,11 +549,17 @@ int find_employee_by_id(employees_list_t *head)
         return -1;
     }
 
-    printf("Enter ID of the employee you want to delete: ");
-    int index = get_input_int();
-    while (find_id(head, index) == -1) {
-        printf("\tID not existed, enter again: ");
-        index = get_input_int();
+    printf("Enter ID of the employee you want to delete (or -1 to exit): ");
+    int index = get_input_int_to_delete();
+    if (index == -1) {
+        return -1;
+    }
+    while (find_id(head, index) == -1 ) {
+        printf("\tID not existed, enter again (or -1 to exit): ");
+        index = get_input_int_to_delete();
+        if (index == -1) {
+            return -1;
+        }
     }
 
     return find_id(head, index);
@@ -636,12 +615,21 @@ int find_employee_by_name(employees_list_t *head)
         return -1;
     }
 
-    printf("Enter full name of the employee you want to delete: ");
+    printf("Enter full name of the employee you want to delete (or press e to exit): ");
     char *name = get_input_name(head);
+    printf("%d\n", strcmp(name, "e"));
+    if (strcmp(name, "e") == 0) {
+        free(name);
+        return -1;
+    }
     while (find_name(head, name) == -1) {
         free(name);
-        printf("\tName not existed, enter again: ");
+        printf("\tName not existed, enter again (or press e to exit): ");
         name = get_input_name();
+        if (strcmp(name, "e") == 0) {
+            free(name);
+            return -1;
+        }
     }
     
 

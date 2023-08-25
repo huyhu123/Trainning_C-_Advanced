@@ -4,7 +4,7 @@ int main() {
     e_main_interface_option option = 1;
     int employee_num = 0;
     int sort_order = 0;
-    int index = 0;
+    int employee_index = 0;
     e_sort_mode_t order = 0;
     employees_list_t *employee_list = NULL;
 
@@ -29,15 +29,15 @@ int main() {
             break;
         case e_delete_employee_id:
             print_employees_list(employee_list);
-            index = find_employee_by_id(employee_list);
-            delete_node_by_index(&employee_list, index);
+            employee_index = find_employee_by_id(employee_list);
+            delete_employee_by_index(&employee_list, employee_index);
             clrscr();
             print_employees_list(employee_list);
             break;
         case e_delete_employee_full_name:
             print_employees_list(employee_list);
-            index = find_employee_by_name(employee_list);
-            delete_node_by_index(&employee_list, index);
+            employee_index = find_employee_by_name(employee_list);
+            delete_employee_by_index(&employee_list, employee_index);
             print_employees_list(employee_list);
             break;
         }
