@@ -7,8 +7,7 @@
     (y) = tmp; } \
   while (0)
 
-#define ARRAY_MIN 0
-#define ARRAY_MAX 50
+
 
 static int clean_stdin()
 {
@@ -41,11 +40,6 @@ static int get_input_int()
 void get_array_size(int *size)
 {
     *size = get_input_size();
-}
-
-int *initialize_array(int size)
-{
-    return malloc(size * sizeof(int));
 }
 
 void print_array(int *array, int size)

@@ -2,7 +2,6 @@
 
 int main()
 {
-    int *array;
     int size = 0;
 
     //Get array size
@@ -10,7 +9,7 @@ int main()
     get_array_size(&size);
 
     //Initialize_array
-    array = initialize_array(size);
+    int array[ARRAY_MAX] = {0};
 
     //Get array data
     get_array_data(array, size);
@@ -31,9 +30,6 @@ int main()
     move_elements_array(array, size);
     printf("Array after moves even values to the right and odd values to the left: ");
     print_array(array, size);
-
-    //Free allocated memory
-    free_array(array);
 
     return 0;
 }

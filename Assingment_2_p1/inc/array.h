@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-int *initialize_array(int size);
+#define ARRAY_MIN 0
+#define ARRAY_MAX 50
 
 void print_array(int *array, int size);
 
