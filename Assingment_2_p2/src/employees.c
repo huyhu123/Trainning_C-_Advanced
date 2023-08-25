@@ -4,6 +4,7 @@
 #define START_YEAR_MAX     2023
 #define MAX_EMPLOYEES      50
 
+
 static int clean_stdin()
 {
     int c;
@@ -24,8 +25,8 @@ static int get_input_size()
 {
     float input;
 
-    while ((scanf("%f", &input) != 1 || input < 0 || input > MAX_EMPLOYEES || input - (int)input != 0) && clean_stdin()) {
-        printf("\n*Warning:Failed! Please enter an interger from 0 to 50.\nEnter again:  ");
+    while ((scanf("%f", &input) != 1 || input < -1 || input > MAX_EMPLOYEES || input - (int)input != 0) && clean_stdin()) {
+        printf("\n*Warning:Failed! Please enter an interger from 0 to 50 (or -1 to exit).\nEnter again:  ");
     }
     clean_stdin();
 
@@ -170,6 +171,51 @@ employees_list_t *push_employee_to_linked_list(employees_list_t *head, employee_
     return new_node;
 }
 
+void append_employee(employees_list_t** head, employee_t *data)
+{
+    // Create a new node
+    employees_list_t *new_node = malloc(sizeof(employees_list_t));
+    new_node->employee_data = data;
+ 
+    // Store the head reference in a temporary variable
+    employees_list_t *last = *head;
+ 
+    // Set the next pointer of the new node as NULL since it
+    // will be the last node
+    new_node->next = NULL;
+ 
+    // If the Linked List is empty, make the new node as the
+    // head and return
+    if (*head == NULL) {
+        *head = new_node;
+        return;
+    }
+ 
+    // Else traverse till the last node
+    while (last->next != NULL) {
+        last = last->next;
+    }
+ 
+    // Change the next pointer of the last node to point to
+    // the new node
+    last->next = new_node;
+}
+
+int find_employees_list_size(employees_list_t *head)
+{
+    employees_list_t *temp = head;
+    int count = 0;
+
+    while (temp != NULL) {
+        count++;
+        temp = temp->next;
+    }
+
+    return count;
+}
+
+
+
 void print_employees_list(employees_list_t *head)
 {
     employees_list_t *temp = head;
@@ -177,7 +223,7 @@ void print_employees_list(employees_list_t *head)
     printf("\n");
     printf("%-15s %-15s %-15s %-15s %-15s\n", "ID", "Full name", "Department", "Salary","Start date");
     while (temp != NULL) {
-        printf("%-15d %-15s %-15s %-15f %d/%d/%d\n", temp->employee_data->id, 
+        printf("%-15d %-15s %-15s %-15.2f %d/%d/%d\n", temp->employee_data->id, 
                                                      temp->employee_data->full_name, 
                                                      temp->employee_data->department, 
                                                      temp->employee_data->salary,
@@ -250,7 +296,7 @@ employees_list_t *input_employees_information(employees_list_t *head, int size)
         printf("\nEnter infomation of employee %i\n", i + 1);
         employee_t *temp = malloc(sizeof(employee_t));
         get_employee_data(temp, head);
-        head = push_employee_to_linked_list(head, temp);
+        append_employee(&head, temp);
     }
 
     return head;
@@ -288,18 +334,6 @@ void swap_element_employees_list(employees_list_t *node_1, employees_list_t *nod
     node_2->employee_data = temp;
 }
 
-int find_employees_list_size(employees_list_t *head)
-{
-    employees_list_t *temp = head;
-    int count = 0;
-
-    while (temp != NULL) {
-        count++;
-        temp = temp->next;
-    }
-
-    return count;
-}
 
 bool compare_name(employees_list_t *employees_1, employees_list_t *employees_2)
 {
@@ -341,20 +375,6 @@ bool compare_name(employees_list_t *employees_1, employees_list_t *employees_2)
     }
     
     return false;
-}
-
-employees_list_t *find_by_index_employees_list(employees_list_t *head, int index)
-{
-    employees_list_t *temp = head;
-
-    for (int i = 0; i < index-1; i++) {
-        if (temp == NULL) {
-            return NULL;
-        }
-        temp = temp->next;
-    }
-
-    return temp;
 }
 
 employees_list_t* merge(employees_list_t* left, employees_list_t* right, e_sort_mode_t order)
@@ -436,6 +456,10 @@ void split(employees_list_t* source, employees_list_t** front, employees_list_t*
 
 void merge_sort(employees_list_t** head, e_sort_mode_t order)
 {
+    if (order == -1) {
+        return;
+    }
+
     employees_list_t *temp = *head;
     employees_list_t *left;
     employees_list_t *right;
@@ -458,8 +482,8 @@ void merge_sort(employees_list_t** head, e_sort_mode_t order)
 e_sort_mode_t get_input_sort_order() 
 {
     float input;
-    printf("Select the sorted order of employees salary (1 = descending or 2 =ascending, or 0 = sorting employees full name alphabetically): ");
-    while ((scanf("%f", &input) != 1 || input < 0 || input > 2 || input - (int)input != 0) && clean_stdin()) {
+    printf("Select the sorted order of employees salary (1 = descending or 2 =ascending, or 0 = sorting employees full name alphabetically) or -1 to exit: ");
+    while ((scanf("%f", &input) != 1 || input < -1 || input > 2 || input - (int)input != 0) && clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an 1, 2 or 3 interger.\nEnter again:  ");
     }
     clean_stdin();
@@ -497,8 +521,12 @@ e_main_interface_option show_main_interface()
 employees_list_t *input_employees(employees_list_t *head, int *employee_num)
 {
     //Get number of employee
-    printf("Enter number of employee: ");
+    printf("Enter number of employee (or -1 to exit): ");
     get_employee_num(employee_num);
+
+    if (*employee_num == -1) {
+        return head;
+    }
 
     //Get employee data
     head = input_employees_information(head ,*employee_num);
@@ -632,7 +660,6 @@ int find_employee_by_name(employees_list_t *head)
         }
     }
     
-
     if (check_name_duplicate(head, name)) {
         printf("\tThere are more than 1 person with the same name, please delete by ID instead!!\n");
         free(name);
