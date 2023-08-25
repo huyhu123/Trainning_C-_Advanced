@@ -26,6 +26,7 @@ static int get_input_size()
 {
     float input;
 
+    // Check if input is valid
     while ((scanf("%f", &input) != 1 || input < -1 || input > MAX_EMPLOYEES || input - (int)input != 0) && clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an interger from 0 to 50 (or -1 to exit).\nEnter again:  ");
     }
@@ -38,6 +39,7 @@ static float get_input_float()
 {
     float input;
 
+    // Check if input is valid
     while ((scanf("%f", &input) != 1 || input <= 0) && clean_stdin()) {
         printf("\n\t*Warning:Failed! Please enter an positive real number.\nEnter again:  ");
     }
@@ -50,6 +52,7 @@ static int get_input_int()
 {
     float input;
 
+    // Check if input is valid
     while ((scanf("%f", &input) != 1 || input < 0 || input - (int)input != 0) && clean_stdin()) {
         printf("\n\t*Warning:Failed! Please enter an positive interger.\nEnter again:  ");
     }
@@ -62,6 +65,7 @@ static int get_input_int_to_delete()
 {
     float input;
 
+    // Check if input is valid
     while ((scanf("%f", &input) != 1 || input < -1 || input - (int)input != 0) && clean_stdin()) {
         printf("\n\t*Warning:Failed! Please enter an positive interger or -1.\nEnter again:  ");
     }
@@ -72,6 +76,7 @@ static int get_input_int_to_delete()
 
 static int find_id(employees_list_t *head, int id)
 {
+    // Check if linked list is empty
     if (head == NULL) {
         return -1;
     }
@@ -79,7 +84,9 @@ static int find_id(employees_list_t *head, int id)
     employees_list_t *temp = head;
     int count = 0;
 
+    // Loop through linked list
     while (temp != NULL) {
+        // Check if id of node is equal to key
         if (temp->employee_data->id == id) {
             return count;
         }
@@ -93,6 +100,8 @@ static int find_id(employees_list_t *head, int id)
 static int get_input_id(employees_list_t *head)
 {
     int id = get_input_int();
+
+    // Check if input is valid
     while (find_id(head, id) != -1) {
         printf("\tID already existed, enter again: ");
         id = get_input_int();
@@ -105,10 +114,13 @@ static bool check_name(char *name)
 {
     int index = 0;
     int name_length = strlen(name);
+
+    // Check if name if empty
     if (name_length <= 1) {
         return false;
     }
 
+    // Check if input is valid
     for (index; index < name_length-1; index++) {
         if (!isalpha(name[index])) {
             return false;
@@ -123,10 +135,12 @@ static char *get_input_name()
     char *input = malloc(MAX_STRING);
 
     fgets(input, MAX_STRING, stdin);
+    // Check if input is valid
     while (check_input_buffer(input) == 1 || !check_name(input)) {
         printf("\tInput too long or contain numbers/special character, enter again: ");
         fgets(input, MAX_STRING, stdin);
     }
+    // Strip line break at the end of input
     input[strcspn(input, "\n")] = 0;
 
     return input;
@@ -137,10 +151,12 @@ static char *get_input_char()
     char *input = malloc(MAX_STRING);
 
     fgets(input, MAX_STRING, stdin);
+    // Check if input is valid
     while (check_input_buffer(input) == 1) {
         printf("\tInput too long, enter again: ");
         fgets(input, MAX_STRING, stdin);
     }
+    // Strip line break at the end of input
     input[strcspn(input, "\n")] = 0;
 
     return input;
@@ -246,6 +262,7 @@ date_t *get_date()
 {
     date_t *date = malloc(sizeof(date_t));
 
+    // Get year from user and check if valid
     printf("\tEnter start year (1500-2023): ");  
     date->year = get_input_int();
     while (date->year < START_YEAR_MIN || date->year > START_YEAR_MAX) {
@@ -253,6 +270,7 @@ date_t *get_date()
         date->year = get_input_int();
     }
 
+    // Get month from user and check if valid
     printf("\tEnter start month: ");
     date->month = get_input_int();
     while (date->month > 12) {
@@ -260,6 +278,7 @@ date_t *get_date()
         date->month = get_input_int();
     }
 
+    // Get date from user and check if valid
     printf("\tEnter start day: ");
     date->day = get_input_int();
     while (!check_date(date->day, date->month)) {
@@ -288,11 +307,11 @@ void get_employee_data(employee_t *employee, employees_list_t *head)
     employee->start_date = get_date();
 
     clrscr();
-    //printf("\e[1;1H\e[2J");
 }
 
 employees_list_t *input_employees_information(employees_list_t *head, int size)
 {
+    // Get employee data and append to linked list
     for (int i = 0; i < size; i++) {
         printf("\nEnter infomation of employee %i\n", i + 1);
         employee_t *temp = malloc(sizeof(employee_t));
@@ -328,6 +347,7 @@ void free_employees_list(employees_list_t *head)
     temp = NULL;
 }
 
+// Swap data of 2 node in linked list
 void swap_element_employees_list(employees_list_t *node_1, employees_list_t *node_2)
 {
     employee_t *temp = node_1->employee_data;
@@ -341,8 +361,9 @@ bool compare_name(employees_list_t *employees_1, employees_list_t *employees_2)
     char *name_1 = employees_1->employee_data->full_name;
     char *name_2 = employees_2->employee_data->full_name;
 
+    // Check if 2 name are the same
     if (strcmp(name_1, name_2) == 0) {
-        
+        // If yes compare by id
         if (employees_1->employee_data->id > employees_2->employee_data->id) {
             return true;
         }
@@ -354,6 +375,7 @@ bool compare_name(employees_list_t *employees_1, employees_list_t *employees_2)
     int index_1 = 0;
     int index_2 = 0;
 
+    // Compare 2 name by chareacter from left to right, ignore space
     while (index_1 < name_1_size && index_2 < name_2_size) {
         if (name_1[index_1] == ' ') {
             index_1++;
@@ -489,6 +511,7 @@ e_sort_mode_t get_input_sort_order()
 {
     float input;
     printf("Select the sorted order of employees salary (1 = descending or 2 =ascending, or 0 = sorting employees full name alphabetically) or -1 to exit: ");
+    // Check if input is valid
     while ((scanf("%f", &input) != 1 || input < -1 || input > 2 || input - (int)input != 0) && clean_stdin()) {
         printf("\n*Warning:Failed! Please enter an 1, 2 or 3 interger.\nEnter again:  ");
     }
@@ -500,6 +523,7 @@ e_sort_mode_t get_input_sort_order()
 e_main_interface_option get_input_main_interface() 
 {
     float input;
+    // Check if input is valid
     while ((scanf("%f", &input) != 1 || input < 0 || input > 5 || input - (int)input != 0) && clean_stdin()) {
         printf("\n*Warning:Failed! Please enter a number from 0 to 5.\nEnter again:  ");
     }
@@ -547,12 +571,14 @@ void show_employee_table(employees_list_t *head)
 
 void delete_employee_by_index(employees_list_t **head, int index) 
 {
+    // Check if list empty
     if (*head == NULL || index == -1) {
         return;
     }
 
     employees_list_t *current = *head;
 
+    // If delete the fisrt element, change head to next node
     if (index == 0) {
         *head = current->next;
         free_employee(current->employee_data);
@@ -560,6 +586,7 @@ void delete_employee_by_index(employees_list_t **head, int index)
         return;
     }
 
+    // Loop throug list until the index'th node
     int count = 0;
     while (current != NULL && count < index - 1) {
         current = current->next;
@@ -570,7 +597,10 @@ void delete_employee_by_index(employees_list_t **head, int index)
         return;
     }
 
+    // Unlink node
     employees_list_t *next = current->next->next;
+
+    // Free node
     free_employee(current->next->employee_data);
     free(current->next); 
     current->next = next;
@@ -578,11 +608,13 @@ void delete_employee_by_index(employees_list_t **head, int index)
 
 int find_employee_by_id(employees_list_t *head)
 {
+    // Check if list empty
     if (head == NULL) {
         printf("Table empty\n\n");
         return -1;
     }
 
+    // Find the index of the employee by input
     printf("Enter ID of the employee you want to delete (or -1 to exit): ");
     int index = get_input_int_to_delete();
     if (index == -1) {
@@ -601,6 +633,7 @@ int find_employee_by_id(employees_list_t *head)
 
 bool check_name_duplicate(employees_list_t *head, char *name)
 {
+    // Check if list empty
     if (head == NULL) {
         return false;
     }
@@ -608,6 +641,7 @@ bool check_name_duplicate(employees_list_t *head, char *name)
     employees_list_t *temp = head;
     int count = 0;
 
+    // Check if threre are more than 1 of the same name in list
     while (temp != NULL) {
         if (strcmp(temp->employee_data->full_name, name) == 0) {
             count++;
@@ -624,6 +658,7 @@ bool check_name_duplicate(employees_list_t *head, char *name)
 
 int find_name(employees_list_t *head, char *name)
 {
+    // Check if list empty
     if (head == NULL) {
         return -1;
     }
@@ -631,6 +666,7 @@ int find_name(employees_list_t *head, char *name)
     employees_list_t *temp = head;
     int count = 0;
 
+    // Find the index of the same name as key
     while (temp != NULL) {
         if (strcmp(temp->employee_data->full_name, name) == 0) {
             return count;
@@ -644,11 +680,13 @@ int find_name(employees_list_t *head, char *name)
 
 int find_employee_by_name(employees_list_t *head)
 {
+    // Check if list empty
     if (head == NULL) {
         printf("Table empty\n\n");
         return -1;
     }
 
+    // Get the input name of the user
     printf("Enter full name of the employee you want to delete (or press e to exit): ");
     char *name = get_input_name(head);
     printf("%d\n", strcmp(name, "e"));
@@ -656,6 +694,7 @@ int find_employee_by_name(employees_list_t *head)
         free(name);
         return -1;
     }
+    // Check if name already exised in the list
     while (find_name(head, name) == -1) {
         free(name);
         printf("\tName not existed, enter again (or press e to exit): ");
