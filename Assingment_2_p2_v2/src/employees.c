@@ -2,13 +2,34 @@
 
 #define START_YEAR_MIN     1500
 #define START_YEAR_MAX     2023
-#define MAX_EMPLOYEES      50
-
 
 //Todo
 //employees_list_t *g_linked_list_head
 //bo bot tham so o cac ham
 //viet ham tra ve array de thao tac tren main
+
+employees_list_t *g_employee_list = NULL;
+
+void linked_list_to_array(employee_t *emplyee_data[], int *size)
+{
+    int index = 0;
+    
+    // Put data of employee to array
+    employees_list_t *temp = g_employee_list;
+    while (temp != NULL) {
+        emplyee_data[index] = temp->employee_data;
+        index++;
+        temp = temp->next;
+    }
+    
+    *size = index;
+
+    // Set the rest of array to NULL
+    while (index < *size) {
+        emplyee_data[index] = NULL;
+        index++;
+    }
+}
 
 static int clean_stdin()
 {
@@ -238,7 +259,7 @@ int find_employees_list_size(employees_list_t *g_employee_list)
 
 
 
-void print_employees_list(employees_list_t *g_employee_list)
+void print_employees_list()
 {
     employees_list_t *temp = g_employee_list;
 
@@ -257,10 +278,11 @@ void print_employees_list(employees_list_t *g_employee_list)
     printf("\n");
 }
 
-void get_employee_num(int *size)
+int get_employee_num()
 {
-    *size = get_input_size();
+    int size = get_input_size();
     clrscr();
+    return size;
 }
 
 date_t *get_date()
@@ -479,7 +501,7 @@ void split(employees_list_t* source, employees_list_t** front, employees_list_t*
 }
 
 // linked list of employee and order to be sorted
-void merge_sort(employees_list_t** g_employee_list, e_sort_mode_t order)
+void merge_sort(employees_list_t **g_employee_list, e_sort_mode_t order)
 {
     if (order == -1) {
         return;
@@ -501,6 +523,12 @@ void merge_sort(employees_list_t** g_employee_list, e_sort_mode_t order)
 
     // Merge the sorted halves
     *g_employee_list = merge(left, right, order);
+}
+
+void sort_employee_list()
+{
+    e_sort_mode_t order = get_input_sort_order(); 
+    merge_sort(&g_employee_list, order);
 }
 
 
@@ -545,25 +573,25 @@ e_main_interface_option show_main_interface()
     return option;
 }
 
-employees_list_t *input_employees(employees_list_t *g_employee_list, int *employee_num)
+employees_list_t *input_employees()
 {
     //Get number of employee
     printf("Enter number of employee (or -1 to exit): ");
-    get_employee_num(employee_num);
+    int employee_num = get_employee_num();
 
-    if (*employee_num == -1) {
+    if (employee_num == -1) {
         return g_employee_list;
     }
 
     //Get employee data
-    g_employee_list = input_employees_information(g_employee_list ,*employee_num);
+    g_employee_list = input_employees_information(g_employee_list, employee_num);
 
     return g_employee_list;
 }
 
-void show_employee_table(employees_list_t *g_employee_list)
+void show_employee_table()
 {
-    print_employees_list(g_employee_list);
+    print_employees_list();
 }
 
 void delete_employee_by_index(employees_list_t **g_employee_list, int index) 

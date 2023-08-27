@@ -13,7 +13,8 @@
 #include <ctype.h> 
 #include <string.h>
 
-#define MAX_STRING 50
+#define MAX_EMPLOYEES      50
+#define MAX_STRING         50
 
 typedef enum {
     e_quit = 0x00U,
@@ -60,7 +61,7 @@ typedef struct node
 *
 * @return None
 */
-void get_employee_num(int *size);
+int get_employee_num();
 
 /*!
 * @brief <Get the data of employee input from keyboard>
@@ -91,7 +92,7 @@ employees_list_t *input_employees_information(employees_list_t *head, int size);
 *
 * @return None
 */
-void print_employees_list(employees_list_t *head);
+void print_employees_list();
 
 /*!
 * @brief <Free allocated memory for list of employee>
@@ -125,7 +126,7 @@ e_main_interface_option show_main_interface();
 *
 * @return employees_list_t * <pointer point to the head node of employee linked list>
 */
-employees_list_t *input_employees(employees_list_t *head, int *employee_num);
+employees_list_t *input_employees();
 
 /*!
 * @brief <Print list of employee to teminal>
@@ -134,7 +135,7 @@ employees_list_t *input_employees(employees_list_t *head, int *employee_num);
 *
 * @return None
 */
-void show_employee_table(employees_list_t *head);
+void show_employee_table();
 
 /*!
 * @brief <Sort employee list>
@@ -143,7 +144,7 @@ void show_employee_table(employees_list_t *head);
 *
 * @return None
 */
-void merge_sort(employees_list_t** head, e_sort_mode_t order);
+void merge_sort(employees_list_t **g_employee_list, e_sort_mode_t order);
 
 /*!
 * @brief <find employee by id>
@@ -171,5 +172,7 @@ int find_employee_by_name(employees_list_t *head);
 * @return None
 */
 void delete_employee_by_index(employees_list_t **head, int index);
+
+void sort_employee_list();
 
 #endif
