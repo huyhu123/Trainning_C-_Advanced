@@ -54,125 +54,20 @@ typedef struct node
 } employees_list_t;
 
 
-/*!
-* @brief <Get the number of employee input from keyboard>
-*
-* @param *size [In/Out] <pointer point to the employee number>
-*
-* @return None
-*/
-int get_employee_num();
-
-/*!
-* @brief <Get the data of employee input from keyboard>
-*
-* @param  *employee [In/Out] <pointer point to the employee data>
-*
-* @param  *head [In/Out] <pointer point to the head node of employee linked list>
-*
-* @return None
-*/
-void get_employee_data(employee_t *employee, employees_list_t *head);
-
-/*!
-* @brief <Get the data of employee input from keyboard>
-*
-* @param  *head [In/Out] <pointer point to the head node of employee linked list>
-*
-* @param *size [In] <employee number>
-*
-* @return employees_list_t * <pointer point to the head node of employee linked list>
-*/
-employees_list_t *input_employees_information(employees_list_t *head, int size);
-
-/*!
-* @brief <Print list of employee to teminal>
-*
-* @param  *head [In] <pointer point to the head node of employee linked list>
-*
-* @return None
-*/
 void print_employees_list();
 
-/*!
-* @brief <Free allocated memory for list of employee>
-*
-* @param  *head [In] <pointer point to the head node of employee linked list>
-*
-* @return None
-*/
-void free_employees_list(employees_list_t *head);
+void free_employees_list();
 
-/*!
-* @brief <get input sort order from key board>
-*
-* @return e_sort_mode_t <Sort order to sort employee list>
-*/
-e_sort_mode_t get_input_sort_order();
-
-/*!
-* @brief <get input option of main interface from key board>
-*
-* @return e_main_interface_option <option for interface>
-*/
 e_main_interface_option show_main_interface();
 
-/*!
-* @brief <Get the data of employee input from keyboard>
-*
-* @param  *head [In/Out] <pointer point to the head node of employee linked list>
-*
-* @param *employee_num [In/Out] <employee number>
-*
-* @return employees_list_t * <pointer point to the head node of employee linked list>
-*/
-employees_list_t *input_employees();
+void input_employees(employee_t employee_list[], int *employee_num);
 
-/*!
-* @brief <Print list of employee to teminal>
-*
-* @param  *head [In] <pointer point to the head node of employee linked list>
-*
-* @return None
-*/
-void show_employee_table();
+void sort_employee_list(employee_t employee_list[], int *employee_num);
 
-/*!
-* @brief <Sort employee list>
-*
-* @param  **head [In] <pointer to pointer point to the head node of employee linked list>
-*
-* @return None
-*/
-void merge_sort(employees_list_t **g_employee_list, e_sort_mode_t order);
+void delete_employee_by_id(employee_t employee_list[], int *employee_num);
 
-/*!
-* @brief <find employee by id>
-*
-* @param  **head [In] <pointer to pointer point to the head node of employee linked list>
-*
-* @return <index of the employee>
-*/
-int find_employee_by_id(employees_list_t *head);
+void delete_employee_by_full_name(employee_t employee_list[], int *employee_num);
 
-/*!
-* @brief <find employee by name>
-*
-* @param  *head [In] <pointer point to the head node of employee linked list>
-*
-* @return <index of the employee>
-*/
-int find_employee_by_name(employees_list_t *head);
-
-/*!
-* @brief <remove an employee by index>
-*
-* @param  **head [In] <pointer to pointer point to the head node of employee linked list>
-*
-* @return None
-*/
-void delete_employee_by_index(employees_list_t **head, int index);
-
-void sort_employee_list();
+void print_employees_array(employee_t employee_list[], int employee_num);
 
 #endif
