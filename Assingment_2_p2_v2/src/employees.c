@@ -51,13 +51,13 @@ static bool check_input_buffer(char *input)
 }
 
 // Get input size of employee
-static int get_input_size() 
+static int get_input_size(int employee_num) 
 {
     float input;
 
     // Check if input is valid
-    while ((scanf("%f", &input) != 1 || input < -1 || input > MAX_EMPLOYEES || input - (int)input != 0) && clean_stdin()) {
-        printf("\n*Warning:Failed! Please enter an interger from 0 to 50 (or -1 to exit).\nEnter again:  ");
+    while ((scanf("%f", &input) != 1 || input < -1 || input + employee_num > MAX_EMPLOYEES || input - (int)input != 0) && clean_stdin()) {
+        printf("\n*Warning:Failed! Not valid input or number of employee more than 50 (or -1 to exit).\nEnter again:  ");
     }
     clean_stdin();
 
@@ -289,9 +289,9 @@ void print_employees_array(employee_t employee_list[], int employee_num)
     printf("\n");
 }
 
-int get_employee_num()
+int get_employee_num(int employee_num)
 {
-    int size = get_input_size();
+    int size = get_input_size(employee_num);
     clrscr();
     return size;
 }
@@ -588,7 +588,7 @@ void input_employees(employee_t employee_list[], int *employee_num)
 {
     //Get number of employee
     printf("Enter number of employee (or -1 to exit): ");
-    int employee_num_add = get_employee_num();
+    int employee_num_add = get_employee_num(*employee_num);
 
     if (employee_num_add == -1) {
         return;
