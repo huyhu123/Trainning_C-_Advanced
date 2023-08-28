@@ -5,13 +5,6 @@
 
 employees_list_t *g_employee_list = NULL;
 
-void free_employee_data(employee_t employee) 
-{
-    free(employee.start_date);
-    free(employee.full_name);
-    free(employee.department);
-}
-
 void linked_list_to_array(employee_t employee_list[], int *employee_num)
 { 
     // Put data of employee to array
