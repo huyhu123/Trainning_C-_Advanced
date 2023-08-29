@@ -2,7 +2,7 @@ CC = gcc
 INC = -I./inc
 SRC = ./src/*.c
 
-all: run
+all: run clean
 
 run: main
 	./main
@@ -21,4 +21,4 @@ debug_gdb: main.c $(SRC)
 	rm -rf gdb_debug
 
 clean:
-	rm -rf main debug gdb_debug
+	rm -rf main

@@ -4,7 +4,7 @@
 #define START_YEAR_MAX     2023
 #define MAX_EMPLOYEES      50
 
-
+// Clear stdin
 static int clean_stdin()
 {
     int c;
