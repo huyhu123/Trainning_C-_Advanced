@@ -5,6 +5,7 @@
         "array": "c",
         "initializer_list": "c",
         "utility": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "sstream": "c"
     }
 }

@@ -87,10 +87,32 @@ e_main_interface_option show_main_interface()
     return option;
 }
 
+// Get current dir
+char *get_current_directory() 
+{
+    char *buffer = (char*)malloc(sizeof(char) * 4096);
+
+    if (getcwd(buffer, 4096) == NULL) {
+        perror("Error getting current directory");
+        free(buffer);
+        return NULL;
+    }
+
+    return buffer;
+}
+
+// Check if directory exist
+bool directory_exists(const char *path) {
+    if (access(path, F_OK) != -1) {
+        return true; // directory exists
+    } else {
+        return false; // directory does not exist
+    }
+}
 
 bool is_validfile_name(const char *file_name) {
     // Check if the file name is empty or exceeds the maximum length
-    if (strlen(file_name) == 0 || strlen(file_name) > 255) {
+    if (strlen(file_name) == 0 || strlen(file_name) > FILE_NAME_MAX) {
         return false;
     }
     
@@ -111,7 +133,7 @@ bool is_validfile_name(const char *file_name) {
     return true;
 }
 
-void create_new_file_name(char *new_file_name, char *file_name, char *output_name)
+void create_new_file_name(char *new_file_name, char *file_name, char *output_name, char *output_dir)
 {
     char *ext = strrchr(file_name, '.');
     if (!ext) {
@@ -120,7 +142,9 @@ void create_new_file_name(char *new_file_name, char *file_name, char *output_nam
         ext = ext + 1;
     }
 
-    strcpy(new_file_name, output_name);
+    strcpy(new_file_name, output_dir);
+    strcat(new_file_name, "/");
+    strcat(new_file_name, output_name);
     strcat(new_file_name, ".");
     strcat(new_file_name, ext);
 }
@@ -165,7 +189,7 @@ char decode_character_caesar_cipher(char ch, int shift)
     return ch;
 }
 
-void encode_caesar_cipher(char *file_name, int shift, char *output_name)
+void encode_caesar_cipher(char *file_name, int shift, char *output_name, char *output_dir)
 {
     FILE *file;
     FILE *temp;
@@ -173,7 +197,7 @@ void encode_caesar_cipher(char *file_name, int shift, char *output_name)
 
     // Get new file name and extension
     char new_file_name[FILE_NAME_MAX]; 
-    create_new_file_name(new_file_name, file_name, output_name);
+    create_new_file_name(new_file_name, file_name, output_name, output_dir);
 
     // Open file
     file = fopen(file_name, "r");
@@ -196,7 +220,7 @@ void encode_caesar_cipher(char *file_name, int shift, char *output_name)
     printf("\n\n");
 }
 
-void decode_caesar_cipher(char *file_name, int shift, char *output_name)
+void decode_caesar_cipher(char *file_name, int shift, char *output_name, char *output_dir)
 {
     FILE *file;
     FILE *temp;
@@ -204,7 +228,7 @@ void decode_caesar_cipher(char *file_name, int shift, char *output_name)
 
     // Get new file name and extension
     char new_file_name[FILE_NAME_MAX]; 
-    create_new_file_name(new_file_name, file_name, output_name);
+    create_new_file_name(new_file_name, file_name, output_name, output_dir);
 
     // Open file
     file = fopen(file_name, "r");
@@ -229,22 +253,69 @@ void decode_caesar_cipher(char *file_name, int shift, char *output_name)
 
 void get_file_name(char *file_name)
 {
-    printf("Enter file name: ");
+    char pre_file_name[FILE_NAME_MAX];
+    strcpy(pre_file_name, file_name);
+
+    printf("Enter file name (or e to exit): ");
     get_input_char(file_name);
+    if (strcmp(file_name, "e") == 0) {
+        strcpy(file_name, pre_file_name);
+        return;
+    }
+
     // Check if file exist
     while (!check_file_exist(file_name)) {
         printf("File not exist, enter again (or e to exit): ");
         get_input_char(file_name);
+        if (strcmp(file_name, "e") == 0) {
+            strcpy(file_name, pre_file_name);
+            return;
+        }
     }
 }
 
 void change_output_name(char *output_name)
 {
-    printf("Enter new output file name: ");
+    char pre_file_name[FILE_NAME_MAX];
+    strcpy(pre_file_name, output_name);
+
+    printf("Enter new output file name (or e to exit): ");
     get_input_char(output_name);
-    while (is_validfile_name(output_name)) {
-        printf("File name can't contain special char");
+    if (strcmp(output_name, "e") == 0) {
+        strcpy(output_name, pre_file_name);
+        return;
+    }
+
+    // Check if name valid
+    while (!is_validfile_name(output_name)) {
+        printf("Invalid file name (contain '\\/:*?\"<>|', too long or have space, '.' at start or end)\n Enter again (or e to exit): ");
         get_input_char(output_name);
+        if (strcmp(output_name, "e") == 0) {
+            strcpy(output_name, pre_file_name);
+            return;
+        }
+    }
+}
+
+void change_output_dir(char *output_dir)
+{
+    char pre_output_name[FILE_NAME_MAX];
+    strcpy(pre_output_name, output_dir);
+
+    printf("Enter new output dir (or e to exit): ");
+    get_input_char(output_dir);
+    if (strcmp(output_dir, "e") == 0) {
+        strcpy(output_dir, pre_output_name);
+        return;
+    }
+
+    while (!directory_exists(output_dir)) {
+        printf("Directory not exist, enter again (or e to exit): ");
+        get_input_char(output_dir);
+        if (strcmp(output_dir, "e") == 0) {
+            strcpy(output_dir, pre_output_name);
+            return;
+        }
     }
 }
 
