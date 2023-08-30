@@ -74,21 +74,52 @@ e_main_interface_option get_input_main_interface()
 e_main_interface_option show_main_interface() 
 {
     printf("Choose an option:\n");
-    printf("0. Quit\n");
     printf("1. Encode file\n");
     printf("2. Decode file\n");
     printf("3. Change file\n");
     printf("4. Change shift number\n");
+    printf("0. Quit\n");
     printf("Your option: ");
     e_main_interface_option option = get_input_main_interface();
 
     return option;
 }
 
+
+void create_new_file_name_encode(char *new_file_name, char *file_name)
+{
+    char *ext = strrchr(file_name, '.');
+    if (!ext) {
+        ext = "";
+    } else {
+        ext = ext + 1;
+    }
+
+    strcpy(new_file_name, "encode_");
+    //strcat(new_file_name, file_name);
+    strcat(new_file_name, ".");
+    strcat(new_file_name, ext);
+}
+
+void create_new_file_name_decode(char *new_file_name, char *file_name)
+{
+    char *ext = strrchr(file_name, '.');
+    if (!ext) {
+        ext = "";
+    } else {
+        ext = ext + 1;
+    }
+
+    strcpy(new_file_name, "decode_");
+    //strcat(new_file_name, file_name);
+    strcat(new_file_name, ".");
+    strcat(new_file_name, ext);
+}
+
 char encode_character_caesar_cipher(char ch, int shift)
 {
     if (isalnum(ch)) {
-        //Lowercase characters.
+        // Lowercase characters.
         if (islower(ch)) {
             ch = (ch - 'a' + shift) % 26 + 'a';
         }
@@ -108,7 +139,7 @@ char encode_character_caesar_cipher(char ch, int shift)
 char decode_character_caesar_cipher(char ch, int shift)
 {
     if (isalnum(ch)) {
-        //Lowercase characters.
+        // Lowercase characters.
         if (islower(ch)) {
             ch = (ch - 'a' - shift + 26) % 26 + 'a';
         }
@@ -125,25 +156,35 @@ char decode_character_caesar_cipher(char ch, int shift)
     return ch;
 }
 
-
 void encode_caesar_cipher(char *file_name, int shift)
 {
     FILE *file;
     FILE *temp;
     char ch;
-    char new_file_name[FILE_NAME_MAX]; 
 
+    // Get new file name and extension
+    char new_file_name[FILE_NAME_MAX]; 
+    create_new_file_name_encode(new_file_name, file_name);
+
+    // Open file
     file = fopen(file_name, "r");
-    temp = fopen("temp.txt", "w");
+    temp = fopen(new_file_name, "w");
+
     // Read charactor from file 
     ch = fgetc(file);
+    printf("\nEncrypt file: \n");
     while(ch != EOF) {
         ch = encode_character_caesar_cipher(ch, shift); // encrypt character
         fputc(ch, temp); // put to temp.txt
+        printf("%c", ch);
         ch = fgetc(file); // get next character
     }
+
+    // Close file
     fclose(file);
     fclose(temp);
+
+    printf("\n\n");
 }
 
 void decode_caesar_cipher(char *file_name, int shift)
@@ -152,17 +193,29 @@ void decode_caesar_cipher(char *file_name, int shift)
     FILE *temp;
     char ch;
 
+    // Get new file name and extension
+    char new_file_name[FILE_NAME_MAX]; 
+    create_new_file_name_decode(new_file_name, file_name);
+
+    // Open file
     file = fopen(file_name, "r");
-    temp = fopen("temp.txt", "w");
+    temp = fopen(new_file_name, "w");
+
     // Read charactor from file 
+    printf("\nDecrypt file: \n");
     ch = fgetc(file);
     while(ch != EOF) {
         ch = decode_character_caesar_cipher(ch, shift); // decrypt character
         fputc(ch, temp); // put to temp.txt
+        printf("%c", ch);
         ch = fgetc(file); // get next character
     }
+
+    // Close file
     fclose(file);
     fclose(temp);
+
+    printf("\n\n");
 }
 
 void get_file_name(char *file_name)
