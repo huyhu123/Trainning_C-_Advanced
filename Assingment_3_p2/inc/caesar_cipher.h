@@ -20,6 +20,7 @@ typedef enum {
     e_decode = 0x02U,
     e_change_file = 0x03U,
     e_change_shift = 0x04U,
+    e_change_output_name = 0x05U,
 } e_main_interface_option;
 
 void get_input_char(char input[]);
@@ -28,12 +29,14 @@ int check_file_exist(const char file_name[]);
 
 e_main_interface_option show_main_interface();
 
-void encode_caesar_cipher(char *file_name, int shift);
+void encode_caesar_cipher(char *file_name, int shift, char *output_name);
 
-void decode_caesar_cipher(char *file_name, int shift);
+void decode_caesar_cipher(char *file_name, int shift, char *output_name);
 
 void get_file_name(char *file_name);
 
 int get_shift_number();
+
+void change_output_name(char *output_name);
 
 #endif

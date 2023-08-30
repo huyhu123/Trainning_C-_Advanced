@@ -50,7 +50,7 @@ void get_input_char(char input[])
 
     // Check if input is valid
     while (check_input_buffer(input) == 1) {
-        printf("\tInput too long, enter again: ");
+        printf("\tInput too long, enter again (or e to exit): ");
         fgets(input, FILE_NAME_MAX, stdin);
     }
     // Strip line break at the end of input
@@ -62,8 +62,8 @@ e_main_interface_option get_input_main_interface()
 {
     float input;
     // Check if input is valid
-    while ((scanf("%f", &input) != 1 || input < 0 || input > 4 || input - (int)input != 0) && clean_stdin()) {
-        printf("  *Warning:Failed! Please enter a number from 0 to 2. Enter again:  ");
+    while ((scanf("%f", &input) != 1 || input < 0 || input > 6 || input - (int)input != 0) && clean_stdin()) {
+        printf("  *Warning:Failed! Please enter a number from 0 to 6. Enter again:  ");
     }
     clean_stdin();
 
@@ -78,6 +78,8 @@ e_main_interface_option show_main_interface()
     printf("2. Decode file\n");
     printf("3. Change file\n");
     printf("4. Change shift number\n");
+    printf("5. Change output file name\n");
+    printf("6. Change output directory\n");
     printf("0. Quit\n");
     printf("Your option: ");
     e_main_interface_option option = get_input_main_interface();
@@ -86,22 +88,30 @@ e_main_interface_option show_main_interface()
 }
 
 
-void create_new_file_name_encode(char *new_file_name, char *file_name)
-{
-    char *ext = strrchr(file_name, '.');
-    if (!ext) {
-        ext = "";
-    } else {
-        ext = ext + 1;
+bool is_validfile_name(const char *file_name) {
+    // Check if the file name is empty or exceeds the maximum length
+    if (strlen(file_name) == 0 || strlen(file_name) > 255) {
+        return false;
     }
-
-    strcpy(new_file_name, "encode_");
-    //strcat(new_file_name, file_name);
-    strcat(new_file_name, ".");
-    strcat(new_file_name, ext);
+    
+    // Check if the file name contains any invalid characters
+    const char *invalid_chars = "\\/:*?\"<>|";
+    for (int i = 0; i < strlen(invalid_chars); i++) {
+        if (strchr(file_name, invalid_chars[i]) != NULL) {
+            return false;
+        }
+    }
+    
+    // Check if the file name starts or ends with a space or a period
+    if (file_name[0] == ' ' || file_name[0] == '.' || 
+        file_name[strlen(file_name)-1] == ' ' || file_name[strlen(file_name)-1] == '.') {
+        return false;
+    }
+    
+    return true;
 }
 
-void create_new_file_name_decode(char *new_file_name, char *file_name)
+void create_new_file_name(char *new_file_name, char *file_name, char *output_name)
 {
     char *ext = strrchr(file_name, '.');
     if (!ext) {
@@ -110,8 +120,7 @@ void create_new_file_name_decode(char *new_file_name, char *file_name)
         ext = ext + 1;
     }
 
-    strcpy(new_file_name, "decode_");
-    //strcat(new_file_name, file_name);
+    strcpy(new_file_name, output_name);
     strcat(new_file_name, ".");
     strcat(new_file_name, ext);
 }
@@ -156,7 +165,7 @@ char decode_character_caesar_cipher(char ch, int shift)
     return ch;
 }
 
-void encode_caesar_cipher(char *file_name, int shift)
+void encode_caesar_cipher(char *file_name, int shift, char *output_name)
 {
     FILE *file;
     FILE *temp;
@@ -164,7 +173,7 @@ void encode_caesar_cipher(char *file_name, int shift)
 
     // Get new file name and extension
     char new_file_name[FILE_NAME_MAX]; 
-    create_new_file_name_encode(new_file_name, file_name);
+    create_new_file_name(new_file_name, file_name, output_name);
 
     // Open file
     file = fopen(file_name, "r");
@@ -187,7 +196,7 @@ void encode_caesar_cipher(char *file_name, int shift)
     printf("\n\n");
 }
 
-void decode_caesar_cipher(char *file_name, int shift)
+void decode_caesar_cipher(char *file_name, int shift, char *output_name)
 {
     FILE *file;
     FILE *temp;
@@ -195,7 +204,7 @@ void decode_caesar_cipher(char *file_name, int shift)
 
     // Get new file name and extension
     char new_file_name[FILE_NAME_MAX]; 
-    create_new_file_name_decode(new_file_name, file_name);
+    create_new_file_name(new_file_name, file_name, output_name);
 
     // Open file
     file = fopen(file_name, "r");
@@ -224,8 +233,18 @@ void get_file_name(char *file_name)
     get_input_char(file_name);
     // Check if file exist
     while (!check_file_exist(file_name)) {
-        printf("File not exist, enter again: ");
+        printf("File not exist, enter again (or e to exit): ");
         get_input_char(file_name);
+    }
+}
+
+void change_output_name(char *output_name)
+{
+    printf("Enter new output file name: ");
+    get_input_char(output_name);
+    while (is_validfile_name(output_name)) {
+        printf("File name can't contain special char");
+        get_input_char(output_name);
     }
 }
 
