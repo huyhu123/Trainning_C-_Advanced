@@ -46,9 +46,31 @@ void get_input_char(char input[])
     input[strcspn(input, "\n")] = 0;
 }
 
+// Check empty dir
+bool check_empty_dir(const char file_name[])
+{
+    int index = 0;
+
+    for (index; index < strlen(file_name); index++) {
+        if (file_name[index] != '\\' && file_name[index] != '/') {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 // Check if file exist
 int check_file_exist(const char file_name[])
 {
+    if (file_name == NULL) {
+        return 0;
+    }
+
+    if (!check_empty_dir(file_name)) {
+        return 0;
+    }
+
     FILE *file;
     if ((file = fopen(file_name, "r"))) {
         fclose(file);

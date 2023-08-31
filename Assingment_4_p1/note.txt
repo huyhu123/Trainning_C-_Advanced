@@ -1,0 +1,24 @@
+Compile gemtek_mathlib.c: 
+    gcc -c ./src/gemtek_mathlib.c
+
+        -c: Compile and assemble, but do not link.
+
+Bundle all object files into one static library. 
+    ar cr ./lib/gemtek_mahlib.a gemtek_mathlib.o
+
+        ar: create a static library or to add additional object files to an existing static library.
+        c:  create the library if it doesn't already exist.
+        r: insert object files or replace existing object files in the library, with the new object files.
+    
+* Optional
+After an archive is created or modified, there is a need to index it. 
+This index is later used by the compiler to speed up symbol-lookup inside the library and to make sure that 
+the order of the symbols in the library will not matter during compilation. 
+    ranlib ./lib/gemtek_mahlib.a
+
+
+compile main.c
+    gcc main.c -l:gemtek_mahlib.a -o main -I./inc -L./lib
+        '-L:' : Specifies non standard lib
+        '-l:' : link with static libraries
+        '-I'  : Specifies included dir
