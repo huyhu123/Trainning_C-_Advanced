@@ -53,7 +53,7 @@ bool check_empty_dir(const char file_name[])
     int index = 0;
 
     for (index; index < strlen(file_name); index++) {
-        if (file_name[index] != '\\' && file_name[index] != '/') {
+        if (file_name[index] != '\\' && file_name[index] != '/' && file_name[index] != '.') {
             return true;
         }
     }
