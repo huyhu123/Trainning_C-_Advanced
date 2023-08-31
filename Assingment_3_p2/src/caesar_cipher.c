@@ -19,15 +19,16 @@ static bool check_input_buffer(char input[])
 }
 
 // Get positive interger input
-static int get_input_int() 
-{
+static int get_input_int() {
     float input;
+    int numScanned;  // variable to store the number of values successfully scanned
 
     // Check if input is valid
-    while ((scanf("%f", &input) != 1 || input < 0 || input - (int)input != 0) && clean_stdin()) {
-        printf("*Warning:Failed! Please enter an positive interger.Enter again:  ");
+    while (((numScanned = scanf("%f", &input)) != 1) || input < 0 || input - (int)input != 0 || getchar() != '\n') {
+        // If scanning for a float fails or the input has extra characters, print a warning message and prompt again
+        printf("*Warning: Failed! Please enter a positive integer. Enter again: ");
+        clean_stdin();
     }
-    clean_stdin();
 
     return (int)input;
 }
