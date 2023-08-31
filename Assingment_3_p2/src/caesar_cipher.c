@@ -291,7 +291,7 @@ void decode_caesar_cipher(char *file_name, int shift, char *output_name, char *o
 
 void get_file_name(char *file_name)
 {
-    char pre_file_name[FILE_NAME_MAX];
+    char pre_file_name[FILE_NAME_MAX] = "";
     strcpy(pre_file_name, file_name);
 
     // Get file name

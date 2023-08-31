@@ -8,7 +8,7 @@ int main() {
     char *current_dir = get_current_directory();
 
     get_file_name(file_name);
-    if (strcmp(file_name, "") == 0) {
+    if (!check_file_exist(file_name)) {
         return 0;
     }
     shift = get_shift_number();
