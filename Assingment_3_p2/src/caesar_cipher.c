@@ -32,17 +32,6 @@ static int get_input_int()
     return (int)input;
 }
 
-// Check if file exist
-int check_file_exist(const char file_name[])
-{
-    FILE *file;
-    if ((file = fopen(file_name, "r"))) {
-        fclose(file);
-        return 1;
-    }
-    return 0;
-}
-
 // Get input file name
 void get_input_char(char input[]) 
 {
@@ -55,6 +44,17 @@ void get_input_char(char input[])
     }
     // Strip line break at the end of input
     input[strcspn(input, "\n")] = 0;
+}
+
+// Check if file exist
+int check_file_exist(const char file_name[])
+{
+    FILE *file;
+    if ((file = fopen(file_name, "r"))) {
+        fclose(file);
+        return 1;
+    }
+    return 0;
 }
 
 // Get input for main UI
@@ -135,6 +135,7 @@ bool is_validfile_name(const char *file_name) {
 
 void create_new_file_name(char *new_file_name, char *file_name, char *output_name, char *output_dir)
 {
+    // Get file extension
     char *ext = strrchr(file_name, '.');
     if (!ext) {
         ext = "";
@@ -142,6 +143,7 @@ void create_new_file_name(char *new_file_name, char *file_name, char *output_nam
         ext = ext + 1;
     }
 
+    // Make new file name
     strcpy(new_file_name, output_dir);
     strcat(new_file_name, "/");
     strcat(new_file_name, output_name);
@@ -254,6 +256,7 @@ void decode_caesar_cipher(char *file_name, int shift, char *output_name, char *o
         printf("File %s already exixted, overwrite file (y/n)? : ", new_file_name);
         get_input_char(input);
 
+        // Check if user want to overwrite file
         while (!strcmp(input, "y") == 0) {
             if (strcmp(input, "n") == 0) {
                 return;
@@ -291,6 +294,7 @@ void get_file_name(char *file_name)
     char pre_file_name[FILE_NAME_MAX];
     strcpy(pre_file_name, file_name);
 
+    // Get file name
     printf("Enter file name (or e to exit): ");
     get_input_char(file_name);
     if (strcmp(file_name, "e") == 0) {
@@ -316,6 +320,7 @@ void change_output_name(char *output_name)
     char pre_file_name[FILE_NAME_MAX];
     strcpy(pre_file_name, output_name);
 
+    // Get output file name
     printf("Enter new output file name (or e to exit): ");
     get_input_char(output_name);
     if (strcmp(output_name, "e") == 0) {
@@ -341,6 +346,7 @@ void change_output_dir(char *output_dir)
     char pre_output_name[FILE_NAME_MAX];
     strcpy(pre_output_name, output_dir);
 
+    // Get output dir
     printf("Enter new output dir (or e to exit): ");
     get_input_char(output_dir);
     if (strcmp(output_dir, "e") == 0) {
@@ -348,6 +354,7 @@ void change_output_dir(char *output_dir)
         return;
     }
 
+    // Check if dir exist
     while (!directory_exists(output_dir)) {
         printf("Directory not exist, enter again (or e to exit): ");
         get_input_char(output_dir);
