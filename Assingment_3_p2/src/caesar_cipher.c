@@ -199,13 +199,31 @@ void encode_caesar_cipher(char *file_name, int shift, char *output_name, char *o
     char new_file_name[FILE_NAME_MAX]; 
     create_new_file_name(new_file_name, file_name, output_name, output_dir);
 
+    // Check if file already exixted
+    if (check_file_exist(new_file_name)) {
+        char input[FILE_NAME_MAX];
+        printf("File %s already exixted, overwrite file (y/n)? : ", new_file_name);
+        get_input_char(input);
+
+        while (!strcmp(input, "y") == 0) {
+            if (strcmp(input, "n") == 0) {
+                return;
+            }
+            printf("Please type 'y' or 'n': ");
+            get_input_char(input);
+        }
+    }
+
+
     // Open file
     file = fopen(file_name, "r");
     temp = fopen(new_file_name, "w");
 
+    clrscr();
+
     // Read charactor from file 
     ch = fgetc(file);
-    printf("\nEncrypt file: \n");
+    printf("\nEncrypt file %s to %s sucessful: \n", file_name, new_file_name);
     while(ch != EOF) {
         ch = encode_character_caesar_cipher(ch, shift); // encrypt character
         fputc(ch, temp); // put to temp.txt
@@ -230,12 +248,29 @@ void decode_caesar_cipher(char *file_name, int shift, char *output_name, char *o
     char new_file_name[FILE_NAME_MAX]; 
     create_new_file_name(new_file_name, file_name, output_name, output_dir);
 
+    // Check if file already exixted
+    if (check_file_exist(new_file_name)) {
+        char input[FILE_NAME_MAX];
+        printf("File %s already exixted, overwrite file (y/n)? : ", new_file_name);
+        get_input_char(input);
+
+        while (!strcmp(input, "y") == 0) {
+            if (strcmp(input, "n") == 0) {
+                return;
+            }
+            printf("Please type 'y' or 'n': ");
+            get_input_char(input);
+        }
+    }
+
+    clrscr();
+
     // Open file
     file = fopen(file_name, "r");
     temp = fopen(new_file_name, "w");
 
     // Read charactor from file 
-    printf("\nDecrypt file: \n");
+    printf("\nDecrypt file %s to %s sucessful: \n", file_name, new_file_name);
     ch = fgetc(file);
     while(ch != EOF) {
         ch = decode_character_caesar_cipher(ch, shift); // decrypt character
@@ -276,6 +311,8 @@ void get_file_name(char *file_name)
 
 void change_output_name(char *output_name)
 {
+    clrscr();
+
     char pre_file_name[FILE_NAME_MAX];
     strcpy(pre_file_name, output_name);
 
@@ -299,6 +336,8 @@ void change_output_name(char *output_name)
 
 void change_output_dir(char *output_dir)
 {
+    clrscr();
+
     char pre_output_name[FILE_NAME_MAX];
     strcpy(pre_output_name, output_dir);
 
