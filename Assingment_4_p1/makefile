@@ -9,7 +9,7 @@ run: main
 	./main
 
 main: gemtek_mathlib.o gemtek_mahlib.a main.c
-	$(CC) main.c -l:gemtek_mahlib.a -o main -I$(INC) -L$(LIB)
+	$(CC) main.c -l:gemtek_mahlib.a -o main -I$(INC) -L$(LIB) -lm
 
 gemtek_mahlib.a: gemtek_mathlib.o
 	ar cr $(LIB)/gemtek_mahlib.a gemtek_mathlib.o

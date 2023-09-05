@@ -4,12 +4,11 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-float square(int x);
+double square(int x);
 
-float cube(int x);
+double cube(int x);
 
 int is_fibonacci(float n);
 
-void get_input_float(float *value);
-
+void get_input_int(int *value);
 #endif

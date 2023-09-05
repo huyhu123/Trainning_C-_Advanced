@@ -8,6 +8,7 @@
         "typeinfo": "c",
         "sstream": "c",
         "type_traits": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "cmath": "c"
     }
 }

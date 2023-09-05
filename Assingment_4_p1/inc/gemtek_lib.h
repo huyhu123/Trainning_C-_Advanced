@@ -2,9 +2,17 @@
 #define _GEMTEK_LIB_H_
 
 #include <stdio.h>
+#include <stdbool.h>
+#include <ctype.h>
+#include <string.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <limits.h>
 
-float square(int x);
+double square(int x);
 
-float cube(int x);
+double cube(int x);
+
+void get_input_int(int *value);
 
 #endif
