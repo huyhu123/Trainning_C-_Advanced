@@ -1,0 +1,58 @@
+***
+- Library that acan be linked by dynamic linker when proocess is loaded
+into memory (.so) (libc.so)
+- Exixt on the taget devive and loaded 1 times into the shared Library
+- Pro: Any changes to the shared library do not require
+the program that link into it to be recompiled.
+- Con: require .so to be on the taget platform
+
+* Independent-code
+- Should be compiled as position-independent code (-fpic/-fPIC)
+(being placed somewhere in the primary memory (real memory), executes properly regardless of its absolute address
+->not tied to a specific address->can be loaded at different addresses in different processes.)
+
+- Global Offset table
+    + Table of run-time addresses of dynamic linked functions
+
+- -fpic: there is a limit on the size of the global offset table (limit depend on machine)
+    -> when conpile excess the limit -> Error
+- -fPIC: no limit of global offset table
+    -> Alway works, but not as small as fast as fpic
+
+* Namming
+- Real name: libname.so.x.y.z
+    + x = major version
+    + y = minor version
+    + z = patch version
+        Ex: libjpeg.so.8.2.2
+
+- Shared Object name (soname)
+    + lable for a major version of a shared object 
+    + A symbol name that point to the real name 
+        Ex: libjpeg.so.8
+
+- Linker name: name of the shared lib that invoke when linking the shared lib 
+    - -lname
+
+*******************
+gcc -fpic -c ./src/gemtek_mathlib.c
+
+gcc -o ./lib/gemtek_mathlib.so.1.2.3 gemtek_mathlib.o -shared -Wl,-soname,gemtek_mathlib.so.1
+(Look at the soname: readelf -a ./lib/gemtek_mathlib.so.1.2.3 | grep soname)
+
+symbolic name: ln -s $(pwd)/lib/gemtek_mathlib.so.1.2.3 ./lib/gemtek_mathlib.so.1
+(check symbolic: file ./lib/gemtek_mathlib.so.1)
+
+real name: ln -s $(pwd)/lib/gemtek_mathlib.so.1 ./lib/gemtek_mathlib.so
+
+Append lib path to the environment variable:
+    LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
+    (check if appended: echo $LD_LIBRARY_PATH)
+Export the variable:
+    export LD_LIBRARY_PATH
+
+compile main.c:
+    gcc main.c -l:gemtek_mathlib.so -o main -I./inc -L./lib
+    (check dynamicly linked: file main
+     check dependency: readelf -a main | grep Shared)
+

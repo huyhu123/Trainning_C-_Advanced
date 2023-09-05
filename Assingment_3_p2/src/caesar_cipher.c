@@ -61,6 +61,7 @@ bool check_empty_dir(const char file_name[])
     return false;
 }
 
+
 // Check if file exist
 int check_file_exist(const char file_name[])
 {
