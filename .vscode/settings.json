@@ -6,6 +6,8 @@
         "initializer_list": "c",
         "utility": "c",
         "typeinfo": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "type_traits": "c",
+        "stdio.h": "c"
     }
 }

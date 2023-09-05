@@ -3,13 +3,13 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#include <ctype.h>
-#include <string.h>
 
 float square(int x);
 
 float cube(int x);
 
 int is_fibonacci(float n);
+
+void get_input_float(float *value);
 
 #endif

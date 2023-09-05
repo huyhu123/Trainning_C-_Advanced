@@ -1,21 +1,7 @@
 #include "gemtek_lib.h"
 
-// Get input
-void get_input_float(float *input)
+int main() 
 {
-    // Check if input is valid
-    printf("Enter x: ");
-    while (scanf("%f", input) != 1) {
-        // Handle invalid input
-        printf("Please enter a real number: ");
-        
-        // Clear stdin buffer
-        int c;
-        while ((c = getchar()) != '\n' && c != EOF);
-    }
-}
-
-int main() {
     float input;
     get_input_float(&input);
 
