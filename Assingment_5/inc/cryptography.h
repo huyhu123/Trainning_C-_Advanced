@@ -13,6 +13,7 @@
 #include <ctype.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include "binary_tree.h"
 
 #define FILE_NAME_MAX 255
 #define COUNT 5
@@ -27,16 +28,8 @@ typedef enum {
     e_change_output_dir = 0x06U,
 } e_main_interface_option;
 
-typedef struct tree_node {
-    char data;
-    struct tree_node *left;
-    struct tree_node *right;
-} tree_node_t;
+void build_morse_tree(tree_node_t **root);
 
 void encode_morse(tree_node_t *root, char *input);
-
-void build_morse_tree(tree_node_t** root);
-
-void print_2d(tree_node_t *root);
 
 #endif

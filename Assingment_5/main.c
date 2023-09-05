@@ -1,4 +1,5 @@
 #include "cryptography.h"
+#include "binary_tree.h"
 
 int main() {
     tree_node_t* root = NULL;
@@ -12,7 +13,7 @@ int main() {
     print_2d(root);
 
     printf("Decoded message: ");
-    encode_morse(root, input);
+    //encode_morse(root, input);
     
     return 0;
 }
