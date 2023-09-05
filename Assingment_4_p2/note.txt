@@ -35,19 +35,24 @@ the program that link into it to be recompiled.
     - -lname
 
 *******************
-gcc -fpic -c ./src/gemtek_mathlib.c
+Compile .c source file with -fpic flag (Position Independent Code generation)
+    gcc -fpic -c ./src/gemtek_mathlib.c
 
-gcc -o ./lib/gemtek_mathlib.so.1.2.3 gemtek_mathlib.o -shared -Wl,-soname,gemtek_mathlib.so.1
-(Look at the soname: readelf -a ./lib/gemtek_mathlib.so.1.2.3 | grep soname)
+Building C dynamic lib:
+    gcc -o ./lib/gemtek_mathlib.so.1.2.3 gemtek_mathlib.o -shared -Wl,-soname,gemtek_mathlib.so.1
+    (Look at the soname: readelf -a ./lib/gemtek_mathlib.so.1.2.3 | grep soname)
 
-symbolic name: ln -s $(pwd)/lib/gemtek_mathlib.so.1.2.3 ./lib/gemtek_mathlib.so.1
-(check symbolic: file ./lib/gemtek_mathlib.so.1)
+Create symbolic name and link to real file
+    ln -s $(pwd)/lib/gemtek_mathlib.so.1.2.3 ./lib/gemtek_mathlib.so.1
+    (check symbolic: file ./lib/gemtek_mathlib.so.1)
 
-real name: ln -s $(pwd)/lib/gemtek_mathlib.so.1 ./lib/gemtek_mathlib.so
+Create real name and link to real file
+    ln -s $(pwd)/lib/gemtek_mathlib.so.1 ./lib/gemtek_mathlib.so
 
 Append lib path to the environment variable:
     LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
     (check if appended: echo $LD_LIBRARY_PATH)
+
 Export the variable:
     export LD_LIBRARY_PATH
 
@@ -55,4 +60,7 @@ compile main.c:
     gcc main.c -l:gemtek_mathlib.so -o main -I./inc -L./lib
     (check dynamicly linked: file main
      check dependency: readelf -a main | grep Shared)
+
+******************************
+
 
