@@ -9,7 +9,7 @@ run:
 	./main
 
 main: main.c Lib
-	$(CC) main.c -l:gemtek_mathlib.so -o main -I$(INC) -L$(LIB)
+	$(CC) main.c -l:gemtek_mathlib.so -o main -I$(INC) -L$(LIB) -lm -Wl,-rpath,$(LIB)
 
 Lib: $(SRC)/*.c
 	$(CC) -fpic -c $(SRC)/gemtek_mathlib.c

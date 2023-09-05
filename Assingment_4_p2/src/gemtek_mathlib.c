@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define BUFFER_LENGTH 100
 
@@ -50,21 +51,16 @@ float square(float x)
     return x * x;
 }
 
+bool is_perfect_square(float x)
+{
+    int s = sqrt(x);
+    return (s * s == x);
+}
+ 
+// Returns true if n is a Fibonacci Number, else false
 int is_fibonacci(float n)
 {
-    int pre_num = 0;
-    int cur_num = 1;
-    if (n == pre_num || n == cur_num) {
-        return 1;
-    } 
-
-    int next_num = pre_num + cur_num;
-    while(next_num <= n) {
-        if(next_num == n) return 1;
-        pre_num = cur_num;
-        cur_num = next_num;
-        next_num = pre_num + cur_num;
-    }
-
-    return 0;
+    // n is Fibonacci if one of 5*n*n + 4 or 5*n*n - 4 or
+    // both is a perfect square
+    return is_perfect_square(5 * n * n + 4) || is_perfect_square(5 * n * n - 4);
 }
