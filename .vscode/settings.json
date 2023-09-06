@@ -9,6 +9,8 @@
         "sstream": "c",
         "type_traits": "c",
         "stdio.h": "c",
-        "cmath": "c"
+        "cmath": "c",
+        "binary_tree.h": "c",
+        "cryptography.h": "c"
     }
 }

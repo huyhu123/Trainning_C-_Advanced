@@ -18,8 +18,8 @@ typedef struct tree_node {
 
 tree_node_t *create_node(char data);
 
-void insert(tree_node_t **root, char data, char *morse_code);
+void insert(tree_node_t **g_root, char data, char *morse_code);
 
-void print_2d(tree_node_t *root);
+void print_2d(tree_node_t *g_root);
 
 #endif
