@@ -235,32 +235,23 @@ void get_path_to_node(tree_node_t *g_root, tree_node_t *node, char *buffer)
 
     while (curr_node != node) {
         // Check if node is on the left
-        if (get_node_by_data(curr_node->left, node->data) != NULL) {
-            if (curr_node->left == node) {
-                buffer[index] = '.';
-                return;
-            }
-
+        if (curr_node->left != NULL && get_node_by_data(curr_node->left, node->data) != NULL) {
             buffer[index] = '.';
             curr_node = curr_node->left;
-            index++;
         }
-
         // Check if node is on the right
-        if (get_node_by_data(curr_node->right, node->data) != NULL) {
-            if (curr_node->right == node) {
-                buffer[index] = '-';
-                return;
-            }
-
+        else if (curr_node->right != NULL && get_node_by_data(curr_node->right, node->data) != NULL) {
             buffer[index] = '-';
             curr_node = curr_node->right;
-            index++;
         }
-    }
+        else {
+            // Clear the buffer to avoid appending invalid characters
+            memset(buffer, 0, MAX_STRING_SIZE);
+            return;
+        }
 
-    // Reverse string
-    reverse_string(buffer);
+        index++;
+    }
 
     return;
 }
@@ -270,11 +261,17 @@ void encode_morse(char *text, char *decode_text)
     tree_node_t *node_temp;
     char s_temp[MAX_STRING_SIZE];
 
-    for(int i = 0; i < strlen(text); i++) {
+    // Clear decode_text
+    memset(decode_text, 0, sizeof(decode_text));
+
+    for (int i = 0; i < strlen(text); i++) {
         if (text[i] == ' ') {
             strcat(decode_text, "/ ");
             continue;
         }
+
+        // Clear s_temp before using it
+        memset(s_temp, 0, sizeof(s_temp));
 
         node_temp = get_node_by_data(g_root, text[i]);
         if (node_temp != NULL) {

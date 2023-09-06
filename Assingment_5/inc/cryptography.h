@@ -15,19 +15,8 @@
 #include <stdlib.h>
 #include "binary_tree.h"
 
-#define FILE_NAME_MAX       255
 #define COUNT               5
 #define MAX_STRING_SIZE     500
-
-typedef enum {
-    e_quit = 0x00U,
-    e_encode = 0x01U,
-    e_decode = 0x02U,
-    e_change_file = 0x03U,
-    e_change_shift = 0x04U,
-    e_change_output_name = 0x05U,
-    e_change_output_dir = 0x06U,
-} e_main_interface_option;
 
 void build_morse_tree(tree_node_t **g_root);
 
