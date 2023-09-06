@@ -16,18 +16,14 @@
 #include "binary_tree.h"
 
 #define COUNT               5
-#define MAX_STRING_SIZE     500
-
-void build_morse_tree(tree_node_t **g_root);
+#define MAX_STRING_SIZE     1000
 
 char* decode_morse(char *morse);
 
-tree_node_t *get_node_by_data(tree_node_t *g_root, char data);
-
 void encode_morse(char *text, char *decode_text);
 
-void clean_up(); 
+void destroy_cryptography(); 
 
-void initialize_binary_tree();
+void init_cryptography();
 
 #endif

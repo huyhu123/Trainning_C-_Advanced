@@ -1,28 +1,40 @@
 #include "cryptography.h"
-#include "binary_tree.h"
 #include "interface.h"
 
 int main() {
-    char input[100];
-    printf("Enter Morse code: ");
-    fgets(input, sizeof(input), stdin);
-    input[strcspn(input, "\n")] = '\0';
-    
-    initialize_binary_tree();
+    init_cryptography();
 
-    //print_2d(g_root);
+    char text[MAX_STRING_SIZE];
+    read_from_file("test.txt", text);
 
-    char encode_text[MAX_STRING_SIZE];
-    encode_morse(input, encode_text);
-    printf("Encode message: %s\n", encode_text);
-    //write_to_file("test.txt", decode_text);
+    e_main_interface_option option = 1;
+    while (option != 0)
+    {
+        option = show_main_UI();
+        switch (option)
+        {
+        case e_quit:
+            break;
+        case e_encode:
+            clrscr();
+            choose_encode_text_option();
+            break;
+        case e_decode:
+            clrscr();
+            choose_decode_text_option();
+            break;
+        case e_encode_file:
+            clrscr();
+            //choose_encode_file_option();
+            break;
+        case e_decode_file:
+            clrscr();
+            //choose_decode_file_option();
+            break;
+        }
+    }
 
-    printf("Decoded message: ");
-    char *decode = decode_morse(encode_text);
-    printf("%s\n", decode);
-    write_to_file("test.txt", decode);
-    
-    clean_up();
+    destroy_cryptography();
 
     return 0;
 }

@@ -123,11 +123,11 @@ void build_morse_tree(tree_node_t **g_root)
     insert(g_root, '0', get_morse_code('0'));
 }
 
-void initialize_binary_tree() {
+void init_cryptography() {
     build_morse_tree(&g_root);
 }
 
-char* decode_morse(char *morse) 
+char* decode_morse(char* morse)
 {
     if (morse == NULL) {
         return NULL;
@@ -143,10 +143,12 @@ char* decode_morse(char *morse)
     while (token != NULL) {
         if (strcmp(token, "/") == 0) {
             decode_string[index++] = ' '; // Indicates a new word
-        } else {
-            tree_node_t *curr_node = g_root;
+        } 
+        else {
+            tree_node_t* curr_node = g_root;
             int len = strlen(token);
             int error = 0; // Flag to indicate if there was an error in decoding
+
             for (int i = 0; i < len; i++) {
                 if (token[i] == '.') {
                     if (curr_node->left != NULL) {
@@ -155,14 +157,16 @@ char* decode_morse(char *morse)
                         error = 1; // Error: Invalid Morse code sequence
                         break;
                     }
-                } else if (token[i] == '-') {
+                } 
+                else if (token[i] == '-') {
                     if (curr_node->right != NULL) {
                         curr_node = curr_node->right;
                     } else {
                         error = 1; // Error: Invalid Morse code sequence
                         break;
                     }
-                } else {
+                } 
+                else {
                     error = 1; // Error: Invalid Morse code character
                     break;
                 }
@@ -170,7 +174,8 @@ char* decode_morse(char *morse)
 
             if (error) {
                 decode_string[index++] = '?'; // Indicates an error in decoding
-            } else {
+            } 
+            else {
                 decode_string[index++] = curr_node->data;
             }
         }
@@ -299,7 +304,7 @@ void free_tree(tree_node_t *g_root)
 }
 
 // Function wrap around free_tree
-void clean_up() 
+void destroy_cryptography() 
 {
     free_tree(g_root);
 }
