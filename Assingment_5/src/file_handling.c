@@ -9,6 +9,7 @@ void read_from_file(char *dir, char *text)
         int index = 0;
         while ((ch = fgetc(fp)) != EOF) {
             if (ch == '\n') {
+                text[index++] = ' ';
                 text[index++] = '|'; // Use '|' to indicate line breaks
                 text[index++] = ' ';
             } else {

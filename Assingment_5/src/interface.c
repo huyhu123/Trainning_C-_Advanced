@@ -329,6 +329,7 @@ void choose_decode_file_option(char *out_dir, char *out_name)
 
     // Read from file
     read_from_file(input, text);
+    printf("%s\n", text);
 
     // Decode text
     decode_text = decode_morse(text);

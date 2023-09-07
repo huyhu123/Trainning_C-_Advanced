@@ -67,7 +67,6 @@ char* decode_morse(char* morse)
         {
             decode_string[index++] = '\n';
         }
-        
         else {
             tree_node_t* curr_node = g_root;
             int len = strlen(token);
@@ -196,6 +195,7 @@ void encode_morse(char *text, char *decode_text)
     for (int i = 0; i < strlen(text); i++) {
         if (text[i] == '|') {
             strcat(decode_text, "\n");
+            i++;
             continue;
         }
         if (text[i] == ' ') {
