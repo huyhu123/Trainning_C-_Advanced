@@ -20,16 +20,59 @@ typedef enum {
 
 e_main_interface_option show_main_UI(char *out_dir, char *out_name);
 
+/**
+ * @brief Shows the main user interface and returns the selected option.
+ *
+ * @param out_dir The output directory.
+ * @param out_name The output file name.
+ * @return The selected option from the main interface.
+ */
+e_main_interface_option show_main_UI(char *out_dir, char *out_name);
+
+/**
+ * @brief Prompts the user to choose an option for text encoding.
+ *
+ * @param out_dir The output directory.
+ * @param out_name The output file name.
+ */
 void choose_encode_text_option(char *out_dir, char *out_name);
 
+/**
+ * @brief Prompts the user to choose an option for text decoding.
+ *
+ * @param out_dir The output directory.
+ * @param out_name The output file name.
+ */
 void choose_decode_text_option(char *out_dir, char *out_name);
 
+/**
+ * @brief Prompts the user to choose an option for file encoding.
+ *
+ * @param out_dir The output directory.
+ * @param out_name The output file name.
+ */
 void choose_encode_file_option(char *out_dir, char *out_name);
 
+/**
+ * @brief Prompts the user to choose an option for file decoding.
+ *
+ * @param out_dir The output directory.
+ * @param out_name The output file name.
+ */
 void choose_decode_file_option(char *out_dir, char *out_name);
 
+/**
+ * @brief Changes the output directory.
+ *
+ * @param output_dir The new output directory.
+ */
 void change_output_dir(char *output_dir);
 
+/**
+ * @brief Changes the output file name.
+ *
+ * @param output_name The new output file name.
+ */
 void change_output_name(char *output_name);
 
 #endif
