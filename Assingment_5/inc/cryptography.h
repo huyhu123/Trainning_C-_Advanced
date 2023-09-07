@@ -24,6 +24,6 @@ void encode_morse(char *text, char *decode_text);
 
 void destroy_cryptography(); 
 
-void init_cryptography();
+bool init_cryptography(char *morse_code_key);
 
 #endif

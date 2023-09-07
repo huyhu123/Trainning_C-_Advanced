@@ -3,128 +3,46 @@
 
 tree_node_t *g_root = NULL;
 
-char *get_morse_code(char c)
+bool create_morse_tree(const char *filename, tree_node_t **root) 
 {
-    switch (c){
-        case 'A':
-            return ".-";
-        case 'B':
-            return "-...";
-        case 'C':
-            return "-.-.";
-        case 'D':
-            return "-..";
-        case 'E':
-            return ".";
-        case 'F':
-            return "..-.";
-        case 'G':
-            return "--.";
-        case 'H':
-            return "....";
-        case 'I':
-            return "..";
-        case 'J':
-            return ".---";
-        case 'K':
-            return "-.-";
-        case 'L':
-            return ".-..";
-        case 'M':
-            return "--";
-        case 'N':
-            return "-.";
-        case 'O':
-            return "---";
-        case 'P':
-            return ".--.";
-        case 'Q':
-            return "--.-";
-        case 'R':
-            return ".-.";
-        case 'S':
-            return "...";
-        case 'T':
-            return "-";
-        case 'U':
-            return "..-";
-        case 'V':
-            return "...-";
-        case 'W':
-            return ".--";
-        case 'X':
-            return "-..-";
-        case 'Y':
-            return "-.--";
-        case 'Z':
-            return "--..";
-        case '1':
-            return ".----";
-        case '2':
-            return "..---";
-        case '3':
-            return "...--";
-        case '4':
-            return "....-";
-        case '5':
-            return ".....";
-        case '6':
-            return "-....";
-        case '7':
-            return "--...";
-        case '8':
-            return "---..";
-        case '9':
-            return "----.";
-        case '0':
-            return "-----";
-        default:
-            return "";
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        fprintf(stderr, "Failed to open morse_code_key.txt (Make sure file morse_code_key.txt is in the same directory as the program).\n");
+        return false;
     }
+
+    printf("Read key from morse_code_key.txt.\n");
+    char line[256];
+    while (fgets(line, sizeof(line), file)) {
+        if (strlen(line) <= 1) {
+            continue;  // Skip empty lines
+        }
+
+        // Extract the character and Morse code from the line
+        char *character= strtok(line, " ");
+        char *morse_code = strtok(NULL, " ");
+        printf("%s %s \n", character, morse_code);
+
+        // Remove trailing newline character
+        int len = strlen(character);
+        if (character[len - 1] == '\n') {
+            character[len - 1] = '\0';
+        }
+
+        insert(&g_root, character[0], morse_code);
+    }
+
+    printf("Buliding binary tree: \n");
+    print_2d(g_root);
+
+    fclose(file);
+
+    return true;
 }
 
-void build_morse_tree(tree_node_t **g_root) 
+bool init_cryptography(char *morse_code_key) 
 {
-    insert(g_root, 'A', get_morse_code('A'));
-    insert(g_root, 'B', get_morse_code('B'));
-    insert(g_root, 'C', get_morse_code('C'));
-    insert(g_root, 'D', get_morse_code('D'));
-    insert(g_root, 'E', get_morse_code('E'));
-    insert(g_root, 'F', get_morse_code('F'));
-    insert(g_root, 'G', get_morse_code('G'));
-    insert(g_root, 'H', get_morse_code('H'));
-    insert(g_root, 'I', get_morse_code('I'));
-    insert(g_root, 'J', get_morse_code('J'));
-    insert(g_root, 'K', get_morse_code('K'));
-    insert(g_root, 'L', get_morse_code('L'));
-    insert(g_root, 'M', get_morse_code('M'));
-    insert(g_root, 'N', get_morse_code('N'));
-    insert(g_root, 'O', get_morse_code('O'));
-    insert(g_root, 'P', get_morse_code('P'));
-    insert(g_root, 'Q', get_morse_code('Q'));
-    insert(g_root, 'R', get_morse_code('R'));
-    insert(g_root, 'S', get_morse_code('S'));
-    insert(g_root, 'T', get_morse_code('T'));
-    insert(g_root, 'U', get_morse_code('U'));
-    insert(g_root, 'V', get_morse_code('V'));
-    insert(g_root, 'W', get_morse_code('W'));
-    insert(g_root, 'X', get_morse_code('X'));
-    insert(g_root, 'Y', get_morse_code('Y'));
-    insert(g_root, 'Z', get_morse_code('Z'));
-    insert(g_root, '1', get_morse_code('1'));
-    insert(g_root, '2', get_morse_code('2'));
-    insert(g_root, '3', get_morse_code('3'));
-    insert(g_root, '4', get_morse_code('4'));
-    insert(g_root, '5', get_morse_code('5'));
-    insert(g_root, '6', get_morse_code('6'));
-    insert(g_root, '7', get_morse_code('7'));
-    insert(g_root, '8', get_morse_code('8'));
-    insert(g_root, '9', get_morse_code('9'));
-    insert(g_root, '0', get_morse_code('0'));
-}
-
-void init_cryptography() {
-    build_morse_tree(&g_root);
+    return create_morse_tree(morse_code_key , &g_root);
 }
 
 char* decode_morse(char* morse)

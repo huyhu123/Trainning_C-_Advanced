@@ -142,7 +142,6 @@ void encode_caesar_cipher(char *file_name, int shift, char *output_name, char *o
         }
     }
 
-
     // Open file
     file = fopen(file_name, "r");
     temp = fopen(new_file_name, "w");

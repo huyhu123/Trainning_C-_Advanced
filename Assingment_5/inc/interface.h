@@ -14,14 +14,22 @@ typedef enum {
     e_decode = 0x02U,
     e_encode_file = 0x03U,
     e_decode_file = 0x04U,
+    e_change_output_name = 0x05U,
+    e_change_output_dir = 0x06U,
 } e_main_interface_option;
 
-e_main_interface_option show_main_UI();
+e_main_interface_option show_main_UI(char *out_dir, char *out_name);
 
-void choose_encode_text_option(char *out_dir);
+void choose_encode_text_option(char *out_dir, char *out_name);
 
-void choose_decode_text_option(char *out_dir);
+void choose_decode_text_option(char *out_dir, char *out_name);
 
-void choose_encode_file_option(char *out_dir);
+void choose_encode_file_option(char *out_dir, char *out_name);
+
+void choose_decode_file_option(char *out_dir, char *out_name);
+
+void change_output_dir(char *output_dir);
+
+void change_output_name(char *output_name);
 
 #endif
