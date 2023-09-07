@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_FILE_SIZE 255
 
