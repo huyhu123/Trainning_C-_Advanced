@@ -143,7 +143,11 @@ char* decode_morse(char* morse)
     while (token != NULL) {
         if (strcmp(token, "/") == 0) {
             decode_string[index++] = ' '; // Indicates a new word
-        } 
+        } else if (strcmp(token, "|") == 0)
+        {
+            decode_string[index++] = '\n';
+        }
+        
         else {
             tree_node_t* curr_node = g_root;
             int len = strlen(token);
@@ -157,7 +161,7 @@ char* decode_morse(char* morse)
                         error = 1; // Error: Invalid Morse code sequence
                         break;
                     }
-                } 
+                }
                 else if (token[i] == '-') {
                     if (curr_node->right != NULL) {
                         curr_node = curr_node->right;
@@ -165,7 +169,7 @@ char* decode_morse(char* morse)
                         error = 1; // Error: Invalid Morse code sequence
                         break;
                     }
-                } 
+                }
                 else {
                     error = 1; // Error: Invalid Morse code character
                     break;
@@ -174,7 +178,7 @@ char* decode_morse(char* morse)
 
             if (error) {
                 decode_string[index++] = '?'; // Indicates an error in decoding
-            } 
+            }
             else {
                 decode_string[index++] = curr_node->data;
             }

@@ -13,6 +13,7 @@
 #include <ctype.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include "file_handling.h"
 
 #define FILE_NAME_MAX 255
 

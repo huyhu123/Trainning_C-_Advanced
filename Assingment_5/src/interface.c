@@ -86,8 +86,7 @@ void get_input_char(char *input)
 
 void get_text(char *text)
 {
-    // Get file name
-    printf("Enter encode text (or e to exit): ");
+    // Get text
     get_input_char(text);
 }
 
@@ -105,28 +104,66 @@ e_main_interface_option show_main_UI()
     return option;
 }
 
-void choose_encode_text_option()
+void choose_encode_text_option(char *out_dir)
 {
     char text[MAX_STRING_SIZE];
     char input[MAX_STRING_SIZE];
+
+    // Get encode text
+    printf("Enter encode text (or e to exit): ");
     get_text(input);
-    if (strcmp(input, "e") == 0) {
+    if (strcmp(input, "e") == 0) { // Handle exit
         return;
     }
+
+    // Encode text
     encode_morse(input, text);
     printf("Encode message: %s\n", text);
-    write_to_file("test.txt", text);
+
+    // Write to file
+    write_to_file(out_dir, text);
 }
 
-void choose_decode_text_option()
+void choose_decode_text_option(char *out_dir)
 {
     char input[MAX_STRING_SIZE];
+
+    // Get decode text
+    printf("Enter decode text (or e to exit): ");
+    get_text(input);
+    if (strcmp(input, "e") == 0) { // Handle exit
+        return;
+    }
+    
+    // Decode text
+    char *text = decode_morse(input);
+    printf("Decoded message: ");
+    printf("%s\n", text);
+
+    // Write to file
+    write_to_file(out_dir, text);
+
+    // Free allocated memory
+    free(text);
+}
+
+void choose_encode_file_option(char *out_dir)
+{
+    char input[MAX_STRING_SIZE];
+    printf("Enter encode file directory (or e to exit): ");
     get_text(input);
     if (strcmp(input, "e") == 0) {
         return;
     }
-    printf("Decoded message: ");
-    char *text = decode_morse(input);
-    printf("%s\n", text);
-    write_to_file("test.txt", text);
+
+    char text[MAX_STRING_SIZE];
+    char encode_text[MAX_STRING_SIZE];
+    read_from_file(input, text);
+
+    encode_morse(text, encode_text);
+
+    printf("Encoded message: ");
+    printf("%s\n", encode_text);
+
+    write_to_file(out_dir, encode_text);
 }

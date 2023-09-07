@@ -18,8 +18,10 @@ typedef enum {
 
 e_main_interface_option show_main_UI();
 
-void choose_encode_text_option();
+void choose_encode_text_option(char *out_dir);
 
-void choose_decode_text_option();
+void choose_decode_text_option(char *out_dir);
+
+void choose_encode_file_option(char *out_dir);
 
 #endif

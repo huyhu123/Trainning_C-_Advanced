@@ -3,9 +3,7 @@
 
 int main() {
     init_cryptography();
-
-    char text[MAX_STRING_SIZE];
-    read_from_file("test.txt", text);
+    char out_dir[MAX_STRING_SIZE] = "out.txt";
 
     e_main_interface_option option = 1;
     while (option != 0)
@@ -17,15 +15,15 @@ int main() {
             break;
         case e_encode:
             clrscr();
-            choose_encode_text_option();
+            choose_encode_text_option(out_dir);
             break;
         case e_decode:
             clrscr();
-            choose_decode_text_option();
+            choose_decode_text_option(out_dir);
             break;
         case e_encode_file:
             clrscr();
-            //choose_encode_file_option();
+            choose_encode_file_option(out_dir);
             break;
         case e_decode_file:
             clrscr();
