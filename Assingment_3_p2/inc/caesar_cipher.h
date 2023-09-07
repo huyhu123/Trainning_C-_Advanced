@@ -27,30 +27,6 @@ typedef enum {
     e_change_output_dir = 0x06U,
 } e_main_interface_option;
 
-
-/**
- * @brief Prompt the user to enter a character.
- * 
- * This function prompts the user to enter a character and stores it in the provided character array. 
- * The entered character can then be accessed from the array.
- *
- * @param input The character array to store the entered character.
- */
-void get_input_char(char input[]);
-
-
-/**
- * @brief Checks if a file exists.
- * 
- * This function checks if a file with the specified name exists in the file system.
- * It returns an integer value indicating whether the file exists or not.
- *
- * @param file_name The name of the file to check existence.
- * @return 1 if the file exists, 0 otherwise.
- */
-int check_file_exist(const char file_name[]);
-
-
 /**
  * @brief Display the main user interface options.
  * 
@@ -114,13 +90,6 @@ int get_shift_number();
  * @param output_name The new output name.
  */
 void change_output_name(char *output_name);
-
-/**
- * @brief Retrieves the current directory.
- *
- * @return The current directory.
- */
-char *get_current_directory();
 
 /**
  * @brief Changes the output directory to the specified value.

@@ -7,12 +7,12 @@ bool create_morse_tree(const char *filename, tree_node_t **root)
 {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
-        fprintf(stderr, "Failed to open morse_code_key.txt (Make sure file morse_code_key.txt is in the same directory as the program).\n");
+        printf("Failed to open morse_code_key.txt (Make sure file morse_code_key.txt is in the same directory as the program).\n");
         return false;
     }
 
     printf("Read key from morse_code_key.txt.\n");
-    char line[256];
+    char line[MAX_STRING_SIZE];
     while (fgets(line, sizeof(line), file)) {
         if (strlen(line) <= 1) {
             continue;  // Skip empty lines
@@ -21,7 +21,8 @@ bool create_morse_tree(const char *filename, tree_node_t **root)
         // Extract the character and Morse code from the line
         char *character= strtok(line, " ");
         char *morse_code = strtok(NULL, " ");
-        printf("%s %s \n", character, morse_code);
+
+        printf("%s %s", character, morse_code);
 
         // Remove trailing newline character
         int len = strlen(character);
@@ -32,7 +33,8 @@ bool create_morse_tree(const char *filename, tree_node_t **root)
         insert(&g_root, character[0], morse_code);
     }
 
-    printf("Buliding binary tree: \n");
+    // Print binary tree
+    printf("\nBuliding binary tree: \n");
     print_2d(g_root);
 
     fclose(file);

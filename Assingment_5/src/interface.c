@@ -183,7 +183,7 @@ e_main_interface_option show_main_UI(char *out_dir, char *out_name)
     printf("1. Encode text\n");
     printf("2. Decode text\n");
     printf("3. Encode file\n");
-    printf("4. Encode file\n");
+    printf("4. Decode file\n");
     printf("5. Change output file name\n");
     printf("6. Change output file directory\n");
     printf("0. Quit\n");
@@ -260,6 +260,7 @@ void choose_decode_text_option(char *out_dir, char *out_name)
 
         while (!strcmp(input, "y") == 0) {
             if (strcmp(input, "n") == 0) {
+                free(text);
                 return;
             }
             printf("Please type 'y' or 'n': ");
@@ -347,6 +348,7 @@ void choose_decode_file_option(char *out_dir, char *out_name)
 
         while (!strcmp(input, "y") == 0) {
             if (strcmp(input, "n") == 0) {
+                free(decode_text); // Free allocated memory
                 return;
             }
             printf("Please type 'y' or 'n': ");
