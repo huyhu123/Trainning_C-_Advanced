@@ -194,6 +194,10 @@ void encode_morse(char *text, char *decode_text)
     memset(decode_text, 0, sizeof(decode_text));
 
     for (int i = 0; i < strlen(text); i++) {
+        if (text[i] == '|') {
+            strcat(decode_text, "\n");
+            continue;
+        }
         if (text[i] == ' ') {
             strcat(decode_text, "/ ");
             continue;
