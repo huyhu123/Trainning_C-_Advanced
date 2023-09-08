@@ -45,6 +45,7 @@ int main() {
     }
 
     free(out_dir);
+    out_dir = NULL;
     destroy_cryptography();
 
     return 0;

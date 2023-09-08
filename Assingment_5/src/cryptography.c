@@ -132,24 +132,6 @@ tree_node_t *get_node_by_data(tree_node_t *g_root, char data)
     return NULL;
 }
 
-void reverse_string(char *str)
-{
-	char temp[MAX_STRING_SIZE];
-	
-	// copy the string into temp
-	strcpy(temp, str);
-	int length = strlen(str);
-	int start = 0, end = length - 1;
-   
-	while (start < end) {
-		char c = str[start];
-		str[start] = str[end];
-		str[end] = c;
-		start++;
-		end--;
-	}
-}
-
 void get_path_to_node(tree_node_t *g_root, tree_node_t *node, char *buffer)
 {
     // Base case: If the g_root is NULL or the node is not found
@@ -229,6 +211,8 @@ void free_tree(tree_node_t *g_root)
     free_tree(g_root->right);
     // Free current node
     free(g_root);
+
+    g_root = NULL;
 }
 
 // Function wrap around free_tree
