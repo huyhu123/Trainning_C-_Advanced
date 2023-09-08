@@ -12,24 +12,24 @@ int main() {
         option = show_main_interface();
         switch (option)
         {
-        case e_quit:
-            break;
-        case e_input_employees:
-            input_employees(employee_list , &employee_num);
-            break;
-        case e_show_employee_table:
-            print_employees_array(employee_list, employee_num);
-            break;
-        case e_sort:
-            sort_employee_list(employee_list, &employee_num);
-            print_employees_array(employee_list, employee_num);
-            break;
-        case e_delete_employee_id:
-            delete_employee_by_id(employee_list, &employee_num);
-            break;
-        case e_delete_employee_full_name:
-            delete_employee_by_full_name(employee_list, &employee_num);
-            break;
+            case e_quit:
+                break;
+            case e_input_employees:
+                input_employees(employee_list , &employee_num);
+                break;
+            case e_show_employee_table:
+                print_employees_array(employee_list, employee_num);
+                break;
+            case e_sort:
+                sort_employee_list(employee_list, &employee_num);
+                print_employees_array(employee_list, employee_num);
+                break;
+            case e_delete_employee_id:
+                delete_employee_by_id(employee_list, &employee_num);
+                break;
+            case e_delete_employee_full_name:
+                delete_employee_by_full_name(employee_list, &employee_num);
+                break;
         }
     }
 

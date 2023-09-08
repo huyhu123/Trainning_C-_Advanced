@@ -291,7 +291,7 @@ void choose_encode_file_option(char *out_dir, char *out_name)
     // Encode text
     encode_morse(text, encode_text);
 
-    printf("Encoded message: ");
+    printf("Encoded message: \n");
     printf("%s\n", encode_text);
 
     // Get new file name and extension
@@ -334,7 +334,7 @@ void choose_decode_file_option(char *out_dir, char *out_name)
     // Decode text
     decode_text = decode_morse(text);
 
-    printf("Decoded message: ");
+    printf("Decoded message: \n");
     printf("%s\n", decode_text);
 
     // Get new file name and extension
