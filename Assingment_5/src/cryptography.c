@@ -110,20 +110,20 @@ char* decode_morse(char* morse)
     return decode_string;
 }
 
-tree_node_t *get_node_by_data(tree_node_t *g_root, char data)
+tree_node_t *get_node_by_data(tree_node_t *root, char data)
 {
     // Base case: If the g_root is NULL or the data matches, return the g_root
-    if (g_root == NULL || g_root->data == data) {
-        return g_root;
+    if (root == NULL || root->data == data) {
+        return root;
     }
 
     // Recursively search in the left and right subtrees
-    tree_node_t *left_node = get_node_by_data(g_root->left, data);
+    tree_node_t *left_node = get_node_by_data(root->left, data);
     if (left_node != NULL) {
         return left_node;
     }
 
-    tree_node_t *right_node = get_node_by_data(g_root->right, data);
+    tree_node_t *right_node = get_node_by_data(root->right, data);
     if (right_node != NULL) {
         return right_node;
     }
@@ -132,16 +132,16 @@ tree_node_t *get_node_by_data(tree_node_t *g_root, char data)
     return NULL;
 }
 
-void get_path_to_node(tree_node_t *g_root, tree_node_t *node, char *buffer)
+void get_path_to_node(tree_node_t *root, tree_node_t *node, char *buffer)
 {
     // Base case: If the g_root is NULL or the node is not found
-    if (g_root == NULL || node == NULL) {
+    if (root == NULL || node == NULL) {
         return;
     }
 
     // Create a pointer to g_root
     int index = 0;
-    tree_node_t *curr_node = g_root;
+    tree_node_t *curr_node = root;
 
     while (curr_node != node) {
         // Check if node is on the left
@@ -203,7 +203,3 @@ void destroy_cryptography()
     free_tree(g_root);
     g_root = NULL;
 }
-
-
-
-
