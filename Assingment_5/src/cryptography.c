@@ -197,28 +197,11 @@ void encode_morse(char *text, char *decode_text)
     }
 }
 
-// Free binary tree
-void free_tree(tree_node_t *g_root)
-{
-    // If tree is empty
-    if (g_root == NULL) {
-        return;
-    }
-
-    // Free left subtree
-    free_tree(g_root->left);
-    // Free right subtree
-    free_tree(g_root->right);
-    // Free current node
-    free(g_root);
-
-    g_root = NULL;
-}
-
 // Function wrap around free_tree
 void destroy_cryptography() 
 {
     free_tree(g_root);
+    g_root = NULL;
 }
 
 

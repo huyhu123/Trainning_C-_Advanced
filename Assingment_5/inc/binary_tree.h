@@ -31,13 +31,20 @@ tree_node_t *create_node(char data);
  * @param data The data to be stored in the new node.
  * @param morse_code The Morse code associated with the data.
  */
-void insert(tree_node_t **g_root, char data, char *morse_code);
+void insert(tree_node_t **root, char data, char *morse_code);
 
 /**
  * @brief Prints the binary tree in a 2D format.
  *
  * @param g_root The root of the binary tree to be printed.
  */
-void print_2d(tree_node_t *g_root);
+void print_2d(tree_node_t *root);
+
+/**
+ * @brief Deallocate tree.
+ *
+ * @param g_root The root of the binary tree to be printed.
+ */
+void free_tree(tree_node_t *root);
 
 #endif
