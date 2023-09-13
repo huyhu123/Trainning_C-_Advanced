@@ -39,7 +39,7 @@ bool is_integer(const char* buffer, int* dest) {
 
 void get_input_int(int *value) 
 {
-    char buffer[BUFFER_LENGTH];
+    char buffer[BUFFER_LENGTH] = "";
     char *endptr;
 
     // Get input

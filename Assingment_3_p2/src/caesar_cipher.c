@@ -124,7 +124,7 @@ void encode_caesar_cipher(char *file_name, int shift, char *output_name, char *o
     char ch;
 
     // Get new file name and extension
-    char new_file_name[FILE_NAME_MAX]; 
+    char new_file_name[FILE_NAME_MAX] = ""; 
     create_new_file_name(new_file_name, file_name, output_name, output_dir);
 
     // Check if file already exixted
@@ -172,7 +172,7 @@ void decode_caesar_cipher(char *file_name, int shift, char *output_name, char *o
     char ch;
 
     // Get new file name and extension
-    char new_file_name[FILE_NAME_MAX]; 
+    char new_file_name[FILE_NAME_MAX] = ""; 
     create_new_file_name(new_file_name, file_name, output_name, output_dir);
 
     // Check if file already exixted
@@ -243,7 +243,7 @@ void change_output_name(char *output_name)
 {
     clrscr();
 
-    char pre_file_name[FILE_NAME_MAX];
+    char pre_file_name[FILE_NAME_MAX] = "";
     strcpy(pre_file_name, output_name);
 
     // Get output file name
@@ -269,7 +269,7 @@ void change_output_dir(char *output_dir)
 {
     clrscr();
 
-    char pre_output_name[FILE_NAME_MAX];
+    char pre_output_name[FILE_NAME_MAX] = "";
     strcpy(pre_output_name, output_dir);
 
     // Get output dir

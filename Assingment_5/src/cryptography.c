@@ -12,7 +12,7 @@ bool create_morse_tree(const char *filename, tree_node_t **root)
     }
 
     printf("Read key from morse_code_key.txt.\n");
-    char line[MAX_STRING_SIZE];
+    char line[MAX_STRING_SIZE] = "";
     while (fgets(line, sizeof(line), file)) {
         if (strlen(line) <= 1) {
             continue;  // Skip empty lines
@@ -169,7 +169,7 @@ void get_path_to_node(tree_node_t *root, tree_node_t *node, char *buffer)
 void encode_morse(char *text, char *decode_text)
 {
     tree_node_t *node_temp;
-    char s_temp[MAX_STRING_SIZE];
+    char s_temp[MAX_STRING_SIZE] = "";
 
     // Clear decode_text
     memset(decode_text, 0, sizeof(decode_text));

@@ -24,7 +24,7 @@
  * @param morse The Morse code to be decoded.
  * @return A pointer to the decoded plain text.
  */
-char* decode_morse(char *morse);
+char *decode_morse(char *morse);
 
 /**
  * @brief Encodes plain text into Morse code.
