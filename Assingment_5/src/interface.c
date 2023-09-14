@@ -18,7 +18,7 @@ static bool check_input_buffer(char input[])
     return false;
 }
 
-bool is_integer(const char *buffer, int *dest, int min, int max) 
+bool is_integer(const char *buffer, int* dest, int min, int max) 
 {
     if (buffer == NULL) {
         return false;
@@ -196,7 +196,6 @@ e_main_interface_option show_main_UI(char *out_dir, char *out_name)
 
 void choose_encode_text_option(char *out_dir, char *out_name)
 {
-    char text[MAX_STRING_SIZE] = {0};
     char input[MAX_STRING_SIZE] = {0};
 
     // Get encode text
@@ -208,6 +207,7 @@ void choose_encode_text_option(char *out_dir, char *out_name)
 
     // Get new file name and extension
     char new_file_name[FILE_NAME_MAX] = {0}; 
+    char text[MAX_STRING_SIZE] = {0};
     create_new_file_name(new_file_name, ".txt", out_name, out_dir);
 
     // Check if file already exixted
