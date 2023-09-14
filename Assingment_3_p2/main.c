@@ -1,7 +1,7 @@
 #include "caesar_cipher.h"
 
 int main() {
-    char file_name[FILE_NAME_MAX] = "";
+    char file_name[FILE_NAME_MAX] = {0};
     int shift = 0;
     e_main_interface_option option = 1;
     char output_name[FILE_NAME_MAX] = "output";

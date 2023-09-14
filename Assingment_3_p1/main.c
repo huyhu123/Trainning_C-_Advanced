@@ -1,7 +1,7 @@
 #include "file.h"
 
 int main() {
-    char file_name[FILE_NAME_MAX] = "";
+    char file_name[FILE_NAME_MAX] = {0};
     printf("Enter file name: ");
     get_input_char(file_name);
 

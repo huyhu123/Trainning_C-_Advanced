@@ -2,12 +2,12 @@
 #include "interface.h"
 
 int main() {
+    char *out_dir = get_current_directory();
+    char out_name[MAX_STRING_SIZE] = "out";
+
     if (!init_cryptography("morse_code_key.txt")) {
         return 0;
     }
-    
-    char *out_dir = get_current_directory();
-    char out_name[MAX_STRING_SIZE] = "out";
 
     e_main_interface_option option = 1;
     while (option != 0)
