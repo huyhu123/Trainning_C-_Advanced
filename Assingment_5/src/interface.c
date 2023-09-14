@@ -18,13 +18,13 @@ static bool check_input_buffer(char input[])
     return false;
 }
 
-bool is_integer(const char* buffer, int* dest, int min, int max) 
+bool is_integer(const char *buffer, int *dest, int min, int max) 
 {
     if (buffer == NULL) {
         return false;
     }
 
-    char* endptr;
+    char *endptr;
     errno = 0; // Reset errno before calling strtol
     long result = strtol(buffer, &endptr, 10);
     
@@ -122,9 +122,9 @@ bool get_file_name(char *file_name)
 // Change name of a char * and check if name is a valid file name
 void change_output_name(char *output_name)
 {
-    clrscr();
-
     char pre_file_name[FILE_NAME_MAX] = {0};
+
+    clrscr();
     strcpy(pre_file_name, output_name);
 
     // Get output file name
@@ -149,9 +149,9 @@ void change_output_name(char *output_name)
 // Change directory and check if dir is exist
 void change_output_dir(char *output_dir)
 {
-    clrscr();
-
     char pre_output_name[FILE_NAME_MAX] = {0};
+
+    clrscr();
     strcpy(pre_output_name, output_dir);
 
     // Get output dir
@@ -245,17 +245,18 @@ void choose_decode_text_option(char *out_dir, char *out_name)
     }
     
     // Decode text
+    char new_file_name[FILE_NAME_MAX] = {0}; 
     char *text = decode_morse(input);
     printf("Decoded message: ");
     printf("%s\n", text);
 
     // Get new file name and extension
-    char new_file_name[FILE_NAME_MAX] = {0}; 
+
     create_new_file_name(new_file_name, ".txt", out_name, out_dir);
 
     // Check if file already exixted
     if (check_file_exist(new_file_name)) {
-        char input[FILE_NAME_MAX] = {0};
+        memset(input, 0, strlen(input));
         printf("File %s already exixted, overwrite file (y/n)? : ", new_file_name);
         get_input_char(input);
 
@@ -283,6 +284,7 @@ void choose_encode_file_option(char *out_dir, char *out_name)
         return;
     }
 
+    char new_file_name[FILE_NAME_MAX] = {0}; 
     char text[MAX_STRING_SIZE] = {0};
     char encode_text[MAX_STRING_SIZE] = {0};
 
@@ -296,12 +298,11 @@ void choose_encode_file_option(char *out_dir, char *out_name)
     printf("%s\n", encode_text);
 
     // Get new file name and extension
-    char new_file_name[FILE_NAME_MAX] = {0}; 
     create_new_file_name(new_file_name, input, out_name, out_dir);
 
     // Check if file already exixted
     if (check_file_exist(new_file_name)) {
-        char input[FILE_NAME_MAX] = {0};
+        memset(input, 0, strlen(input));
         printf("File %s already exixted, overwrite file (y/n)? : ", new_file_name);
         get_input_char(input);
 
@@ -325,6 +326,7 @@ void choose_decode_file_option(char *out_dir, char *out_name)
         return;
     }
 
+    char new_file_name[FILE_NAME_MAX] = {0}; 
     char text[MAX_STRING_SIZE] = {0};
     char *decode_text;
 
@@ -339,12 +341,11 @@ void choose_decode_file_option(char *out_dir, char *out_name)
     printf("%s\n", decode_text);
 
     // Get new file name and extension
-    char new_file_name[FILE_NAME_MAX] = {0}; 
     create_new_file_name(new_file_name, input, out_name, out_dir);
 
     // Check if file already exixted
     if (check_file_exist(new_file_name)) {
-        char input[FILE_NAME_MAX] = {0};
+        memset(input, 0, strlen(input));
         printf("File %s already exixted, overwrite file (y/n)? : ", new_file_name);
         get_input_char(input);
 

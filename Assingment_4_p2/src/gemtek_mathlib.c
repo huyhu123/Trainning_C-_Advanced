@@ -9,12 +9,12 @@
 
 #define BUFFER_LENGTH 100
 
-bool is_integer(const char* buffer, int* dest) {
+bool is_integer(const char *buffer, int *dest) {
     if (buffer == NULL) {
         return false;
     }
 
-    char* endptr;
+    char *endptr;
     errno = 0; // Reset errno before calling strtol
     long result = strtol(buffer, &endptr, 10);
     

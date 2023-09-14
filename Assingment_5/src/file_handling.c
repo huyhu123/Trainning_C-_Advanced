@@ -114,8 +114,9 @@ bool is_validfile_name(const char *file_name)
 // Create new file name with the directory and extention of old file name 
 void create_new_file_name(char *new_file_name, char *file_name, char *output_name, char *output_dir)
 {
-    // Get file extension
     char *ext = strrchr(file_name, '.');
+
+    // Get file extension
     if (!ext) {
         ext = "";
     } else {

@@ -47,18 +47,18 @@ bool init_cryptography(char *morse_code_key)
     return create_morse_tree(morse_code_key , &g_root);
 }
 
-char* decode_morse(char* morse)
+char *decode_morse(char *morse)
 {
     if (morse == NULL) {
         return NULL;
     }
 
-    char* decode_string = malloc(strlen(morse) + 1);
+    char *decode_string = malloc(strlen(morse) + 1);
     if (decode_string == NULL) {
         return NULL;
     }
 
-    char* token = strtok(morse, " ");
+    char *token = strtok(morse, " ");
     int index = 0;
     while (token != NULL) {
         if (strcmp(token, "/") == 0) {
