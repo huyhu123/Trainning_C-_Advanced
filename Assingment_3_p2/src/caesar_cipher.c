@@ -241,9 +241,9 @@ void get_file_name(char *file_name)
 
 void change_output_name(char *output_name)
 {
-    clrscr();
-
     char pre_file_name[FILE_NAME_MAX] = {0};
+
+    clrscr();
     strcpy(pre_file_name, output_name);
 
     // Get output file name
@@ -267,9 +267,9 @@ void change_output_name(char *output_name)
 
 void change_output_dir(char *output_dir)
 {
-    clrscr();
-
     char pre_output_name[FILE_NAME_MAX] = {0};
+
+    clrscr();
     strcpy(pre_output_name, output_dir);
 
     // Get output dir
