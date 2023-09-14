@@ -5,27 +5,32 @@ tree_node_t *g_root = NULL;
 
 bool create_morse_tree(const char *filename, tree_node_t **root) 
 {
+    char line[MAX_STRING_SIZE] = {0};
+    char *character = NULL;
+    char *morse_code = NULL;
+    int len = 0;
     FILE *file = fopen(filename, "r");
+
     if (file == NULL) {
         printf("Failed to open morse_code_key.txt (Make sure file morse_code_key.txt is in the same directory as the program).\n");
         return false;
     }
 
     printf("Read key from morse_code_key.txt.\n");
-    char line[MAX_STRING_SIZE] = {0};
+    
     while (fgets(line, sizeof(line), file)) {
         if (strlen(line) <= 1) {
             continue;  // Skip empty lines
         }
 
         // Extract the character and Morse code from the line
-        char *character= strtok(line, " ");
-        char *morse_code = strtok(NULL, " ");
+        character = strtok(line, " ");
+        morse_code = strtok(NULL, " ");
 
         printf("%s %s", character, morse_code);
 
         // Remove trailing newline character
-        int len = strlen(character);
+        len = strlen(character);
         if (character[len - 1] == '\n') {
             character[len - 1] = '\0';
         }
@@ -49,17 +54,22 @@ bool init_cryptography(char *morse_code_key)
 
 char *decode_morse(char *morse)
 {
+    char *decode_string = NULL;
+    char *token = NULL;
+    int index = 0;
+    int len = 0;
+    int error = 0;
+
     if (morse == NULL) {
         return NULL;
     }
 
-    char *decode_string = malloc(strlen(morse) + 1);
+    decode_string = malloc(strlen(morse) + 1);
     if (decode_string == NULL) {
         return NULL;
     }
 
-    char *token = strtok(morse, " ");
-    int index = 0;
+    token = strtok(morse, " ");
     while (token != NULL) {
         if (strcmp(token, "/") == 0) {
             decode_string[index++] = ' '; // Indicates a new word
@@ -69,8 +79,8 @@ char *decode_morse(char *morse)
         }
         else {
             tree_node_t* curr_node = g_root;
-            int len = strlen(token);
-            int error = 0; // Flag to indicate if there was an error in decoding
+            len = strlen(token);
+            error = 0; // Flag to indicate if there was an error in decoding
 
             for (int i = 0; i < len; i++) {
                 if (token[i] == '.') {
@@ -112,18 +122,21 @@ char *decode_morse(char *morse)
 
 tree_node_t *get_node_by_data(tree_node_t *root, char data)
 {
+    tree_node_t *left_node = NULL;
+    tree_node_t *right_node = NULL;
+
     // Base case: If the g_root is NULL or the data matches, return the g_root
     if (root == NULL || root->data == data) {
         return root;
     }
 
     // Recursively search in the left and right subtrees
-    tree_node_t *left_node = get_node_by_data(root->left, data);
+    left_node = get_node_by_data(root->left, data);
     if (left_node != NULL) {
         return left_node;
     }
 
-    tree_node_t *right_node = get_node_by_data(root->right, data);
+    right_node = get_node_by_data(root->right, data);
     if (right_node != NULL) {
         return right_node;
     }

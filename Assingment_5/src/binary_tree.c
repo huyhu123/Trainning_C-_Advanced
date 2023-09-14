@@ -13,11 +13,13 @@ tree_node_t *create_node(char data)
 
 void insert(tree_node_t **root, char data, char *morse_code) 
 {
+    tree_node_t *curr = NULL;
+
     if (*root == NULL) {
         *root = create_node('\0');
     }
 
-    tree_node_t *curr = *root;
+    curr = *root;
     for (int i = 0; i < strlen(morse_code); i++) {
         if (morse_code[i] == '.') {
             if (curr->left == NULL) {

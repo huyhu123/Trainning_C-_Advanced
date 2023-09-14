@@ -21,7 +21,7 @@ static bool check_input_buffer(char input[])
 // Check if file exist
 int check_file_exist(const char file_name[])
 {
-    FILE *file;
+    FILE *file = NULL;
     if ((file = fopen(file_name, "r"))) {
         fclose(file);
         return 1;

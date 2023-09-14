@@ -3,7 +3,7 @@
 // Clear stdin
 static int clean_stdin()
 {
-    int c;
+    int c = 0;
     while (c = getchar() != '\n' && c != EOF);
     return 1;
 }
@@ -119,8 +119,8 @@ char decode_character_caesar_cipher(char ch, int shift)
 
 void encode_caesar_cipher(char *file_name, int shift, char *output_name, char *output_dir)
 {
-    FILE *file;
-    FILE *temp;
+    FILE *file = NULL;
+    FILE *temp = NULL;
     char ch;
 
     // Get new file name and extension
@@ -167,10 +167,9 @@ void encode_caesar_cipher(char *file_name, int shift, char *output_name, char *o
 
 void decode_caesar_cipher(char *file_name, int shift, char *output_name, char *output_dir)
 {
-    FILE *file;
-    FILE *temp;
+    FILE *file = NULL;
+    FILE *temp = NULL;
     char ch;
-
     // Get new file name and extension
     char new_file_name[FILE_NAME_MAX] = {0}; 
     create_new_file_name(new_file_name, file_name, output_name, output_dir);

@@ -102,13 +102,15 @@ static int get_input_int_to_delete()
 // Find index of an employee id (return -1 if not found)
 static int find_id(employees_list_t *g_employee_list, int id)
 {
+    employees_list_t *temp = NULL;
+    int count = 0;
+
     // Check if linked list is empty
     if (g_employee_list == NULL) {
         return -1;
     }
 
-    employees_list_t *temp = g_employee_list;
-    int count = 0;
+    temp = g_employee_list;
 
     // Loop through linked list
     while (temp != NULL) {
@@ -666,13 +668,13 @@ void delete_employee_by_id(employee_t employee_list[], int *employee_num)
 
 bool check_name_duplicate(employees_list_t *g_employee_list, char *name)
 {
+    employees_list_t *temp = g_employee_list;
+    int count = 0;
+
     // Check if list empty
     if (g_employee_list == NULL) {
         return false;
     }
-
-    employees_list_t *temp = g_employee_list;
-    int count = 0;
 
     // Check if threre are more than 1 of the same name in list
     while (temp != NULL) {
@@ -691,13 +693,13 @@ bool check_name_duplicate(employees_list_t *g_employee_list, char *name)
 
 int find_name(char *name)
 {
+    employees_list_t *temp = g_employee_list;
+    int count = 0;
+
     // Check if list empty
     if (g_employee_list == NULL) {
         return -1;
     }
-
-    employees_list_t *temp = g_employee_list;
-    int count = 0;
 
     // Find the index of the same name as key
     while (temp != NULL) {
@@ -713,6 +715,9 @@ int find_name(char *name)
 
 int find_employee_by_name()
 {
+    int index = 0;
+    char *name = NULL;
+
     // Check if list empty
     if (g_employee_list == NULL) {
         printf("Table empty\n\n");
@@ -721,7 +726,7 @@ int find_employee_by_name()
 
     // Get the input name of the user
     printf("Enter full name of the employee you want to delete (or press e to exit): ");
-    char *name = get_input_name(g_employee_list);
+    name = get_input_name(g_employee_list);
     printf("%d\n", strcmp(name, "e"));
     if (strcmp(name, "e") == 0) {
         free(name);
@@ -744,7 +749,7 @@ int find_employee_by_name()
         return -1;
     }
 
-    int index = find_name(name);
+    index = find_name(name);
     free(name);
 
     return index;

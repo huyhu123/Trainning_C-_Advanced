@@ -20,13 +20,15 @@ static bool check_input_buffer(char input[])
 
 bool is_integer(const char *buffer, int *dest, int min, int max) 
 {
+    char *endptr = NULL;
+    errno = 0; // Reset errno before calling strtol
+    long result = 0;
+
     if (buffer == NULL) {
         return false;
     }
 
-    char *endptr;
-    errno = 0; // Reset errno before calling strtol
-    long result = strtol(buffer, &endptr, 10);
+    result = strtol(buffer, &endptr, 10);
     
     // Check for conversion errors
     if (buffer == endptr || errno == ERANGE || result > max || result < min) {
@@ -197,6 +199,8 @@ e_main_interface_option show_main_UI(char *out_dir, char *out_name)
 void choose_encode_text_option(char *out_dir, char *out_name)
 {
     char input[MAX_STRING_SIZE] = {0};
+    char new_file_name[FILE_NAME_MAX] = {0}; 
+    char text[MAX_STRING_SIZE] = {0};
 
     // Get encode text
     printf("Enter encode text (or e to exit): ");
@@ -206,8 +210,6 @@ void choose_encode_text_option(char *out_dir, char *out_name)
     }
 
     // Get new file name and extension
-    char new_file_name[FILE_NAME_MAX] = {0}; 
-    char text[MAX_STRING_SIZE] = {0};
     create_new_file_name(new_file_name, ".txt", out_name, out_dir);
 
     // Check if file already exixted
@@ -236,6 +238,8 @@ void choose_encode_text_option(char *out_dir, char *out_name)
 void choose_decode_text_option(char *out_dir, char *out_name)
 {
     char input[MAX_STRING_SIZE] = {0};
+    char new_file_name[FILE_NAME_MAX] = {0}; 
+    char *text = NULL;
 
     // Get decode text
     printf("Enter decode text (or e to exit): ");
@@ -245,8 +249,7 @@ void choose_decode_text_option(char *out_dir, char *out_name)
     }
     
     // Decode text
-    char new_file_name[FILE_NAME_MAX] = {0}; 
-    char *text = decode_morse(input);
+    text = decode_morse(input);
     printf("Decoded message: ");
     printf("%s\n", text);
 
@@ -279,14 +282,14 @@ void choose_decode_text_option(char *out_dir, char *out_name)
 
 void choose_encode_file_option(char *out_dir, char *out_name)
 {
-    char input[MAX_STRING_SIZE] = {0};
-    if(!get_file_name(input)) { // Handle exit
-        return;
-    }
-
     char new_file_name[FILE_NAME_MAX] = {0}; 
     char text[MAX_STRING_SIZE] = {0};
     char encode_text[MAX_STRING_SIZE] = {0};
+    char input[MAX_STRING_SIZE] = {0};
+
+    if(!get_file_name(input)) { // Handle exit
+        return;
+    }
 
     // Read from file
     read_from_file(input, text);
@@ -321,14 +324,14 @@ void choose_encode_file_option(char *out_dir, char *out_name)
 
 void choose_decode_file_option(char *out_dir, char *out_name)
 {
+    char new_file_name[FILE_NAME_MAX] = {0}; 
+    char text[MAX_STRING_SIZE] = {0};
     char input[MAX_STRING_SIZE] = {0};
+    char *decode_text = NULL;
+
     if(!get_file_name(input)) { // Handle exit
         return;
     }
-
-    char new_file_name[FILE_NAME_MAX] = {0}; 
-    char text[MAX_STRING_SIZE] = {0};
-    char *decode_text;
 
     // Read from file
     read_from_file(input, text);

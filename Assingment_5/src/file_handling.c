@@ -2,7 +2,7 @@
 
 void read_from_file(char *dir, char *text)
 {
-    FILE *fp;
+    FILE *fp = NULL;
     fp = fopen(dir, "r");
     if (fp != NULL) {
         char ch;
@@ -23,7 +23,7 @@ void read_from_file(char *dir, char *text)
 
 void write_to_file(char *dir, char *text)
 {
-    FILE *fp;
+    FILE *fp = NULL;
     fp = fopen(dir, "w");
     fprintf(fp, "%s", text);
     fclose(fp);
@@ -46,6 +46,8 @@ bool check_empty_dir(const char file_name[])
 // Check if file exist
 int check_file_exist(const char file_name[])
 {
+    FILE *file = NULL;
+
     if (file_name == NULL) {
         return 0;
     }
@@ -54,7 +56,6 @@ int check_file_exist(const char file_name[])
         return 0;
     }
 
-    FILE *file;
     if ((file = fopen(file_name, "r"))) {
         fclose(file);
         return 1;
@@ -89,13 +90,14 @@ bool directory_exists(const char *path)
 // Check if file name is valid
 bool is_validfile_name(const char *file_name) 
 {
+    const char *invalid_chars = "\\/:*?\"<>|";
+
     // Check if the file name is empty or exceeds the maximum length
     if (strlen(file_name) == 0 || strlen(file_name) > MAX_FILE_SIZE) {
         return false;
     }
     
     // Check if the file name contains any invalid characters
-    const char *invalid_chars = "\\/:*?\"<>|";
     for (int i = 0; i < strlen(invalid_chars); i++) {
         if (strchr(file_name, invalid_chars[i]) != NULL) {
             return false;
