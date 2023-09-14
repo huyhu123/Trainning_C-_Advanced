@@ -215,12 +215,11 @@ static bool check_date(int day, int month)
 // Append employee node to linked list 
 void append_employee(employees_list_t** g_employee_list, employee_t *data)
 {
+    // Store the g_employee_list reference in a temporary variable
+    employees_list_t *last = *g_employee_list;
     // Create a new node
     employees_list_t *new_node = malloc(sizeof(employees_list_t));
     new_node->employee_data = data;
- 
-    // Store the g_employee_list reference in a temporary variable
-    employees_list_t *last = *g_employee_list;
  
     // Set the next pointer of the new node as NULL since it
     // will be the last node
@@ -385,6 +384,10 @@ bool compare_name(employees_list_t *employees_1, employees_list_t *employees_2)
 {
     char *name_1 = employees_1->employee_data->full_name;
     char *name_2 = employees_2->employee_data->full_name;
+    int name_1_size = strlen(name_1);
+    int name_2_size = strlen(name_2);
+    int index_1 = 0;
+    int index_2 = 0;
 
     // Check if 2 name are the same
     if (strcmp(name_1, name_2) == 0) {
@@ -394,11 +397,6 @@ bool compare_name(employees_list_t *employees_1, employees_list_t *employees_2)
         }
         return false;
     }
-
-    int name_1_size = strlen(name_1);
-    int name_2_size = strlen(name_2);
-    int index_1 = 0;
-    int index_2 = 0;
 
     // Compare 2 name by chareacter from left to right, ignore space
     while (index_1 < name_1_size && index_2 < name_2_size) {
@@ -443,35 +441,35 @@ employees_list_t* merge(employees_list_t* left, employees_list_t* right, e_sort_
     // Compare the salaries of the employees in the linked lists and merge accordingly
     switch (order)
     {
-    case e_salary_decend_sorting:
-        if (left->employee_data->salary >= right->employee_data->salary) {
-            result = left;
-            result->next = merge(left->next, right, order);
-        } else {
-            result = right;
-            result->next = merge(left, right->next, order);
-        }
-        break;
-    case e_salary_accend_sorting:
-        if (left->employee_data->salary <= right->employee_data->salary) {
-            result = left;
-            result->next = merge(left->next, right, order);
-        } else {
-            result = right;
-            result->next = merge(left, right->next, order);
-        }
-        break;
-    case e_name_sorting:
-        if (!compare_name(left, right)) {
-            result = left;
-            result->next = merge(left->next, right, order);
-        } else {
-            result = right;
-            result->next = merge(left, right->next, order);
-        }
-        break;
-    default:
-        break;
+        case e_salary_decend_sorting:
+            if (left->employee_data->salary >= right->employee_data->salary) {
+                result = left;
+                result->next = merge(left->next, right, order);
+            } else {
+                result = right;
+                result->next = merge(left, right->next, order);
+            }
+            break;
+        case e_salary_accend_sorting:
+            if (left->employee_data->salary <= right->employee_data->salary) {
+                result = left;
+                result->next = merge(left->next, right, order);
+            } else {
+                result = right;
+                result->next = merge(left, right->next, order);
+            }
+            break;
+        case e_name_sorting:
+            if (!compare_name(left, right)) {
+                result = left;
+                result->next = merge(left->next, right, order);
+            } else {
+                result = right;
+                result->next = merge(left, right->next, order);
+            }
+            break;
+        default:
+            break;
     }
 
     return result;
@@ -597,12 +595,15 @@ void input_employees(employee_t employee_list[], int *employee_num)
 
 void delete_employee_by_index(employees_list_t **g_employee_list, int index) 
 {
+    int count = 0;
+    employees_list_t *current = NULL;
+
     // Check if list empty
     if (*g_employee_list == NULL || index == -1) {
         return;
     }
 
-    employees_list_t *current = *g_employee_list;
+    current = *g_employee_list;
 
     // If delete the fisrt element, change g_employee_list to next node
     if (index == 0) {
@@ -613,7 +614,6 @@ void delete_employee_by_index(employees_list_t **g_employee_list, int index)
     }
 
     // Loop throug list until the index'th node
-    int count = 0;
     while (current != NULL && count < index - 1) {
         current = current->next;
         count++;
@@ -634,6 +634,8 @@ void delete_employee_by_index(employees_list_t **g_employee_list, int index)
 
 int find_employee_by_id()
 {
+    int index = 0;
+
     // Check if list empty
     if (g_employee_list == NULL) {
         printf("Table empty\n\n");
@@ -642,7 +644,7 @@ int find_employee_by_id()
 
     // Find the index of the employee by input
     printf("Enter ID of the employee you want to delete (or -1 to exit): ");
-    int index = get_input_int_to_delete();
+    index = get_input_int_to_delete();
     if (index == -1) {
         return -1;
     }
